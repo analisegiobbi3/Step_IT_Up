@@ -49,6 +49,16 @@ function NavTabs({ currentPage, handlePageChange }) {
       </BreadcrumbItem>
       <BreadcrumbItem>
         <a
+          href="#routines"
+          onClick={() => handlePageChange('Routines')}
+          // check to see if the current page is "Profile", if it is, set the current page to 'nav-link-active', otherwise set it to 'nav-link'
+          className={currentPage === 'Routines' ? 'nav-link active' : 'nav-link'}
+        >
+          Routines
+        </a>
+      </BreadcrumbItem>
+      <BreadcrumbItem>
+        <a
           href="#profile"
           onClick={() => handlePageChange('Profile')}
           // check to see if the current page is "Profile", if it is, set the current page to 'nav-link-active', otherwise set it to 'nav-link'

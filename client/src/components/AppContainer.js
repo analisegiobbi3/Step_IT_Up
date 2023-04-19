@@ -24,11 +24,11 @@ export default function AppContainer() {
     if (currentPage === 'Profile') {
       return <Profile />;
     }
-    // if (currentPage === 'Resume') {
-    //   return <Resume />;
+    // if (currentPage === 'Tracker') {
+    //   return <Tracker />;
     // }
-    // if (currentPage === 'Contact') {
-    //   return <Contact />;
+    // if (currentPage === 'Routines') {
+    //   return <Routines />;
     // }
   };
 

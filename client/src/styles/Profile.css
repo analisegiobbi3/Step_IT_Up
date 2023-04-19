@@ -15,14 +15,11 @@
 }
 
 .profile-page {
+  font-family: 'Patrick Hand', cursive;
   height: 100vh;
   padding: 3vw;
 }
 
-.profile-page .css-1kxonj9  {
-  font-family: 'Patrick Hand', cursive;
-}
-
-.profile-page .css-g6pte  {
+.profile-page .css-g6pte, .profile-page .css-16xaqf9 {
   font-size: 2.25vw;
 }

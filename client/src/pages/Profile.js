@@ -3,7 +3,7 @@ import React from 'react';
 
 import { 
   Grid, GridItem, Image, Button, IconButton,
-  FormControl, FormLabel, FormHelperText,
+  FormControl, FormLabel, Switch,
   Input, InputGroup, InputRightAddon,
   Radio, RadioGroup, Stack, Select,
   NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper,
@@ -18,9 +18,24 @@ export default function Profile() {
   const [value, setValue] = React.useState('')
 
   return (
-    <Grid className= 'profile-page' templateColumns='repeat(10, 1fr)' gap={6}>
+    <Grid className= 'profile-page' templateColumns='repeat(10, 1fr)' gap={3}>
       <GridItem colSpan={3}>
       <Image boxSize='350px' objectFit='cover' src='https://cdn1.iconfinder.com/data/icons/social-messaging-ui-color-shapes/128/exercise-circle-blue-512.png' alt='Dan Abramov'/>
+      <Button colorScheme='facebook' size='lg' width='100%' my='10'>
+        Upload Image
+      </Button>
+      <FormControl display='flex' alignItems='center' my='3'>
+        <FormLabel htmlFor='calorie-tracker' mb='0'>
+          Calorie Tracker
+        </FormLabel>
+        <Switch id='calorie-tracker' size='lg' />
+      </FormControl>
+      <FormControl display='flex' alignItems='center' my='3'>
+        <FormLabel htmlFor='weight-tracker' mb='0'>
+          Weight Tracker
+        </FormLabel>
+        <Switch id='weight-tracker' size='lg' />
+      </FormControl>
       </GridItem>
       <GridItem colSpan={4}>
         <FormControl>
@@ -43,15 +58,6 @@ export default function Profile() {
             <Input type='date' variant='filled' width='auto' />
           </InputGroup>
           <InputGroup size='md' my='4'>
-            <FormLabel>Age</FormLabel>
-            <Input type='int' variant='filled' width='auto' />
-            <FormHelperText ml='2'>Auto-calculated.</FormHelperText>
-          </InputGroup>
-        </FormControl>
-      </GridItem>
-      <GridItem colSpan={3}>
-        <FormControl>
-          <InputGroup size='md' my='4'>
             <FormLabel>Birth Sex</FormLabel>
             <RadioGroup onChange={setValue} value={value}>
               <Stack direction='row'  mt='3'>
@@ -60,6 +66,10 @@ export default function Profile() {
               </Stack>
             </RadioGroup>
           </InputGroup>
+        </FormControl>
+      </GridItem>
+      <GridItem colSpan={3}>
+        <FormControl>
           <InputGroup size='md' my='4'>
             <FormLabel>Weight (lbs)</FormLabel>
             <NumberInput variant='filled' height='50%' >
@@ -92,10 +102,15 @@ export default function Profile() {
           </InputGroup>
           <InputGroup size='md' my='4'>
             <FormLabel>Maintenance Calories</FormLabel>
-            <Input type='int' variant='filled' width='auto' />
             <IconButton colorScheme='facebook' aria-label='Call Segun' size='md' icon={<IoIosCalculator />} />
           </InputGroup>
-          <Button colorScheme='facebook' size='lg' width='100%' type='submit'my='10'>
+          <InputGroup size='md' my='4'>
+            <FormLabel>Daily</FormLabel>
+            <Input type='int' variant='filled' width='auto' mr='3' />
+            <FormLabel>Monthly</FormLabel>
+            <Input type='int' variant='filled' width='auto' />
+          </InputGroup>
+          <Button colorScheme='facebook' size='lg' width='100%' type='submit' my='10'>
             Save
           </Button>
         </FormControl>
