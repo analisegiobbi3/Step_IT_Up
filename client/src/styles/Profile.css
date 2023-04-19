@@ -1,0 +1,25 @@
+/* * {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+} */
+
+:root {
+  --shade1: #465892;
+  --shade2: #546DA6;
+  --shade3: #BBC1C6;
+  --shade4: #968EAF;
+  --shade5: #6D5593;
+  --shade6: #543D7B;
+  --trans:  #98755400;
+}
+
+.profile-page {
+  font-family: 'Patrick Hand', cursive;
+  height: 100vh;
+  padding: 3vw;
+}
+
+.profile-page .css-g6pte, .profile-page .css-16xaqf9 {
+  font-size: 2.25vw;
+}

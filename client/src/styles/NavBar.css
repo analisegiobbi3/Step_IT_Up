@@ -1,0 +1,13 @@
+/* styling for the Nav Bar page */
+.navBar {
+    background-color: var(--shade5);
+    height: fit-content;
+    font-family: 'Patrick Hand', cursive;
+    padding: 1vw;
+    border-bottom: 0.75vw solid white
+}
+
+.navBar a {
+    color: white;
+    font-size: 2vw;
+}
