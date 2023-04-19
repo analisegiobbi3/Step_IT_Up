@@ -1,17 +1,42 @@
-const { Post, User } = require('../models')
+const { Profile, User, Post } = require('../models')
 
 const resolvers = {
-    Query: {
-        posts: async () => {
-            return Post.find().sort({ createAt: -1 })
-        },
-        post: async (parent, { postId }) => {
-            return Post.fineOne({ _id: postId })
-        },
+Query: {
+    profile: async (parent, { profileId }) => {
+        return Profile.findOne({ _id: profileId });
     },
+    profiles: async () => {
+        return await Profile.find({})
+    },
+     posts: async () => {
+         return Post.find().sort({ createAt: -1 })
+     },
+     post: async (parent, { postId }) => {
+         return Post.fineOne({ _id: postId })
+      },
+},
 
-
-    Mutation: {
+Mutation: {
+    addProfile: async (parent, { username, age, sex, weight, height, goalWeight, dailyCalories }, context) => {
+        if (context.user) {
+        return await Profile.create({ username, age, sex, weight, height, goalWeight, dailyCalories });
+        }
+        throw new AuthenticationError('You need to be logged in!');
+      },
+      updateProfile: async (parent, { id, age, weight, height, goalWeight, dailyCalories }, context) => {
+        if (context.user) {
+        return await Profile.findOneAndUpdate(
+          { _id: id }, 
+          { age },
+          { weight },
+          { height },
+          { goalWeight },
+          { dailyCalories },
+          { new: true }
+        );
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
         addPost: async (parent, { title, text }, context) => {
             if (context.user) {
                 const post = await Post.create({
@@ -70,7 +95,9 @@ const resolvers = {
             }
             throw new AuthenticationError('You need to be logged in to delete a comment!')
         },
-    },
+    };
 }
+
+};
 
 module.exports = resolvers;
