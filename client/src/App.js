@@ -1,12 +1,8 @@
-import React from 'react';
-import Home from './pages/Home.js';
+// import package and local component
+import React from "react";
+import AppContainer from "./components/AppContainer";
 
-function App() {
-  return (
-    <>
-      <Home />
-    </>
-  );
-}
+// main App component that can reference other React components for rendering
+const App = () => <AppContainer />;
 
 export default App;

@@ -1,0 +1,18 @@
+/* styling for the Home page */
+.home-page {
+    color: white;
+    text-align: center;
+    height: 100vh;
+    padding-top: 15%;
+}
+
+.appName {
+    display : flex;
+    align-items : center;
+    padding-left: 20vw;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 10vw;
+    height: 25vh;
+    background: var(--shade4);
+    text-shadow: -1px -1px 1px rgba(255,255,255,.1), 1px 1px 1px rgba(0,0,0,.5);
+}

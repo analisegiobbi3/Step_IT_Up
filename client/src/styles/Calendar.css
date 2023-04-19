@@ -1,0 +1,112 @@
+/* styling for the Calendar page */
+.calendar-page {
+    height: 100vh;
+    padding: 3vw;
+}
+
+.calendar-page h2 {
+    color: var(--shade6);
+    font-family: 'Patrick Hand', cursive;
+}
+
+.calendar-page .css-1dklj6k {
+    font-size: 3vw;
+    font-weight: normal;
+}
+
+.calendar-page .css-6klpau {
+    background-color: var(--shade4);
+}
+
+.calendar-page .css-ubdhuc {
+    background-color: var(--shade2);
+}
+
+.react-calendar {
+    width: 100%;
+    background-color: white;
+    color: black;
+    border-radius: 8px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    font-family: 'Patrick Hand', cursive;
+    font-size: 2.75vw;
+    padding: 2vw;
+}
+
+.react-calendar__tile {
+    text-align: center;
+    padding: 0.75em 0.5em;
+    background: none;
+  }
+
+.react-calendar__navigation button {
+    color: var(--shade6);
+    font-weight: bolder;
+    min-width: 44px;
+    background: none;
+    margin-top: 8px;
+}
+
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+    background-color: white;
+}
+
+.react-calendar__navigation button[disabled] {
+    background-color: var(--shade3);
+}
+
+abbr[title] {
+    text-decoration: none;
+}
+
+.react-calendar__month-view__days__day--weekend {
+    color: var(--shade2);
+}
+
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+    background: rgba(211, 211, 211, 0.601);
+    color: var(--shade6);
+    border-radius: 6px;
+}
+
+.react-calendar__tile--now {
+    background: #543d7b56;
+    border-radius: 6px;
+    font-weight: bold;
+    color: white;
+}
+
+.react-calendar__tile--now:enabled:hover,
+.react-calendar__tile--now:enabled:focus {
+    background: rgba(211, 211, 211, 0.601);
+    border-radius: 6px;
+    font-weight: bold;
+    color: var(--shade6);
+}
+
+.react-calendar__tile--hasActive:enabled:hover,
+.react-calendar__tile--hasActive:enabled:focus {
+    background: white;
+}
+
+.react-calendar__tile--active {
+    background: var(--shade6);
+    border-radius: 6px;
+    font-weight: bold;
+    color: white;
+}
+
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
+    background: var(--shade6);
+    color: white;
+}
+
+.react-calendar__tile--rangeEnd {
+    border-radius: 6px;
+    background: var(--shade6);
+    color: white;
+}
+   
