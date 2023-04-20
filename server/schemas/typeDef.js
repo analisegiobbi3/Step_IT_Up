@@ -2,17 +2,17 @@ const { gql } = require('apollo-server-express')
 
 const typeDef = gql`
 
-type Profile {
-    _id: ID!
-    username: String!
-    age: Int!
-    sex: String!
-    weight: Int! 
-    height: Int! 
-    goalWeight: Int!
-    dailyCalories: Int
-    savedRoutines: [Routine]
-}
+    type Profile {
+        _id: ID!
+        username: String!
+        age: Int!
+        sex: String!
+        weight: Int! 
+        height: Int! 
+        goalWeight: Int!
+        dailyCalories: Int
+        savedRoutines: [Routine]
+    }
 
     type Post {
         _id: ID

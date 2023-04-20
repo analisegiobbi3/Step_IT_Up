@@ -95,9 +95,7 @@ Mutation: {
             }
             throw new AuthenticationError('You need to be logged in to delete a comment!')
         },
-    };
+    }
 }
-
-};
 
 module.exports = resolvers;
