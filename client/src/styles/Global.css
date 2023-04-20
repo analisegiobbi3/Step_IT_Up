@@ -1,0 +1,32 @@
+:root {
+  --shade1: #465892;
+  --shade2: #546DA6;
+  --shade3: #BBC1C6;
+  --shade4: #968EAF;
+  --shade5: #6D5593;
+  --shade6: #543D7B;
+  --trans:  #98755400;
+}
+
+/* import font used throughout pages */
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+
+/* create background color transition/animation */
+@keyframes animatedBackground {
+  0% { background-position: -0 85%; }
+  100% { background-position: -1350px 85%; }
+}
+
+/* define transition gradient */
+@keyframes gradient {
+0% { background-position: 50% 0%; }
+50% { background-position: 50% 100%; }
+100% { background-position: 50% 0%; }
+}
+
+.global {
+background: linear-gradient(0deg, var(--shade1), var(--shade4),  var(--shade6), white);
+background-size: 400% 400%;
+animation: gradient 15s ease infinite;
+height: fit-content;
+}
