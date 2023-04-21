@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
 import { useMutation } from '@apollo-client'
-import { Input, InputGroup, InputLeftElement, StarIcon, Textarea } from '@chakra-ui/react'
+import { Input, InputGroup, InputLeftElement, Textarea } from '@chakra-ui/react'
+import { BiDumbbell } from "react-icons/bi";
+
 
 
 import { ADD_POST } from '../utils/mutations'
+//remember to add QUERY_ME when that is made
 import { QUERY_POSTS } from '../utils/queries'
 
 import Auth from ''
@@ -66,7 +68,7 @@ const CreatePost = () => {
                             <InputGroup>
                                 <InputLeftElement
                                     pointerEvents='none'
-                                    children={<StarIcon color='gray.300' />}
+                                    icon={<BiDumbbell />}
                                 />
                                 <Input 
                                     placeholder='Post Title'
