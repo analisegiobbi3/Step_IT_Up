@@ -54,18 +54,36 @@ export const QUERY_SINGLE_PROFILE = gql`
         height
         goalWeight
 
+    }
+}
+`
+
 export const QUERY_USER = gql`
   query user($username: String!) {
     user(username: $username) {
       _id
       username
       email
-      thoughts {
-        _id
-        thoughtText
-        createdAt
-      }
-
+      posts {
+            _id
+            title
+            text
+            author
+            createdAt
+            comments {
+                _id
+                commentText
+                comment Author
+                createdAt
+            }
+        profile {
+            _id
+            age
+            sex
+            weight
+            height
+            goalWeight
+        }
     }
   }
 `;
@@ -73,7 +91,6 @@ export const QUERY_USER = gql`
 export const QUERY_ME = gql`
   query me {
     me {
-
         _id
         age
         sex

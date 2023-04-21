@@ -1,20 +1,17 @@
-const { Profile, User, Post } = require('../models')
+const { Profile, User, Post } = require('../models');
+const { AuthenticationError } = require('apollo-server-express');
+const { signToken } = require('../utils/auth');
+
 
 const resolvers = {
 Query: {
     
     // ********** BENJI ADDED CLOSE **********
     users: async () => {
-        return User.find().populate('posts');
+        return User.find().populate('posts').populate('profile');
     },
     user: async (parent, { username }) => {
-        return User.findOne({ username }).populate('posts');
-    },
-    me: async (parent, args, context) => {
-        if (context.user) {
-          return User.findOne({ _id: context.user._id }).populate('posts');
-        }
-        throw new AuthenticationError('You need to be logged in!');
+        return User.findOne({ username }).populate('posts').populate('profile');
     },
     // ********** BENJI ADDED CLOSE **********
 

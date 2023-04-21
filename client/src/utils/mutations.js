@@ -44,6 +44,9 @@ export const ADD_PROFILE = gql`
         weight
         height
         goalWeight
+    }
+}
+`
 
 
 export const LOGIN_USER = gql`
@@ -68,6 +71,10 @@ export const UPDATE_PROFILE = gql`
         weight
         height
         goalWeight
+
+    }
+}
+`
 
 export const ADD_USER = gql`
   mutation addUser($username: String!, $email: String!, $password: String!) {
