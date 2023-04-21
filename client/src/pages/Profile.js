@@ -1,8 +1,9 @@
 // import package and local style sheet
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Form } from 'react-router-dom';
 import { useQuery, useMutation} from '@apollo/client';
 import AddProfile from '../components/AddProfile';
+import { Box, FormControl, FormLabel, Input, FormHelperText, Button } from '@chakra-ui/react';
 
 import { QUERY_ME } from '../utils/queries';
 import { UPDATE_PROFILE } from '../utils/mutations';
@@ -14,6 +15,7 @@ const Profile = () => {
   const me = data?.me || [];
 
   const [age, setAge] = useState(me.age);
+  // const [sex, setSex] = useState(me.sex);
   const [weight, setWeight] = useState(me.weight);
   const [height, setHeight] = useState(me.height);
   const [goalWeight, setGoalWeight] = useState(me.goalWeight);
@@ -27,17 +29,18 @@ const Profile = () => {
     event.preventDefault() ;
 
     setShowAddProfile(true);
+
+    }
     return (
       <div>
       {showAddProfile ? (
         <AddProfile />
       ) : (
-        <button onClick={handleClick}>Start by adding your information!</button>
+        <Button onClick={handleClick}>Start by adding your information!</Button>
       )}
 
       </div>
     )
-  }
 }
 
   const handleFormSubmit = async (e) => {
@@ -58,46 +61,72 @@ const Profile = () => {
       <div>
         {Auth.loggedIn() ? (
           <>
-            <form
-        className="flex-row justify-center justify-space-between-md align-center"
+          {loading? ( <div>Loading....</div>) : (
+          <Box maxW='480px'>
+            <Form
         onSubmit={handleFormSubmit}
       >
-        <div className='col-12'>
-          <label>Age</label>
-          <input 
+        <FormControl isRequired mb='20px'>
+          <FormLabel>Age</FormLabel>
+          <Input 
           value={age}
           className = 'form-input'
           onChange={(e) => setAge(e.target.value)}
           />
-          <label>Weight</label>
-          <input 
+          </FormControl>
+          {/* <FormControl isRequired mb='20px'>
+          <FormLabel>Birth Sex</FormLabel>
+          <RadioGroup onChange={(e) => setSex(e.target.checked)}>
+          <HStack spacing='24px'>
+          Radio
+          value={sex}>
+          Male
+          </Radio>
+          <Radio 
+          value={sex}>
+          Female
+          </Radio>
+          <Hstack>
+          </RadioGroup>
+          </FormControl> */}
+          <FormControl isRequired mb='20px'>
+          <FormLabel>Weight</FormLabel>
+          <Input
           value={weight}
           className='form-input'
           onChange={(e) => setWeight(e.target.value)}
           />
-          <label>Height</label>
-          <input 
+          </FormControl>
+          <FormControl isRequired mb='20px'>
+          <FormLabel>Height</FormLabel>
+          <Input 
           value={height}
           className='form-input'
           onChange={(e) => setHeight(e.target.value)}
           />
-          <label>Goal Weight</label>
-          <input
+          </FormControl>
+          <FormControl isRequired mb='20px'>
+          <FormLabel>Goal Weight</FormLabel>
+          <FormHelperText>If you are working on maintenance, you can enter your current weight here
+            to help us personalise your experience on this app.</FormHelperText>
+          <Input
           value={goalWeight}
           className='form-input'
           onChange={(e) => setGoalWeight(e.target.value)}
           />
-        </div>
+          </FormControl>
 
         <div className='button'>
-          <button>save changes</button>
+          <Button type="submit">save changes</Button>
         </div>
         {error && (
           <div className='danger'>
             Something went wrong..
           </div>
         )}
-      </form>
+      </Form>
+      </Box>
+        )}
           </>) : (
           <p>
             You need to be logged in to view your profile. Please {' '}
