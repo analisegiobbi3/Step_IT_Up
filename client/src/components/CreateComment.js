@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client'
 import { Textarea } from '@chakra-ui/react'
 
@@ -10,7 +9,7 @@ import Auth from ''
 const CreateComment= ({ postId }) => {
     const [commentText, setCommentText] = useState('')
 
-    const [addComment, { error }] = useMutation(ADD_COMMENT)
+    const [addComment] = useMutation(ADD_COMMENT)
 
     const handleFormSubmit = async (event) => {
         event.preventDefault()
