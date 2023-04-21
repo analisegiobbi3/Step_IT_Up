@@ -34,9 +34,15 @@ const typeDef = gql`
         profiles: [Profile]
         profile(profileId: ID!): Profile
         me: Profile
+        users: [User]
+        user(username: String!): User
+ 
+
     }
 
     type Mutation{
+        addUser(username: String!, email: String!, password: String!): Auth
+        login(email: String!, password: String!): Auth
         addPost(title: String!, text: String!): Post
         addComment(postId: ID!, commentText: String!): Post
         editPost(postId: ID!, title: String!, text: String!): Post

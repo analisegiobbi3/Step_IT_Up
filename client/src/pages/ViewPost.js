@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { userParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 
 import { Card, CardHeader, CardBody, CardFooter, Heading, Text, Button } from '@chakra-ui/react'
@@ -11,7 +11,7 @@ import CreateComment from '../components/CreateComment'
 import { QUERY_USER_POST } from '../utils/queries'
 
 const ViewPost = () => {
-    const { postId } = userParams()
+    const { postId } = useParams()
     const { loading, data } = useQuery(QUERY_USER_POST, {
         variables: { postId: postId },
     });
