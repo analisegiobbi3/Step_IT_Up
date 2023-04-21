@@ -29,6 +29,31 @@ export const QUERY_USER_POST = gql`
         }
     }
 `
+
+
+export const QUERY_PROFILES = gql`
+  query allProfiles {
+    profiles {
+        _id
+        age
+        sex
+        weight
+        height
+        goalWeight
+    }
+  }
+`;
+
+export const QUERY_SINGLE_PROFILE = gql`
+  query singleProfile($profileId: ID!) {
+    profile(profileId: $profileId) {
+       _id
+        age
+        sex
+        weight
+        height
+        goalWeight
+
 export const QUERY_USER = gql`
   query user($username: String!) {
     user(username: $username) {
@@ -40,6 +65,7 @@ export const QUERY_USER = gql`
         thoughtText
         createdAt
       }
+
     }
   }
 `;
@@ -47,15 +73,14 @@ export const QUERY_USER = gql`
 export const QUERY_ME = gql`
   query me {
     me {
-      _id
-      username
-      email
-      thoughts {
+
         _id
-        thoughtText
-        thoughtAuthor
-        createdAt
-      }
+        age
+        sex
+        weight
+        height
+        goalWeight
     }
   }
 `;
+

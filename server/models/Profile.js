@@ -24,11 +24,6 @@ const profileSchema = new Schema(
         type: Number, 
         required: true,
     },
-    dailyCalories: {
-        type: Number,
-        required: false
-    },
-    savedRoutines: [routineSchema],
 }
 );
 
