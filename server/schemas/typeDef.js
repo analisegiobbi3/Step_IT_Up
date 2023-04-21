@@ -28,6 +28,20 @@ const typeDef = gql`
         createdAt: String
     }
 
+    type User {
+       _id: ID
+       username: String
+       email: String
+       password: String
+       posts: [Post]
+       profile: [Profile]
+   }
+
+    type Auth {
+       token: ID!
+       user: User
+  }
+
     type Query {
         posts: (username: String) [Post]!
         post(postId: ID!): Post

@@ -10,13 +10,13 @@ import { UPDATE_PROFILE } from '../utils/mutations';
 import Auth from '../../utils/auth';
 
 const Profile = () => {
+  const { loading, data } = useQuery(QUERY_ME);
+  const me = data?.me || [];
+
   const [age, setAge] = useState(me.age);
   const [weight, setWeight] = useState(me.weight);
   const [height, setHeight] = useState(me.height);
   const [goalWeight, setGoalWeight] = useState(me.goalWeight);
-
-  const { loading, data } = useQuery(QUERY_ME);
-  const me = data?.me || [];
 
   const [updateProfile, { error }] = useMutation(UPDATE_PROFILE);
 
