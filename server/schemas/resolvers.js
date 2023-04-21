@@ -14,6 +14,12 @@ Query: {
      post: async (parent, { postId }) => {
          return Post.fineOne({ _id: postId })
       },
+      me: async (parent, args, context) => {
+      if (context.user) {
+        return Profile.findOne({ _id: context.user._id });
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
 },
 
 Mutation: {

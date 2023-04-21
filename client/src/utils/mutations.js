@@ -34,3 +34,27 @@ export const ADD_COMMENT = gql`
         }
     }
 `
+export const ADD_PROFILE = gql`
+  mutation addProfile(age: Int!, sex: String!, weight: Int!, height: Int!, goalWeight: Int!) {
+    addProfile(age: $newAge, sex: $newSex, weight: $newWeight, height: $newHeight, goalWeight: $newGoalWeight) {
+        _id
+        age
+        sex
+        weight
+        height
+        goalWeight
+    }
+  }
+`;
+
+export const UPDATE_PROFILE = gql`
+  mutation updateProfile(id: ID!, age: Int!, weight: Int!, height: Int!, goalWeight: Int!) {
+    updateProfile(age: $age, weight: $weight, height: $height, goalWeight: $goalWeight) {
+        _id
+        age
+        weight
+        height
+        goalWeight
+    }
+  }
+`;
