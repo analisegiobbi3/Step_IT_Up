@@ -5,7 +5,7 @@ import { Box, FormControl, FormLabel, Input, FormHelperText, Button } from '@cha
 
 import { ADD_PROFILE } from "../utils/mutations";
 
-import Auth from '../../utils/auth';
+import Auth from '../utils/auth';
 
 const AddProfile = () => {
   const [newAge, setNewAge] = useState(' ');

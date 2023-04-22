@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import '../styles/NavBar.css';
 import { Breadcrumb, BreadcrumbItem } from '@chakra-ui/react';
-import Auth from ''
+import Auth from '../utils/auth'
 
 // page navigation bar
 function Header() {
@@ -55,4 +55,4 @@ function Header() {
   );
 }
 
-export default Header();
+export default Header;

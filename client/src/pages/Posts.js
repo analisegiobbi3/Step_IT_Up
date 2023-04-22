@@ -1,7 +1,7 @@
 import React from 'react'
 import CreatePost from './CreatePost'
 
-import { useQuery } from '@apolloClient'
+import { useQuery } from '@apollo/client'
 
 import AllPosts from '../components/AllPosts'
 
@@ -32,4 +32,4 @@ const Posts = ({ handlePageChange }) => {
     )
 }
 
-export default Posts()
+export default Posts;

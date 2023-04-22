@@ -36,7 +36,7 @@ export const ADD_COMMENT = gql`
 `
 
 export const ADD_PROFILE = gql`
-  mutation addProfile(age: Int!, sex: String!, weight: Int!, height: Int!, goalWeight: Int!) {
+  mutation addProfile($newAge: Int!, $newSex: String!, $newWeight: Int!, $newHeight: Int!, $newGoalWeight: Int!) {
     addProfile(age: $newAge, sex: $newSex, weight: $newWeight, height: $newHeight, goalWeight: $newGoalWeight) {
         _id
         age
@@ -64,8 +64,8 @@ export const LOGIN_USER = gql`
 
 
 export const UPDATE_PROFILE = gql`
-  mutation updateProfile(id: ID!, age: Int!, weight: Int!, height: Int!, goalWeight: Int!) {
-    updateProfile(age: $age, weight: $weight, height: $height, goalWeight: $goalWeight) {
+  mutation updateProfile($id: ID!, $age: Int!, $weight: Int!, $height: Int!, $goalWeight: Int!) {
+    updateProfile(id: $id, age: $age, weight: $weight, height: $height, goalWeight: $goalWeight) {
         _id
         age
         weight
@@ -74,7 +74,7 @@ export const UPDATE_PROFILE = gql`
 
     }
 }
-`
+`;
 
 export const ADD_USER = gql`
   mutation addUser($username: String!, $email: String!, $password: String!) {
