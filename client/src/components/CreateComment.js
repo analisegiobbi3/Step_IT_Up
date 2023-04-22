@@ -4,7 +4,7 @@ import { Textarea } from '@chakra-ui/react'
 
 
 import { ADD_COMMENT } from '../utils/mutations';
-import Auth from ''
+import Auth from '../utils/auth'
 
 const CreateComment= ({ postId }) => {
     const [commentText, setCommentText] = useState('')
@@ -65,4 +65,4 @@ const CreateComment= ({ postId }) => {
     )
 }
 
-export default CreateComment();
+export default CreateComment;
