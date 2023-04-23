@@ -41,4 +41,13 @@ const LoginForm = () => {
       password: '',
     });
     }
+
+    return (
+      <>
+      {/* Add functionality for validtaing response for login if good or badd as long with html and styling */}
+
+      
+      </>
+    );
+
 }
