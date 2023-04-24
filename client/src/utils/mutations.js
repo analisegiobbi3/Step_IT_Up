@@ -35,6 +35,30 @@ export const ADD_COMMENT = gql`
     }
 `
 
+// export const REMOVE_COMMENT = gql`
+//     mutation removeComment($commentId: ID){
+//       removeComment(commentId: $commentId){
+//         _id
+//       }
+//     }
+// `
+
+export const EDIT_POST = gql`
+    mutation editPost($postId: ID!, $title: String!, $text: String!){
+      editPost(postId: $postId, title: $title, text: $text){
+        _id
+        title
+        text
+    }
+`
+export const REMOVE_POST = gql`
+    mutation removePost($postId: ID){
+      removePost(postId: $postId){
+        _id
+      }
+    }
+`
+
 export const ADD_PROFILE = gql`
   mutation addProfile($newAge: Int!, $newSex: String!, $newWeight: Int!, $newHeight: Int!, $newGoalWeight: Int!) {
     addProfile(age: $newAge, sex: $newSex, weight: $newWeight, height: $newHeight, goalWeight: $newGoalWeight) {

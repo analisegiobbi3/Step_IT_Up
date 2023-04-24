@@ -41,7 +41,7 @@ const CreatePost = () => {
         variables: {
           title,
           text,
-          // author: Auth.getProfile().data.username,
+          author: Auth.getProfile().data.username,
         },
       });
       setTitle("");

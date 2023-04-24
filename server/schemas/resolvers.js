@@ -126,7 +126,7 @@ Mutation: {
             }
             throw new AuthenticationError('You need to be logged in to delete a post!')
         },
-        removeComment: async (parent, { postId, commentId}, context) => {
+        removeComment: async (parent, { postId, commentId }, context) => {
             if (context.user) {
                 return Post.findOneAndUpdate(
                     { _id: postId },
