@@ -7,7 +7,7 @@
     border-bottom: 0.75vw solid white
 }
 
-.navBar a {
+.navBar a, .navBar button {
     color: white;
     font-size: 2vw;
 }

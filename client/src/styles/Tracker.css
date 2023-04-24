@@ -1,0 +1,21 @@
+:root {
+    --shade1: #465892;
+    --shade2: #546DA6;
+    --shade3: #BBC1C6;
+    --shade4: #968EAF;
+    --shade5: #6D5593;
+    --shade6: #543D7B;
+    --trans:  #98755400;
+  }
+
+/* styling for the Routine page */
+.tracker-page {
+    height: 100vh;
+    padding: 3vw;
+    font-family: 'Patrick Hand', cursive;
+}
+
+.tracker-page h2 {
+    color: var(--shade6);
+    font-family: 'Patrick Hand', cursive;
+}

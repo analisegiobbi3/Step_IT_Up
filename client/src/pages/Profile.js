@@ -17,26 +17,26 @@ import { UPDATE_PROFILE } from "../utils/mutations";
 
 import Auth from "../utils/auth";
 
- const HandleNewData = () => {
-   const [showAddProfile, setShowAddProfile] = useState(false);
+const HandleNewData = () => {
+  const [showAddProfile, setShowAddProfile] = useState(false);
 
-   const handleClick = (event) => {
-     event.preventDefault();
+  const handleClick = (event) => {
+    event.preventDefault();
 
-     setShowAddProfile(true);
-   };
-   return (
-     <div>
-       {showAddProfile ? (
-         <AddProfile />
-       ) : (
-         <Button onClick={handleClick}>
-           Start by adding your information!
-         </Button>
-       )}
-     </div>
-   );
- };
+    setShowAddProfile(true);
+  };
+  return (
+    <div>
+      {showAddProfile ? (
+        <AddProfile />
+      ) : (
+        <Button onClick={handleClick}>
+          Start by adding your information!
+        </Button>
+      )}
+    </div>
+  );
+};
 
 const Profile = () => {
   const { loading, data } = useQuery(QUERY_ME);

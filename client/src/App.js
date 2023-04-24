@@ -11,12 +11,16 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
 import Calendar from "./pages/Calendar";
+import Tracker from "./pages/Tracker";
+import Routine from "./pages/Routine";
 import Posts from "./pages/Posts";
 import ViewPost from "./pages/ViewPost";
 import Profile from "./pages/Profile";
 import Header from "./components/Header";
 // import Login from "";
 // import Signup from "";
+
+import './styles/Global.css';
 
 // Construct request middleware that will attach the JWT token to every request as an `authorization` header
 const authLink = setContext((_, { headers }) => {
@@ -42,20 +46,20 @@ const client = new ApolloClient({
 });
 
 function App() {
-  const calendar = () => {
-    return <Calendar />;
-  };
 
   return (
     <ApolloProvider client={client}>
       <Router>
-        <div>
+        <div className="global">
           <Header />
           <div>
             <Routes>
               <Route path="/" element={<Home />} />
               {/* <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} /> */}
+              <Route path="/calendar" element={<Calendar />} />
+              <Route path="/tracker" element={<Tracker />} />
+              <Route path="/routine" element={<Routine />} />
               <Route path="/profile" element={<Profile />} />
 
               <Route path="/posts" element={<Posts />} /> 
@@ -64,9 +68,6 @@ function App() {
           </div>
         </div>
       </Router>
-      <a href="#Calendar" onClick={calendar}>
-        Calendar
-      </a>
     </ApolloProvider>
   );
 }
