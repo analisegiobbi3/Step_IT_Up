@@ -10,7 +10,7 @@ import { BiDumbbell } from "react-icons/bi";
 
 import { ADD_POST } from "../utils/mutations";
 //remember to add QUERY_ME when that is made
-import { QUERY_POSTS } from "../utils/queries";
+import { QUERY_POSTS, QUERY_USER } from "../utils/queries";
 
 import Auth from "../utils/auth";
 
@@ -30,6 +30,12 @@ const CreatePost = () => {
       } catch (error) {
         console.error(error);
       }
+
+      const { user } = cache.readQuery({ query: QUERY_USER })
+      cache.writeQuery({
+        query: QUERY_USER,
+        data: { user: { ...user, posts: [...user.posts, addPost]}}
+      });
     },
   });
 
@@ -41,7 +47,7 @@ const CreatePost = () => {
         variables: {
           title,
           text,
-          // author: Auth.getProfile().data.username,
+          author: Auth.getProfile().data.username,
         },
       });
       setTitle("");

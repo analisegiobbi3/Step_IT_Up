@@ -1,10 +1,16 @@
 import React from 'react'
+// import { useMutation } from "@apollo/client"
 import { Card, CardBody, CardFooter, Text } from '@chakra-ui/react'
+// import { REMOVE_COMMENT } from '../utils/mutations'
 
 const Comments = ({ comments = [] }) => {
     if (!comments.length) {
         return <h3>No one has commented on this post yet</h3>
     }
+    // const [removeComment] = useMutation(REMOVE_COMMENT)
+    // const handleOnClick = () => {
+    //     removeComment({ variables: { commentId }})
+    // }
 
     return (
         <div>
