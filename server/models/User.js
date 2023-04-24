@@ -31,6 +31,12 @@ const userSchema = new Schema({
       ref: 'Profile',
     },
   ],
+  routine: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Routine',
+    },
+  ],
 });
 
 userSchema.pre('save', async function (next) {

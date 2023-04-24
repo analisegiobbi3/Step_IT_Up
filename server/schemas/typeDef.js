@@ -35,12 +35,12 @@ const typeDef = gql`
        password: String
        posts: [Post]
        profile: [Profile]
-   }
+    }
 
     type Auth {
        token: ID!
        user: User
-  }
+    }
 
     type Query {
         posts(username: String): [Post]!
@@ -50,8 +50,6 @@ const typeDef = gql`
         me: Profile
         users: [User]
         user(username: String!): User
- 
-
     }
 
     type Mutation{

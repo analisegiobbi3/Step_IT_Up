@@ -1,0 +1,27 @@
+/* styling for the Routine page */
+.routine-page {
+    height: 100vh;
+    padding: 3vw;
+    font-family: 'Patrick Hand', cursive;
+}
+
+.routine-page h2 {
+    color: var(--shade6);
+    font-family: 'Patrick Hand', cursive;
+}
+.css-wl0d9u {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.5vw;
+}
+
+.css-qfq9qr {
+    color: white;
+}
+
+.css-1idwstw {
+    white-space: pre-line;
+}
+
+.css-1a7q9t8 {
+    justify-content: flex-end;
+}

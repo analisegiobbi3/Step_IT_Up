@@ -6,14 +6,12 @@ const { signToken } = require('../utils/auth');
 const resolvers = {
 Query: {
     
-    // ********** BENJI ADDED CLOSE **********
     users: async () => {
         return User.find().populate('posts').populate('profile');
     },
     user: async (parent, { username }) => {
         return User.findOne({ username }).populate('posts').populate('profile');
     },
-    // ********** BENJI ADDED CLOSE **********
 
     profile: async (parent, { profileId }) => {
         return Profile.findOne({ _id: profileId });
