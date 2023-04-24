@@ -49,6 +49,7 @@ export const EDIT_POST = gql`
         _id
         title
         text
+      }
     }
 `
 export const REMOVE_POST = gql`
