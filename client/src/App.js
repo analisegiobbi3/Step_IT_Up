@@ -18,7 +18,7 @@ import ViewPost from "./pages/ViewPost";
 import Profile from "./pages/Profile";
 import Header from "./components/Header";
 // import Login from "";
-// import Signup from "";
+import Signup from "./pages/Signup";
 
 import './styles/Global.css';
 
@@ -55,8 +55,8 @@ function App() {
           <div>
             <Routes>
               <Route path="/" element={<Home />} />
-              {/* <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} /> */}
+              {/* <Route path="/login" element={<Login />} />*/}
+              <Route path="/signup" element={<Signup />} /> 
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/tracker" element={<Tracker />} />
               <Route path="/routine" element={<Routine />} />
