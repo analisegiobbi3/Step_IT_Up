@@ -72,6 +72,21 @@ export const ADD_PROFILE = gql`
     }
 }
 `
+export const ADD_ROUTINE = gql`
+  mutation addRoutine(
+    $title: String
+    $routine: String
+  ) {
+    addRoutine(
+      title: $title
+      routine: $routine
+    ) {
+      _id
+      title
+      routine
+    }
+  }
+`;
 
 
 export const LOGIN_USER = gql`
