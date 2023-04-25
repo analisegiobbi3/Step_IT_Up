@@ -18,10 +18,15 @@ import ViewPost from "./pages/ViewPost";
 import Profile from "./pages/Profile";
 import Header from "./components/Header";
 import CreatePost from './pages/CreatePost'
-// import Login from "";
+import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 
 import './styles/Global.css';
+
+
+const httpLink = createHttpLink({
+  uri: "/graphql",
+});
 
 // Construct request middleware that will attach the JWT token to every request as an `authorization` header
 const authLink = setContext((_, { headers }) => {
@@ -34,10 +39,6 @@ const authLink = setContext((_, { headers }) => {
       authorization: token ? `Bearer ${token}` : "",
     },
   };
-});
-
-const httpLink = createHttpLink({
-  uri: "/graphql",
 });
 
 const client = new ApolloClient({
@@ -56,7 +57,7 @@ function App() {
           <div>
             <Routes>
               <Route path="/" element={<Home />} />
-              {/* <Route path="/login" element={<Login />} />*/}
+              <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} /> 
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/tracker" element={<Tracker />} />

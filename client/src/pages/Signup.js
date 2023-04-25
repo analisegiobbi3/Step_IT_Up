@@ -1,85 +1,118 @@
 import React, { useState } from 'react';
+import { Link, Form } from 'react-router-dom';
+
+import { useMutation  } from '@apollo/client';
+import { ADD_USER } from '../utils/mutations';
+
+import Auth from '../utils/auth';
+
 import '../styles/Signup.css';
 
 import {
     FormControl,
     Input,
-    InputGroup,
-    InputRightElement,
     Button,
     Text,
-    FormHelperText,
-    Link,
-  } from '@chakra-ui/react'
+    FormLabel
+  } from '@chakra-ui/react';
 
-export default function Signup() {
-    const [show, setShow] = React.useState(false)
-    const handleClick = () => setShow(!show)
+const Signup = () =>  {
 
-    const [value, setValue] = React.useState('')
-    const handleChange = (event) => setValue(event.target.value)
+    const [formState, setFormState] = useState({
+        username: '',
+        email: '',
+        password: '',
+    });
 
+    const [addUser, { data }] = useMutation(ADD_USER);
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+
+        setFormState({
+            ...formState,
+            [name]: value,
+        })
+    };
+
+    const handleFormSubmit = async (event) => {
+        event.preventDefault();
+        console.log(formState);
+    
+        try { 
+            const { data } = await addUser({
+                variables: { ...formState},
+            });
+
+            Auth.login(data.addUser.token);
+        } catch (e) {
+            console.error(e);
+        }
+    };
   return (
     <>
-        <div className='signup'>
-            <div className='signup-form'>
-                <div>
-                    <FormControl isRequired>
-                        <Text fontSize="2xl" m={5}>Create your Account</Text>
-                        <div className='names-input flex'>
-                            <Input 
-                            type='First name' 
-                            placeholder='First name' 
-                            size='md' 
-                            htmlSize={20} 
-                            width='auto'
-                            />
-                        
-                            <Input 
-                            type='Last name' 
-                            placeholder='Last name' 
-                            size='md' htmlSize={15} 
-                            width='auto'/>
-                        </div>
-                        <div className='email-input'>
-                            <Input 
-                            type='email' 
-                            placeholder='Email' 
-                            size='md' 
-                            htmlSize={55} 
-                            width='auto'/>
-                            <FormHelperText>We'll never share your email.</FormHelperText>
-                        </div>
-                        
-                        <div className='password-input'>
-                            <InputGroup size='md'>
-                                <Input
-                                    pr='4rem'
-                                    type={show ? 'text' : 'password'}
-                                    placeholder='Enter password'
-                                    htmlSize={35} 
-                                    width='auto'
-                                />
-                                <InputRightElement width='30rem'>
-                                    <Button h='1.75rem' size='sm' onClick={handleClick}>
-                                        {show ? 'Hide' : 'Show'}
-                                    </Button>
-                                </InputRightElement>
-                            </InputGroup>
-                            <FormHelperText>We'll never share your email.</FormHelperText>
-                        </div>    
-                    </FormControl>
-                </div>
-                <div className='login flex'>
-                    <Link to='/Login'>
-                        You can login instead
-                    </Link>
-                    <Button>
-                        Sign up
-                    </Button>
-                </div>
+      <div className="signup">
+        {data ? (
+          <p>
+            Success! You may now head <Link to="/">back to homepage</Link>
+          </p>
+        ) : (
+          <div className="signup-form">
+            <div>
+              <Form onSubmit={handleFormSubmit}>
+                <FormControl isRequired>
+                  <Text fontSize="2xl" m={5}>
+                    Create your Account
+                  </Text>
+                  <div className="username-input flex">
+                    <FormLabel>Username</FormLabel>
+                    <Input
+                      type="username"
+                      placeholder="Username"
+                      size="md"
+                      htmlSize={20}
+                      width="auto"
+                      value={formState.name}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="email-input">
+                    <FormLabel>Email</FormLabel>
+                    <Input
+                      type="email"
+                      placeholder="Email"
+                      size="md"
+                      htmlSize={55}
+                      width="auto"
+                      value={formState.email}
+                      onChange={handleChange}
+                    />
+                  </div>
+
+                  <div className="password-input">
+                    <FormLabel>Password</FormLabel>
+                    <Input
+                      pr="4rem"
+                      type="password"
+                      placeholder="Password"
+                      htmlSize={35}
+                      width="auto"
+                      value={formState.password}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <Button type="submit">Sign up</Button>
+                </FormControl>
+              </Form>
             </div>
-        </div>
+            <div className="login flex">
+              <Link to="/Login">Would you like to Log In instead?</Link>
+            </div>
+          </div>
+        )}
+      </div>
     </>
-  )
+  );
 }
+
+export default Signup;
