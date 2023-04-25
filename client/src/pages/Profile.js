@@ -10,6 +10,9 @@ import {
   Input,
   FormHelperText,
   Button,
+  RadioGroup,
+  Radio,
+  HStack
 } from "@chakra-ui/react";
 
 import { QUERY_ME } from "../utils/queries";
@@ -40,10 +43,10 @@ const HandleNewData = () => {
 
 const Profile = () => {
   const { loading, data } = useQuery(QUERY_ME);
-  const me = data?.me || [];
+  const me = data?.me.profile || [];
 
   const [age, setAge] = useState(me.age);
-  // const [sex, setSex] = useState(me.sex);
+  const [sex, setSex] = useState(me.sex);
   const [weight, setWeight] = useState(me.weight);
   const [height, setHeight] = useState(me.height);
   const [goalWeight, setGoalWeight] = useState(me.goalWeight);
@@ -54,7 +57,7 @@ const Profile = () => {
     e.preventDefault();
     try {
       const { data } = await updateProfile({
-        variables: { age, weight, height, goalWeight },
+        variables: { age, sex, weight, height, goalWeight },
       });
 
       window.location.reload();
@@ -62,7 +65,7 @@ const Profile = () => {
       console.error(err);
     }
   };
-  if (data?.me) {
+  if (data?.me.profile) {
     return (
       <div>
         {Auth.loggedIn() ? (
@@ -80,21 +83,21 @@ const Profile = () => {
                       onChange={(e) => setAge(e.target.value)}
                     />
                   </FormControl>
-                  {/* <FormControl isRequired mb='20px'>
+                  <FormControl isRequired mb='20px'>
           <FormLabel>Birth Sex</FormLabel>
-          <RadioGroup onChange={(e) => setSex(e.target.checked)}>
+          <RadioGroup onChange={(e) => setSex(e.target.value)}>
           <HStack spacing='24px'>
-          Radio
-          value={sex}>
+          <Radio
+          value='Male'>
           Male
           </Radio>
           <Radio 
-          value={sex}>
+          value='Female'>
           Female
           </Radio>
-          <Hstack>
+          </HStack>
           </RadioGroup>
-          </FormControl> */}
+          </FormControl>
                   <FormControl isRequired mb="20px">
                     <FormLabel>Weight</FormLabel>
                     <Input

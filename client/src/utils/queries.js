@@ -57,6 +57,25 @@ export const QUERY_SINGLE_PROFILE = gql`
     }
 }
 `
+export const QUERY_ROUTINES = gql`
+  query allRoutines {
+    routines {
+      _id
+      title
+      routine
+    }
+  }
+`;
+
+export const QUERY_SINGLE_ROUTINE = gql`
+  query singleRoutine {
+    routine {
+      _id
+      title
+      routine
+    }
+  }
+`;
 
 export const QUERY_USER = gql`
   query user($username: String!) {
@@ -84,6 +103,11 @@ export const QUERY_USER = gql`
             height
             goalWeight
         }
+        routines {
+            _id
+            title
+            routine
+        }
       }
     }
   }
@@ -92,12 +116,36 @@ export const QUERY_USER = gql`
 export const QUERY_ME = gql`
   query me {
     me {
+      _id
+      username
+      email
+      posts {
         _id
-        age
-        sex
-        weight
-        height
-        goalWeight
+        title
+        text
+        author
+        createdAt
+        comments {
+          _id
+          commentText
+          comment
+          Author
+          createdAt
+        }
+        profile {
+          _id
+          age
+          sex
+          weight
+          height
+          goalWeight
+        }
+        routines {
+          _id
+          title
+          routine
+        }
+      }
     }
   }
 `;

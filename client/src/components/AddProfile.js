@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, Form } from 'react-router-dom';
 import { useMutation} from '@apollo/client';
-import { Box, FormControl, FormLabel, Input, FormHelperText, Button } from '@chakra-ui/react';
+import { Box, FormControl, FormLabel, Input, FormHelperText, Button, Radio, RadioGroup, HStack } from '@chakra-ui/react';
 
 import { ADD_PROFILE } from "../utils/mutations";
 
@@ -9,7 +9,7 @@ import Auth from '../utils/auth';
 
 const AddProfile = () => {
   const [newAge, setNewAge] = useState(' ');
-  // const [newSex, setNewSex] = useState(me.sex);
+  const [newSex, setNewSex] = useState(' ');
   const [newWeight, setNewWeight] = useState(' ');
   const [newHeight, setNewHeight] = useState(' ');
   const [newGoalWeight, setNewGoalWeight] = useState(' ');
@@ -20,7 +20,7 @@ const AddProfile = () => {
     e.preventDefault();
     try{
       const { data } = await addProfile({
-        variables: { newAge, newWeight, newHeight, newGoalWeight},
+        variables: { newAge, newSex, newWeight, newHeight, newGoalWeight},
       });
 
       window.location.reload();
@@ -44,21 +44,21 @@ const AddProfile = () => {
           onChange={(e) => setNewAge(e.target.value)}
           />
           </FormControl>
-          {/* <FormControl isRequired mb='20px'>
+          <FormControl isRequired mb='20px'>
           <FormLabel>Birth Sex</FormLabel>
-          <RadioGroup onChange={(e) => setNewSex(e.target.checked)}>
+          <RadioGroup onChange={(e) => setNewSex(e.target.value)}>
           <HStack spacing='24px'>
-          Radio
-          value={newSex}>
+          <Radio
+          value='Male'>
           Male
           </Radio>
           <Radio 
-          value={newSex}>
+          value='Female'>
           Female
           </Radio>
-          <Hstack>
+          </HStack>
           </RadioGroup>
-          </FormControl> */}
+          </FormControl>
           <FormControl isRequired mb='20px'>
           <FormLabel>Weight</FormLabel>
           <Input

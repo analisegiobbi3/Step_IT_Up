@@ -27,12 +27,14 @@ const Routine = () => {
   const [workout, setWorkout] = React.useState('')
   const [routine, setRoutine] = React.useState('')
   const [checkbox, setCheckbox] = React.useState(false);
+  const [routineName, setRoutineName] = useState(' ');
 
   const outlineRoutine = () => {
     const count = getValues('count');
     const rep = getValues('rep');
     const time = getValues('time');
     const unit = getValues('unit');
+
     if (!checkbox) {
       if (count !== '-') {
         let workoutDetail = workout + ': ' + rep + ' rep of ' + count
@@ -53,9 +55,15 @@ const Routine = () => {
     resetDetails();
   };
 
+  const addRDb = () => {
+    return(
+    console.log(routineName, routine)
+    )
+  };
+
   const addRoutine = (workoutDetail) => {
     if (!routine) {
-      setRoutine(workoutDetail)
+      setRoutine(workoutDetail);
     } else {
       setRoutine(routine + '\n' + workoutDetail)
     }
@@ -331,7 +339,7 @@ const Routine = () => {
                 <CardHeader pb='0'>
                   <Editable color='var(--shade6)' defaultValue='Click to Name the Routine'>
                     <EditablePreview />
-                    <EditableInput {...register('routineName', { required: true })} />
+                    <EditableInput onChange={(e) => {setRoutineName(e.target.value)}}{...register('routineName', { required: true })} />
                   </Editable>
                 </CardHeader>
                 <CardBody>
@@ -347,7 +355,7 @@ const Routine = () => {
 
           <ModalFooter justifyContent='space-between'>
             <Button colorScheme='gray' mr={3} onClick={onClose}>Close</Button>
-            <Button colorScheme='facebook'>Add Routine</Button>
+            <Button onClick={() => {addRDb()}} colorScheme='facebook'>Add Routine</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

@@ -31,7 +31,7 @@ const userSchema = new Schema({
       ref: 'Profile',
     },
   ],
-  routine: [
+  routines: [
     {
       type: Schema.Types.ObjectId,
       ref: 'Routine',
