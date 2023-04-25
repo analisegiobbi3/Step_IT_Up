@@ -1,23 +1,15 @@
-// import React from 'react';
-// import Header from '../components/Header';
-
-// export default function Home() {
-//   return (
-//     <>
-//         <Header />
-//     </>
-//   );
-// }
-
 // import package and local style sheet
 import React from 'react';
-import '../styles/Home.css';
+
+import {
+  Box, Image
+} from "@chakra-ui/react";
 
 export default function Home() {
   return (
-    <div className="home-page">
+    <Box height='fit-content'>
       {/* homepage with name display */}
-      <h1 className="appName">STEP IT UP</h1>
-    </div>
+      <Image boxSize='100vh' src='./animatedLogo.gif' alt='Step It Up' m='auto' pb='5vh'/>
+    </Box>
   );
 }

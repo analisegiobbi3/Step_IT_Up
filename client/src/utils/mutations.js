@@ -1,5 +1,55 @@
 import { gql } from '@apollo/client'
 
+export const ADD_USER = gql`
+  mutation addUser($username: String!, $email: String!, $password: String!) {
+    addUser(username: $username, email: $email, password: $password) {
+      token
+      user {
+        _id
+        username
+      }
+    }
+  }
+`;
+
+export const LOGIN_USER = gql`
+  mutation login($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      token
+      user {
+        _id
+        username
+      }
+
+    }
+  }
+`;
+
+export const ADD_PROFILE = gql`
+  mutation addProfile($newAge: Int!, $newSex: String!, $newWeight: Int!, $newHeight: Int!, $newGoalWeight: Int!) {
+    addProfile(age: $newAge, sex: $newSex, weight: $newWeight, height: $newHeight, goalWeight: $newGoalWeight) {
+        _id
+        age
+        sex
+        weight
+        height
+        goalWeight
+    }
+}
+`;
+
+export const UPDATE_PROFILE = gql`
+  mutation updateProfile($id: ID!, $age: Int!, $weight: Int!, $height: Int!, $goalWeight: Int!) {
+    updateProfile(id: $id, age: $age, weight: $weight, height: $height, goalWeight: $goalWeight) {
+      _id
+      age
+      weight
+      height
+      goalWeight
+    } 
+  }
+`;
+
 export const ADD_POST = gql`
     mutation addPost($title: String!, $text: String!){
         addPost(title: $title, text: $text){
@@ -58,20 +108,8 @@ export const REMOVE_POST = gql`
         _id
       }
     }
-`
+`;
 
-export const ADD_PROFILE = gql`
-  mutation addProfile($newAge: Int!, $newSex: String!, $newWeight: Int!, $newHeight: Int!, $newGoalWeight: Int!) {
-    addProfile(age: $newAge, sex: $newSex, weight: $newWeight, height: $newHeight, goalWeight: $newGoalWeight) {
-        _id
-        age
-        sex
-        weight
-        height
-        goalWeight
-    }
-}
-`
 export const ADD_ROUTINE = gql`
   mutation addRoutine(
     $title: String
@@ -84,47 +122,6 @@ export const ADD_ROUTINE = gql`
       _id
       title
       routine
-    }
-  }
-`;
-
-
-export const LOGIN_USER = gql`
-  mutation login($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-      token
-      user {
-        _id
-        username
-      }
-
-    }
-  }
-`;
-
-
-export const UPDATE_PROFILE = gql`
-  mutation updateProfile($id: ID!, $age: Int!, $weight: Int!, $height: Int!, $goalWeight: Int!) {
-    updateProfile(id: $id, age: $age, weight: $weight, height: $height, goalWeight: $goalWeight) {
-        _id
-        age
-        weight
-        height
-        goalWeight
-
-    }
-}
-`;
-
-export const ADD_USER = gql`
-  mutation addUser($username: String!, $email: String!, $password: String!) {
-    addUser(username: $username, email: $email, password: $password) {
-      token
-      user {
-        _id
-        username
-      }
-
     }
   }
 `;

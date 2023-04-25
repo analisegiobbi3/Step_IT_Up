@@ -10,6 +10,7 @@ import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
+import Blog from "./pages/Blog";
 import Calendar from "./pages/Calendar";
 import Tracker from "./pages/Tracker";
 import Routine from "./pages/Routine";
@@ -18,8 +19,8 @@ import ViewPost from "./pages/ViewPost";
 import Profile from "./pages/Profile";
 import Header from "./components/Header";
 import CreatePost from './pages/CreatePost'
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
+import Login from "./components/Login";
+// import Signup from "./pages/Signup";
 
 import './styles/Global.css';
 
@@ -58,7 +59,8 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} /> 
+              {/* <Route path="/signup" element={<Signup />} />  */}
+              <Route path="/blog" element={<Blog />} /> 
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/tracker" element={<Tracker />} />
               <Route path="/routine" element={<Routine />} />
