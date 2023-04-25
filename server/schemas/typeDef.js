@@ -12,6 +12,12 @@ const typeDef = gql`
     routines: [Routine]
   }
 
+  type Routine {
+    _id: ID
+    title: String
+    routine: String
+  }
+
   type Profile {
     _id: ID!
     username: String!
@@ -58,6 +64,7 @@ const typeDef = gql`
     users: [User]
     user(username: String!): User
     routine: Routine
+    routines: [Routine]
   }
 
   type Mutation {
@@ -83,7 +90,7 @@ const typeDef = gql`
       height: Int!
       goalWeight: Int!
     ): Profile
-    addRoutine: (title: String, routine: String): Routine
+    addRoutine(title: String, routine: String): Routine
   }
 `;
 
