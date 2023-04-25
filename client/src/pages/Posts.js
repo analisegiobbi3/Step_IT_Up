@@ -1,5 +1,7 @@
 import React from 'react'
-import CreatePost from './CreatePost'
+import { Button, Center } from '@chakra-ui/react'
+
+import { Link } from 'react-router-dom'
 
 import { useQuery } from '@apollo/client'
 
@@ -10,15 +12,17 @@ import { QUERY_POSTS } from '../utils/queries'
 const Posts = ({ handlePageChange }) => {
     const { loading, data } = useQuery(QUERY_POSTS)
     const posts = data?.posts || []
-    const createPost = () => {
-        return <CreatePost />
-    }
+
 
     return(
         <main>
-            <a href="#Post" onClick={createPost}>
-                <button>Post</button>
-            </a>
+            <Link to='/posts/addPost'>
+                <Center>
+                    <Button colorScheme='purple' variant='outline' align='center' mt={5}>
+                        Post!
+                    </Button>
+                </Center>
+            </Link>
             <div>
                 {loading ? (
                 <div>Loading...</div>

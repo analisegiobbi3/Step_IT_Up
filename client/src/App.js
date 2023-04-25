@@ -17,6 +17,7 @@ import Posts from "./pages/Posts";
 import ViewPost from "./pages/ViewPost";
 import Profile from "./pages/Profile";
 import Header from "./components/Header";
+import CreatePost from './pages/CreatePost'
 // import Login from "";
 // import Signup from "";
 
@@ -61,8 +62,8 @@ function App() {
               <Route path="/tracker" element={<Tracker />} />
               <Route path="/routine" element={<Routine />} />
               <Route path="/profile" element={<Profile />} />
-
               <Route path="/posts" element={<Posts />} /> 
+              <Route path="/posts/addPost" element={<CreatePost />} />
               <Route path="/posts/:postId" element={<ViewPost />} />
             </Routes>
           </div>
