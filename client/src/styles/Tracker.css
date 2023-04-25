@@ -1,21 +1,45 @@
-:root {
-    --shade1: #465892;
-    --shade2: #546DA6;
-    --shade3: #BBC1C6;
-    --shade4: #968EAF;
-    --shade5: #6D5593;
-    --shade6: #543D7B;
-    --trans:  #98755400;
-  }
-
 /* styling for the Routine page */
 .tracker-page {
-    height: 100vh;
+    min-height: 100vh;
+    height: fit-content;
     padding: 3vw;
-    font-family: 'Patrick Hand', cursive;
+    font-family: var(--font);
 }
 
-.tracker-page h2 {
+/* section titles */
+.tracker-page .css-tgwblw {
     color: var(--shade6);
-    font-family: 'Patrick Hand', cursive;
+    font-family: var(--font);
+}
+
+/* stat label */
+.tracker-page .css-14go5ty {
+    font-size: 2vw;
+}
+
+/* stat value */
+.tracker-page .css-1axeus7 {
+    font-size: 2.5vw;
+}
+
+/* stat caption */
+.tracker-page .css-1phhsu0 {
+    font-size: 1.5vw;
+}
+
+/* select dropdown */
+.tracker-page .css-atz6h4 {
+    background-color: var(--shade5);
+    color: white;
+}
+
+/* start & end date left caption */
+.tracker-page .css-qfq9qr {
+    background-color: var(--shade3);
+    color: white;
+}
+
+/* start & end date value */
+.tracker-page .css-b0j76j {
+    background-color: white;
 }

@@ -5,14 +5,14 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
 import {
-  Grid, GridItem, useDisclosure, Divider,
+  Grid, GridItem, Stack, StackDivider,
   Card, CardHeader, CardBody, CardFooter,
-  Heading, Stack, StackDivider, Box, Spacer,
-  Flex, Text, Button, IconButton, Checkbox,
+  Flex, Box, Divider, Spacer, Tooltip,
+  ButtonGroup, Button, IconButton,
+  Heading, Text, Input, Checkbox,
+  Editable, EditableInput, EditablePreview, useEditableControls,
   Drawer, DrawerBody, DrawerFooter, DrawerHeader,
-  DrawerOverlay, DrawerContent, DrawerCloseButton,
-  Editable, EditableInput, EditableTextarea, EditablePreview,
-  useEditableControls, EditableControls, Input, Tooltip, ButtonGroup,
+  DrawerOverlay, DrawerContent, useDisclosure,
 } from '@chakra-ui/react'
 
 import { FiCheck, FiX, FiEdit, FiPlusSquare, FiMinusSquare, FiExternalLink } from "react-icons/fi";
@@ -37,13 +37,13 @@ const CalendarPage = () => {
         <IconButton icon={<FiX />} {...getCancelButtonProps()} />
       </ButtonGroup>
     ) : (
-      <IconButton bg='var(--shade4)' color='white' ml='3' size='md' icon={<FiEdit />} {...getEditButtonProps()} />
+      <IconButton ml='3' size='md' icon={<FiEdit />} {...getEditButtonProps()} />
     )
   }
 
   return (
-    <Box>
-      <Grid className='calendar-page' templateColumns='repeat(10, 1fr)' gap={6}>
+    <Box className='calendar-page'>
+      <Grid templateColumns='repeat(10, 1fr)' gap={6}>
         <GridItem colSpan={5}>
           <div className="calendar">
             <div className='calendar-container'>
@@ -65,12 +65,12 @@ const CalendarPage = () => {
                     </Box>
                     <Spacer />
                     <Box>
-                      <IconButton bg='var(--shade4)' color='white' ml='3' size='md' icon={<FiPlusSquare />} onClick={onOpen} />
+                      <IconButton ml='3' size='md' icon={<FiPlusSquare />} onClick={onOpen} />
                     </Box>
                   </Flex>
                   {/* duplicate this section for routines */}
                   <Text fontSize='sm'>
-                    <IconButton variant='solid' colorScheme='facebook' aria-label='Remove Circle' size='sm' mr='5' icon={<FiMinusSquare />} />
+                    <IconButton variant='solid' aria-label='Remove Circle' size='sm' mr='5' icon={<FiMinusSquare />} />
                     <Checkbox size='lg' colorScheme='green'>
                       Routine 1
                     </Checkbox>
@@ -131,9 +131,9 @@ const CalendarPage = () => {
                   </Box>
                   <Box>
                     <Link to='/routine' >
-                    <Tooltip label='Add / Edit / View Routines' bg='var(--shade2)' color='white'>
-                      <IconButton bg='var(--shade4)' color='white' aria-label='Routine' icon={<FiExternalLink />} />
-                    </Tooltip>
+                      <Tooltip label='Add / Edit / View Routines'>
+                        <IconButton aria-label='Routine' bg='var(--shade1)' color='white' _hover={{ bg: 'var(--shade5)' }} icon={<FiExternalLink />} />
+                      </Tooltip>
                     </Link>
                   </Box>
                 </Flex>
@@ -141,7 +141,7 @@ const CalendarPage = () => {
                 <Checkbox>Routine 1</Checkbox>
                 <Checkbox>Routine 1</Checkbox>
                 <Checkbox>Routine 1</Checkbox>
-                <Divider borderWidth='3px' borderColor='black' />
+                <Divider borderWidth='3px' borderColor='var(--shade1)' />
                 <Text as='b' my='5'>Preview: </Text>
                 <Card>
                   <CardHeader>
@@ -151,7 +151,7 @@ const CalendarPage = () => {
                     <Text>View a summary of all your customers over the last month.</Text>
                   </CardBody>
                   <CardFooter>
-                    <Button>Delete</Button>
+                    <Button bg='var(--shade1)' color='white' _hover={{ bg: 'var(--shade5)' }}>Delete</Button>
                   </CardFooter>
                 </Card>
               </Stack>
@@ -161,7 +161,7 @@ const CalendarPage = () => {
             <Button variant='outline' mr={3} onClick={onClose}>
               Cancel
             </Button>
-            <Button colorScheme='facebook'>Add Routine(s)</Button>
+            <Button bg='var(--shade1)' color='white' _hover={{ bg: 'var(--shade5)' }}>Add Routine(s)</Button>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

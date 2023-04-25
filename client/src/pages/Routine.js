@@ -3,18 +3,15 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import {
-  SimpleGrid, Grid, GridItem, Box, Flex, Spacer,
-  Radio, RadioGroup, Stack, Checkbox, useToast,
-  Input, InputGroup, InputLeftAddon,
-  NumberInput, NumberInputField, NumberInputStepper,
-  NumberIncrementStepper, NumberDecrementStepper,
+  SimpleGrid, Stack, Flex, Box, Spacer, Divider,
+  Card, CardHeader, CardBody, CardFooter,
   Tabs, TabList, TabPanels, Tab, TabPanel,
-  Editable, EditableInput, EditableTextarea, EditablePreview,
-  Heading, Text, Textarea, Button, Select, Divider, Center,
-  Card, CardHeader, CardBody, CardFooter, useDisclosure,
+  Input, InputGroup, InputLeftAddon,
+  Editable, EditableInput, EditablePreview,
+  Radio, RadioGroup, Checkbox, Select,
   Modal, ModalOverlay, ModalContent, ModalHeader,
-  ModalFooter, ModalBody, ModalCloseButton,
-
+  ModalFooter, ModalBody, ModalCloseButton, useDisclosure,
+  Heading, Text, Button,
 } from '@chakra-ui/react'
 
 import '../styles/Routine.css';
@@ -44,7 +41,7 @@ const Routine = () => {
         addRoutine(workoutDetail)
       }
     } else {
-        if (count !== '-') {
+      if (count !== '-') {
         let workoutDetail = workout + ' (L): ' + rep + ' rep of ' + count + '\n' + workout + ' (R): ' + rep + ' rep of ' + count
         addRoutine(workoutDetail)
       } else {
@@ -56,8 +53,8 @@ const Routine = () => {
   };
 
   const addRDb = () => {
-    return(
-    console.log(routineName, routine)
+    return (
+      console.log(routineName, routine)
     )
   };
 
@@ -69,7 +66,7 @@ const Routine = () => {
     }
   };
 
-  const resetDetails = () => { 
+  const resetDetails = () => {
     setWorkout('');
     setValue('count', '')
     setValue('rep', '')
@@ -78,47 +75,62 @@ const Routine = () => {
   };
 
   return (
-    <div className='routine-page'>
+    <Box className='routine-page'>
       <Flex mb='5'>
         <Box>
-          <Heading>My Routines</Heading>
+          <Heading size='2xl'>My Routines</Heading>
         </Box>
         <Spacer />
         <Box>
           <Button onClick={onOpen} variant='solid' mb='5'>New Routine</Button>
         </Box>
       </Flex>
-      <SimpleGrid spacing={4} templateColumns='repeat(auto-fill, minmax(200px, 1fr))'>
+      <SimpleGrid spacing={6} templateColumns='repeat(auto-fill, minmax(200px, 1fr))'>
         {/* repeat this for routine map */}
-        <Card>
+        <Card size='lg'>
           <CardHeader>
-            <Heading size='md'>Routine 1</Heading>
+            <Heading size='lg'>Routine 1</Heading>
           </CardHeader>
-          <CardBody>
-            <Text>View a summary of all your customers over the last month.</Text>
+          <CardBody py='0'>
+            <Text>
+              Jump Squats: 3 rep of 15 {'\n'}
+              Jump Rope: 15 minute(s) {'\n'}
+              Side Plank (L): 2 minute(s) {'\n'}
+              Side Plank (R): 2 minute(s)
+            </Text>
           </CardBody>
           <CardFooter>
             <Button>Delete</Button>
           </CardFooter>
         </Card>
         {/* end of repeat */}
-        <Card>
+        <Card size='lg'>
           <CardHeader>
-            <Heading size='md'>Routine 2</Heading>
+            <Heading size='lg'>Routine 1</Heading>
           </CardHeader>
-          <CardBody>
-            <Text>View a summary of all your customers over the last month.</Text>
+          <CardBody py='0'>
+            <Text>
+              Jump Squats: 3 rep of 15 {'\n'}
+              Jump Rope: 15 minute(s) {'\n'}
+              Side Plank (L): 2 minute(s) {'\n'}
+              Side Plank (R): 2 minute(s)
+            </Text>
           </CardBody>
           <CardFooter>
             <Button>Delete</Button>
           </CardFooter>
         </Card>
-        <Card>
+        <Card size='lg'>
           <CardHeader>
-            <Heading size='md'>Routine 3</Heading>
+            <Heading size='lg'>Routine 1</Heading>
           </CardHeader>
-          <CardBody>
-            <Text>View a summary of all your customers over the last month.</Text>
+          <CardBody py='0'>
+            <Text>
+              Jump Squats: 3 rep of 15 {'\n'}
+              Jump Rope: 15 minute(s) {'\n'}
+              Side Plank (L): 2 minute(s) {'\n'}
+              Side Plank (R): 2 minute(s)
+            </Text>
           </CardBody>
           <CardFooter>
             <Button>Delete</Button>
@@ -300,10 +312,10 @@ const Routine = () => {
               <Text mb='5'>OR </Text>
               <Text as='b'>Create your own: </Text>
               <InputGroup my='3'>
-                <InputLeftAddon children='Workout' as='b' background='var(--shade4)' color='white' />
+                <InputLeftAddon as='b' bg='var(--shade4)' color='white'>Workout</InputLeftAddon>
                 <Input width='50%' placeholder='i.e. Breathe'
                   value={workout}
-                  onChange={(e) => {setWorkout(e.target.value)}}
+                  onChange={(e) => { setWorkout(e.target.value) }}
                 />
                 <Checkbox ml='5' isChecked={checkbox} onChange={(e) => setCheckbox(e.target.checked)}>Repeat for Left and Right</Checkbox>
               </InputGroup>
@@ -312,14 +324,14 @@ const Routine = () => {
 
               <Text as='b'>2. Enter the workout details: </Text>
               <InputGroup mt='3' onSubmit={() => { setValue('count', ''); setValue('rep', ''); setValue('time', '') }}>
-                <InputLeftAddon children='Count' as='b' background='var(--shade4)' color='white' />
+                <InputLeftAddon as='b' bg='var(--shade4)' color='white'>Count</InputLeftAddon>
                 <Input min={1} mr='3' width='30vw' onClick={() => { setValue('time', '-') }}
                   {...register('count', { required: false })} />
-                <InputLeftAddon children='Rep' as='b' background='var(--shade4)' color='white' />
+                <InputLeftAddon as='b' bg='var(--shade4)' color='white'>Rep</InputLeftAddon>
                 <Input min={1} width='30vw' onClick={() => { setValue('time', '-') }}
                   {...register('rep', { required: false })} />
                 <Text mx='5' my='auto'>OR</Text>
-                <InputLeftAddon children='Time' as='b' background='var(--shade4)' color='white' />
+                <InputLeftAddon as='b' bg='var(--shade4)' color='white'>Time</InputLeftAddon>
                 <Input min={1} width='30vw' onClick={() => { setValue('count', '-'); setValue('rep', '-'); }}
                   {...register('time', { required: false })} />
                 <Select mr='5' width='60vw'
@@ -328,8 +340,10 @@ const Routine = () => {
                   <option value='minute(s)'>minute(s)</option>
                   <option value='hour(s)'>hour(s)</option>
                 </Select>
-                <Button colorScheme='facebook' width='30vw'
-                  onClick={() => {outlineRoutine()}}>Add Workout</Button>
+                <Button width='30vw'
+                  bg='var(--shade1)' color='white'
+                  _hover={{ bg: 'var(--shade6)' }}
+                  onClick={() => { outlineRoutine() }}>Add Workout</Button>
               </InputGroup>
 
               <Divider borderWidth='3px' borderColor='black' my='5' />
@@ -339,14 +353,14 @@ const Routine = () => {
                 <CardHeader pb='0'>
                   <Editable color='var(--shade6)' defaultValue='Click to Name the Routine'>
                     <EditablePreview />
-                    <EditableInput onChange={(e) => {setRoutineName(e.target.value)}}{...register('routineName', { required: true })} />
+                    <EditableInput onChange={(e) => { setRoutineName(e.target.value) }}{...register('routineName', { required: true })} />
                   </Editable>
                 </CardHeader>
                 <CardBody>
                   <Text>{routine}</Text>
                 </CardBody>
                 <CardFooter>
-                  <Button onClick={() => {setRoutine(''); resetDetails()}}>Reset</Button>
+                  <Button onClick={() => { setRoutine(''); resetDetails() }} bg='var(--shade3)' color='white'>Reset</Button>
                 </CardFooter>
               </Card>
 
@@ -355,11 +369,11 @@ const Routine = () => {
 
           <ModalFooter justifyContent='space-between'>
             <Button colorScheme='gray' mr={3} onClick={onClose}>Close</Button>
-            <Button onClick={() => {addRDb()}} colorScheme='facebook'>Add Routine</Button>
+            <Button onClick={() => { addRDb() }} bg='var(--shade1)' color='white' _hover={{ bg: 'var(--shade6)' }}>Add Routine</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </div>
+    </Box>
   );
 }
 

@@ -1,27 +1,49 @@
 /* styling for the Routine page */
 .routine-page {
-    height: 100vh;
+    min-height: 100vh;
+    height: fit-content;
     padding: 3vw;
-    font-family: 'Patrick Hand', cursive;
+    font-family: var(--font);
 }
 
-.routine-page h2 {
-    color: var(--shade6);
-    font-family: 'Patrick Hand', cursive;
-}
-.css-wl0d9u {
-    font-family: 'Patrick Hand', cursive;
-    font-size: 1.5vw;
+/* page title */
+.routine-page .css-1jkx6l7 {
+    color: var(--shade1);
+    font-family: var(--font);
 }
 
-.css-qfq9qr {
+/* new routine button */
+.routine-page .css-1qyqv0q {
+    font-size: 2vw;
+    padding: 25px;
+    background-color: var(--shade1);
     color: white;
 }
 
-.css-1idwstw {
-    white-space: pre-line;
+/* new routine button */
+.routine-page .css-1qyqv0q:hover {
+    background-color: var(--shade5);
 }
 
-.css-1a7q9t8 {
-    justify-content: flex-end;
+/* routine card headers */
+.routine-page .css-1jb3vzl {
+    color: var(--shade5);
+    font-family: var(--font);
+}
+
+/* routine delete button */
+.routine-page .css-i857na {
+    background-color: var(--shade3);
+    color: white;
+}
+
+/* routine delete button */
+.routine-page .css-i857na:hover {
+    background-color: var(--shade2);
+    color: var(--shade6);
+}
+
+/* routine card body (to display new lines) */
+.routine-page .css-0 {
+    white-space: pre-line;
 }

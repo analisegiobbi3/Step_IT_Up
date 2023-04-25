@@ -1,0 +1,37 @@
+/* styling for the Routine page */
+.blog-page {
+    min-height: 100vh;
+    height: fit-content;
+    padding: 3vw;
+    font-family: var(--font);
+}
+
+/* page title */
+.blog-page .css-1jkx6l7 {
+    color: var(--shade1);
+    font-family: var(--font);
+}
+
+/* my post & create post buttons */
+.blog-page .css-1qyqv0q {
+    font-size: 2vw;
+    padding: 25px;
+    background-color: var(--shade1);
+    color: white;
+}
+
+/* my post & create post buttons */
+.blog-page .css-1qyqv0q:hover{
+    background-color: var(--shade5);
+}
+
+/* icon buttons */
+.blog-page .css-i857na, .blog-page .css-hb9wqp, .blog-page .css-esamib  {
+    background-color: var(--shade3);
+    color: white;
+}
+/* icon buttons */
+.blog-page .css-i857na:hover, .blog-page .css-hb9wqp:hover, .blog-page .css-esamib:hover {
+    background-color: var(--shade2);
+    color: var(--shade6);
+}

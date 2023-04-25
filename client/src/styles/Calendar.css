@@ -1,30 +1,32 @@
 /* styling for the Calendar page */
 .calendar-page {
-    height: 100vh;
+    min-height: 100vh;
+    height: fit-content;
     padding: 3vw;
 }
 
-.calendar-page h2 {
+/* date */
+.calendar-page .css-k3gghb {
     color: var(--shade6);
-    font-family: 'Patrick Hand', cursive;
+    font-family: var(--font);
 }
 
-.calendar-page .css-1dklj6k {
-    font-size: 3vw;
-    font-weight: normal;
+/* routine, calorie, and weight sub-headings */
+.calendar-page .css-tgwblw, .calendar-page .css-h0uhjz  {
+    color: var(--shade2);
+    font-family: var(--font);
 }
 
-.calendar-page .css-6klpau {
-    background-color: var(--shade4);
+/* add, delete, edit buttons */
+.calendar-page .css-1jfvl37, .calendar-page .css-81d84v {
+    background: var(--shade1);
+    color: white;
 }
 
-.calendar-page .css-ubdhuc {
-    background-color: var(--shade2);
+/* add, delete, edit buttons */
+.calendar-page .css-1jfvl37:hover, .calendar-page .css-81d84v:hover {
+    background: var(--shade5);
 }
-
-/* .css-17pwl6t {
-    font-family: 'Patrick Hand', cursive;
-} */
 
 .react-calendar {
     width: 100%;
@@ -32,7 +34,7 @@
     color: black;
     border-radius: 8px;
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-    font-family: 'Patrick Hand', cursive;
+    font-family: var(--font);
     font-size: 2.75vw;
     padding: 2vw;
 }
@@ -65,7 +67,7 @@ abbr[title] {
 }
 
 .react-calendar__month-view__days__day--weekend {
-    color: var(--shade2);
+    color: var(--shade4);
 }
 
 .react-calendar__tile:enabled:hover,
@@ -76,7 +78,7 @@ abbr[title] {
 }
 
 .react-calendar__tile--now {
-    background: #543d7b56;
+    background: var(--shade1);
     border-radius: 6px;
     font-weight: bold;
     color: white;

@@ -1,32 +1,52 @@
 :root {
-  --shade1: #465892;
-  --shade2: #546DA6;
-  --shade3: #BBC1C6;
-  --shade4: #968EAF;
-  --shade5: #6D5593;
-  --shade6: #543D7B;
+  --shade1: #e1bcba;
+  --shade2: #bdcfd2;
+  --shade3: #97989d;
+  --shade4: #778faf;
+  --shade5: #4d648f;
+  --shade6: #32496c;
   --trans:  #98755400;
+  --font: 'Pathway Gothic One', sans-serif;
 }
 
 /* import font used throughout pages */
-@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pathway+Gothic+One&display=swap');
 
 /* create background color transition/animation */
-@keyframes animatedBackground {
+/* @keyframes animatedBackground {
   0% { background-position: -0 85%; }
   100% { background-position: -1350px 85%; }
-}
+} */
 
 /* define transition gradient */
-@keyframes gradient {
+/* @keyframes gradient {
 0% { background-position: 50% 0%; }
 50% { background-position: 50% 100%; }
 100% { background-position: 50% 0%; }
-}
+} */
 
 .global {
-background: linear-gradient(0deg, var(--shade1), var(--shade4),  var(--shade6), white);
-background-size: 400% 400%;
-animation: gradient 15s ease infinite;
+background: linear-gradient(0deg, var(--shade1), var(--shade1), var(--shade4), var(--shade5),  var(--shade6), var(--shade6));
+background-size: 100% 100%;
+min-height: 100vh;
 height: fit-content;
+font-family: var(--font);
+cursor: url("../../public/weight.png") 35 10, auto;
+}
+
+/* global modal styles */
+/* modal */
+.css-wl0d9u {
+  font-family: var(--font);
+  font-size: 1.5vw;
+}
+
+/* card body (to display new lines) */
+.css-1idwstw {
+  white-space: pre-line;
+}
+
+/* modal footer */
+.css-1a7q9t8 {
+  justify-content: flex-end;
 }
