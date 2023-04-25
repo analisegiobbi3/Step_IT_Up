@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client'
-import { Textarea } from '@chakra-ui/react'
-
+import { Input, Button, Center, Textarea } from '@chakra-ui/react'
+import '../styles/CreatePost.css'
 
 import { ADD_COMMENT } from '../utils/mutations';
 import Auth from '../utils/auth'
@@ -39,27 +39,35 @@ const CreateComment= ({ postId }) => {
 
     return(
         <div>
-            <h2>Comment Below!</h2>
+            <h1>Comment Below!</h1>
             {Auth.loggedIn() ? (
                 <div>
                     <form onSubmit={handleFormSubmit}>
                         <div>
-                            <Textarea 
-                                placeholder='Type Comment Here!' 
-                                name="commentText"
-                                value={commentText}
-                                onChange={handleChange}
-                            />
+                            <Center>
+                                <Textarea 
+                                    placeholder='Type Comment Here!' 
+                                    name="commentText"
+                                    value={commentText}
+                                    onChange={handleChange}
+                                    size='md'
+                                    width='350px'
+                                />
+                            </Center>
                         </div>
                         <div>
-                            <button>Comment!</button>
+                            <Center>
+                                <Button type='submit' colorScheme='purple' variant='outline' size='md' mb={5} mt={5}>
+                                    Comment!
+                                </Button>
+                            </Center>
                         </div>
                     </form>
                 </div>
             ) : (
-                <p>
-                    You need to be logged in to Comment!
-                </p>
+            <p>
+                You need to be logged in to Comment!
+            </p>
             )}
         </div>
     )

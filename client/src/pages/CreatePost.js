@@ -5,14 +5,18 @@ import {
   InputGroup,
   InputLeftElement,
   Textarea,
+  Button,
+  Center,
 } from "@chakra-ui/react";
 import { BiDumbbell } from "react-icons/bi";
+import { StarIcon } from '@chakra-ui/icons'
 
 import { ADD_POST } from "../utils/mutations";
 //remember to add QUERY_ME when that is made
-import { QUERY_POSTS, QUERY_USER } from "../utils/queries";
+import { QUERY_POSTS, QUERY_ME } from "../utils/queries";
 
 import Auth from "../utils/auth";
+import '../styles/CreatePost.css'
 
 const CreatePost = () => {
   const [title, setTitle] = useState("");
@@ -31,10 +35,10 @@ const CreatePost = () => {
         console.error(error);
       }
 
-      const { user } = cache.readQuery({ query: QUERY_USER })
+      const { me } = cache.readQuery({ query: QUERY_ME })
       cache.writeQuery({
-        query: QUERY_USER,
-        data: { user: { ...user, posts: [...user.posts, addPost]}}
+        query: QUERY_ME,
+        data: { me: { ...me, posts: [...me.posts, addPost]}}
       });
     },
   });
@@ -69,31 +73,43 @@ const CreatePost = () => {
 
   return (
     <div>
-      <h2>Time to Step up and Post!</h2>
+      <h1>Time to Step up and Post!</h1>
       {Auth.loggedIn() ? (
         <div>
           <form onSubmit={handleFormSubmit}>
             <div>
-              <InputGroup>
-                <InputLeftElement pointerEvents="none" icon={<BiDumbbell />} />
+              <InputGroup size='md'>
+                <InputLeftElement pointerEvents="none" icon={<BiDumbbell />}/>
                 <Input
                   placeholder="Post Title"
                   name="title"
                   value={title}
                   onChange={handleChange}
+                  mr={10}
+                  ml={10}
+
                 />
               </InputGroup>
             </div>
             <div>
-              <Textarea
-                placeholder="Type Post Here!"
-                name="text"
-                value={text}
-                onChange={handleChange}
-              />
+              <InputGroup>
+                <Textarea
+                    placeholder="Type Post Here!"
+                    name="text"
+                    value={text}
+                    onChange={handleChange}
+                    mt={5}
+                    mr={10}
+                    ml={10}
+                  />
+              </InputGroup> 
             </div>
             <div>
-              <button>Post!</button>
+              <Center>
+                <Button type='submit' colorScheme='purple' variant='outline' size='lg' mb={5} mt={5} ml={10} icon={<StarIcon />}>
+                    Post!
+                </Button>
+              </Center>
             </div>
           </form>
         </div>
