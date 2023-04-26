@@ -39,8 +39,8 @@ export const ADD_PROFILE = gql`
 `;
 
 export const UPDATE_PROFILE = gql`
-  mutation updateProfile($id: ID!, $age: Int!, $weight: Int!, $height: Int!, $goalWeight: Int!) {
-    updateProfile(id: $id, age: $age, weight: $weight, height: $height, goalWeight: $goalWeight) {
+  mutation updateProfile($profileId: ID!, $age: Int!, $weight: Int!, $height: Int!, $goalWeight: Int!) {
+    updateProfile(profileId: $profileId, age: $age, weight: $weight, height: $height, goalWeight: $goalWeight) {
       _id
       age
       weight

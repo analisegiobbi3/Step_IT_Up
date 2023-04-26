@@ -8,7 +8,7 @@ const typeDef = gql`
     email: String
     password: String
     posts: [Post]
-    profile: [Profile]
+    profile: Profile
     routines: [Routine]
   }
 
@@ -83,7 +83,7 @@ const typeDef = gql`
       goalWeight: Int!
     ): Profile
     updateProfile(
-      id: ID!
+      profileId: ID!
       age: Int!
       weight: Int!
       height: Int!
