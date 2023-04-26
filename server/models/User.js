@@ -25,12 +25,11 @@ const userSchema = new Schema({
       ref: 'Post',
     },
   ],
-  profile: [
+  profile: 
     {
       type: Schema.Types.ObjectId,
       ref: 'Profile',
     },
-  ],
   routines: [
     {
       type: Schema.Types.ObjectId,

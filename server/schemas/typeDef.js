@@ -1,7 +1,6 @@
 const { gql } = require('apollo-server-express')
 
 const typeDef = gql`
-
   type User {
     _id: ID
     username: String
@@ -10,6 +9,25 @@ const typeDef = gql`
     posts: [Post]
     profile: Profile
     routines: [Routine]
+  }
+
+  type RoutineSchedule {
+    _id: ID
+    date: String
+    routine: String
+    complete: Boolean
+  }
+
+  type WeightSchedule {
+    _id: ID
+    date: String
+    weight: Int
+  }
+
+  type CalorieSchedule {
+    _id: ID
+    date: String
+    calorie: Int
   }
 
   type Routine {
@@ -65,12 +83,20 @@ const typeDef = gql`
     user(username: String!): User
     routine: Routine
     routines: [Routine]
+    routineSchedule: RoutineSchedule
+    routineSchedules: [RoutineSchedule]
+    weightSchedule: WeightSchedule
+    weightSchedules: [WeightSchedule]
+    calorieSchedule: CalorieSchedule
+    calorieSchedules: [CalorieSchedule]
   }
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     addPost(title: String!, text: String!): Post
+    addLike(postID: ID!, likes: ID): Post
+    removeLike(postID: ID!, likes: ID): Post
     addComment(postId: ID!, commentText: String!): Post
     editPost(postId: ID!, title: String!, text: String!): Post
     removePost(postId: ID!): Post
@@ -90,6 +116,15 @@ const typeDef = gql`
       goalWeight: Int!
     ): Profile
     addRoutine(title: String, routine: String): Routine
+    addRoutineSchedule(date: String!, routine: String!): RoutineSchedule
+    updateRoutineSchedule(routineID: ID!, routine: String!): RoutineSchedule
+    removeRoutineSchedule(routineID: ID): RoutineSchedule
+    addWeightSchedule(date: String!, weight: Int!): WeightSchedule
+    updateWeightSchedule(weightID: ID!, weight: String!): WeightSchedule
+    removeWeightSchedule(weightID: ID): WeightSchedule
+    addCalorieSchedule(date: String!, calorie: Int!): CalorieSchedule
+    updateCalorieSchedule(calorieID: ID!, calorie: String!): CalorieSchedule
+    removeCalorieSchedule(calorieID: ID): CalorieSchedule
   }
 `;
 
