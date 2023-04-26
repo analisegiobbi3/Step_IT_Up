@@ -1,6 +1,6 @@
 // import package and local style sheet
 import React, { useState } from "react";
-import { Link, Form } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import AddProfile from "../components/AddProfile";
 import {
@@ -57,7 +57,7 @@ const Profile = () => {
     e.preventDefault();
     try {
       const { data } = await updateProfile({
-        variables: { age, sex, weight, height, goalWeight },
+        variables: { age, weight, height, goalWeight },
       });
 
       window.location.reload();
@@ -73,19 +73,18 @@ const Profile = () => {
             {loading ? (
               <div>Loading....</div>
             ) : (
-              <Box maxW="480px">
-                <Form onSubmit={handleFormSubmit}>
-                  <FormControl isRequired mb="20px">
-                    <FormLabel>Age</FormLabel>
-                    <Input
-                      value={age}
-                      className="form-input"
-                      onChange={(e) => setAge(e.target.value)}
-                    />
-                  </FormControl>
-                  <FormControl isRequired mb='20px'>
-          <FormLabel>Birth Sex</FormLabel>
-          <RadioGroup onChange={(e) => setSex(e.target.value)}>
+              // <Box maxW="480px">
+              <form onSubmit={handleFormSubmit}>
+                <label>Age</label>
+                <input
+                  type="number"
+                  defaultValue={age}
+                  value={age}
+                  className="form-input"
+                  onChange={(e) => setAge(parseInt(e.target.value))}
+                />
+                <label>Birth Sex</label>
+                {/* <RadioGroup onChange={(e) => setSex(e.target.value)}>
           <HStack spacing='24px'>
           <Radio
           value='Male'>
@@ -96,46 +95,40 @@ const Profile = () => {
           Female
           </Radio>
           </HStack>
-          </RadioGroup>
-          </FormControl>
-                  <FormControl isRequired mb="20px">
-                    <FormLabel>Weight</FormLabel>
-                    <Input
-                      value={weight}
-                      className="form-input"
-                      onChange={(e) => setWeight(e.target.value)}
-                    />
-                  </FormControl>
-                  <FormControl isRequired mb="20px">
-                    <FormLabel>Height</FormLabel>
-                    <Input
-                      value={height}
-                      className="form-input"
-                      onChange={(e) => setHeight(e.target.value)}
-                    />
-                  </FormControl>
-                  <FormControl isRequired mb="20px">
-                    <FormLabel>Goal Weight</FormLabel>
-                    <FormHelperText>
+          </RadioGroup> */}
+                <label>Weight</label>
+                <input
+                  defaultValue={weight}
+                  value={weight}
+                  className="form-input"
+                  onChange={(e) => setWeight(parseInt(e.target.value))}
+                />
+                <label>Height</label>
+                <input
+                  defaultValue={height}
+                  value={height}
+                  className="form-input"
+                  onChange={(e) => setHeight(parseInt(e.target.value))}
+                />
+                <label>Goal Weight</label>
+                {/* <FormHelperText>
                       If you are working on maintenance, you can enter your
                       current weight here to help us personalise your experience
                       on this app.
-                    </FormHelperText>
-                    <Input
-                      value={goalWeight}
-                      className="form-input"
-                      onChange={(e) => setGoalWeight(e.target.value)}
-                    />
-                  </FormControl>
+                    </FormHelperText> */}
+                <input
+                  defaultValue={goalWeight}
+                  value={goalWeight}
+                  className="form-input"
+                  onChange={(e) => setGoalWeight(parseInt(e.target.value))}
+                />
 
-                  <div className="button">
-                    <Button type="submit">save changes</Button>
-                  </div>
-                  {error && (
-                    <div className="danger">Something went wrong..</div>
-                  )}
-                </Form>
-              </Box>
+                <div className="button">
+                  <button type="submit">save changes</button>
+                </div>
+                {error && <div className="danger">Something went wrong..</div>}
+              </form>
+              // </Box>
             )}
           </>
         ) : (

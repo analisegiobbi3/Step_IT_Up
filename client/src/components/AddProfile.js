@@ -18,6 +18,8 @@ const AddProfile = () => {
 
     const handleFormSubmit = async (e) => {
     e.preventDefault();
+    console.log(newAge, newGoalWeight, newSex, newWeight, newHeight);
+
     try{
       const { data } = await addProfile({
         variables: { newAge, newSex, newWeight, newHeight, newGoalWeight},
@@ -28,25 +30,23 @@ const AddProfile = () => {
       console.error(err);
     }
   }
-    return ( 
+    return (
       <div>
         {Auth.loggedIn() ? (
           <>
-          <Box maxW='480px'>
-            <Form
-        onSubmit={handleFormSubmit}
-      >
-        <FormControl isRequired mb='20px'>
-          <FormLabel>Age</FormLabel>
-          <Input 
-          value={newAge}
-          className = 'form-input'
-          onChange={(e) => setNewAge(e.target.value)}
-          />
-          </FormControl>
-          <FormControl isRequired mb='20px'>
-          <FormLabel>Birth Sex</FormLabel>
-          <RadioGroup onChange={(e) => setNewSex(e.target.value)}>
+            {/* <Box maxW='480px'> */}
+            <form onSubmit={handleFormSubmit}>
+              {/* <FormControl isRequired mb='20px'> */}
+              <label>Age</label>
+              <input
+                value={newAge}
+                className="form-input"
+                onChange={(e) => setNewAge(parseInt(e.target.value))}
+              />
+              {/* </FormControl> */}
+              {/* <FormControl isRequired mb='20px'> */}
+              <label>Birth Sex</label>
+              {/* <RadioGroup onChange={(e) => setNewSex(e.target.value)}>
           <HStack spacing='24px'>
           <Radio
           value='Male'>
@@ -57,53 +57,55 @@ const AddProfile = () => {
           Female
           </Radio>
           </HStack>
-          </RadioGroup>
-          </FormControl>
-          <FormControl isRequired mb='20px'>
-          <FormLabel>Weight</FormLabel>
-          <Input
-          value={newWeight}
-          className='form-input'
-          onChange={(e) => setNewWeight(e.target.value)}
-          />
-          </FormControl>
-          <FormControl isRequired mb='20px'>
-          <FormLabel>Height</FormLabel>
-          <Input 
-          value={newHeight}
-          className='form-input'
-          onChange={(e) => setNewHeight(e.target.value)}
-          />
-          </FormControl>
-          <FormControl isRequired mb='20px'>
-          <FormLabel>Goal Weight</FormLabel>
-          <FormHelperText>If you are working on maintenance, you can enter your current weight here
-            to help us personalise your experience on this app.</FormHelperText>
-          <Input
-          value={newGoalWeight}
-          className='form-input'
-          onChange={(e) => setNewGoalWeight(e.target.value)}
-          />
-          </FormControl>
+          </RadioGroup> */}
+              {/* </FormControl> */}
+              {/* <FormControl isRequired mb='20px'> */}
+              <input
+                value={newSex}
+                className="form-input"
+                onChange={(e) => setNewSex(e.target.value)}
+              />
+              <label>Weight</label>
+              <input
+                value={newWeight}
+                className="form-input"
+                onChange={(e) => setNewWeight(parseInt(e.target.value))}
+              />
+              {/* </FormControl> */}
+              {/* <FormControl isRequired mb='20px'> */}
+              <label>Height</label>
+              <input
+                value={newHeight}
+                className="form-input"
+                onChange={(e) => setNewHeight(parseInt(e.target.value))}
+              />
+              {/* </FormControl> */}
+              {/* <FormControl isRequired mb='20px'> */}
+              <label>Goal Weight</label>
+              {/* <FormHelperText>If you are working on maintenance, you can enter your current weight here
+            to help us personalise your experience on this app.</FormHelperText> */}
+              <input
+                value={newGoalWeight}
+                className="form-input"
+                onChange={(e) => setNewGoalWeight(parseInt(e.target.value))}
+              />
+              {/* </FormControl> */}
 
-        <div className='button'>
-          <Button type="submit">save changes</Button>
-        </div>
-        {error && (
-          <div className='danger'>
-            Something went wrong..
-          </div>
-        )}
-      </Form>
-      </Box>
-          </>) : (
+              <div className="button">
+                <button type="submit">save changes</button>
+              </div>
+              {error && <div className="danger">Something went wrong..</div>}
+            </form>
+            {/* </Box> */}
+          </>
+        ) : (
           <p>
-            You need to be logged in to view your profile. Please {' '}
-            <Link to='/login'>login</Link> or <Link to="/signup">signup.</Link>
-            </p>
+            You need to be logged in to view your profile. Please{" "}
+            <Link to="/login">login</Link> or <Link to="/signup">signup.</Link>
+          </p>
         )}
       </div>
-    )
+    );
 
  
   };

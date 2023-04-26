@@ -23,7 +23,7 @@ export const QUERY_USER_POST = gql`
             comments {
                 _id
                 commentText
-                comment Author
+                commentAuthor
                 createdAt
             }
         }
@@ -92,9 +92,10 @@ export const QUERY_USER = gql`
             comments {
                 _id
                 commentText
-                comment Author
+                commentAuthor
                 createdAt
             }
+      }
         profile {
             _id
             age
@@ -110,7 +111,6 @@ export const QUERY_USER = gql`
         }
       }
     }
-  }
 `;
 
 export const QUERY_ME = gql`
@@ -128,10 +128,10 @@ export const QUERY_ME = gql`
         comments {
           _id
           commentText
-          comment
-          Author
+          commentAuthor
           createdAt
         }
+      }
         profile {
           _id
           age
@@ -147,6 +147,5 @@ export const QUERY_ME = gql`
         }
       }
     }
-  }
 `;
 
