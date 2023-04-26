@@ -2,3 +2,8 @@
 .login-modal {
     font-family: var(--font);
 }
+
+
+.login-modal input {
+    border-color: var(--shade1);
+}
