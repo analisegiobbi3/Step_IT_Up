@@ -37,6 +37,24 @@ const userSchema = new Schema({
       ref: 'Routine',
     },
   ],
+  routineSchedule: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'RoutineSchedule',
+    },
+  ],
+  weightSchedule: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'WeightSchedule',
+    },
+  ],
+  calorieSchedule: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'CalorieSchedule',
+    },
+  ],
 });
 
 userSchema.pre('save', async function (next) {

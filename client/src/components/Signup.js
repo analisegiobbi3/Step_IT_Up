@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom'
 
 import { useMutation } from '@apollo/client';
-import { LOGIN_USER } from "../utils/mutations";
+import { ADD_USER } from "../utils/mutations";
 
 import Auth from '../utils/auth';
 
@@ -15,14 +15,19 @@ import {
   Tabs, TabList, TabPanels, Tab, TabPanel,
 } from '@chakra-ui/react'
 
-import { FiMail, FiLock, FiUnlock } from "react-icons/fi";
+import { FiUser, FiMail, FiLock, FiUnlock } from "react-icons/fi";
 
 import '../styles/LoginSignup.css';
 
-const Login = () => {
+const Signup = () => {
 
-  const [formState, setFormState] = useState({ email: "", password: "" });
-  const [login, { error, data }] = useMutation(LOGIN_USER);
+  const [formState, setFormState] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+
+  const [addUser, { error, data }] = useMutation(ADD_USER);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -38,33 +43,28 @@ const Login = () => {
     console.log(formState);
 
     try {
-      const { data } = await login({
+      const { data } = await addUser({
         variables: { ...formState },
       });
 
-      Auth.login(data.login.token);
+      Auth.login(data.addUser.token);
     } catch (e) {
       console.error(e);
     }
-
-    setFormState({
-      email: "",
-      password: "",
-    });
   };
 
   const { isOpen } = useDisclosure({ defaultIsOpen: true })
   const navigate = useNavigate();
   const returnToHome = () => navigate('/');
-  const redirectSignup = () => navigate('/signup');
+  const redirectLogin = () => navigate('/login');
   const [show, setShow] = React.useState(false)
 
   return (
-    <Box className="login-modal">
+    <Box className="signup-modal">
       <Modal isOpen={isOpen} onClose={returnToHome}>
         <ModalOverlay />
         <ModalContent>
-          <Tabs isFitted variant="enclosed" defaultIndex={0}>
+          <Tabs isFitted variant="enclosed" defaultIndex={1}>
             <ModalHeader>
               <TabList mr="10">
                 <Tab
@@ -73,6 +73,7 @@ const Login = () => {
                     bg: "var(--shade2)",
                     fontWeight: "bold",
                   }}
+                  onClick={redirectLogin}
                 >
                   Login
                 </Tab>
@@ -82,7 +83,6 @@ const Login = () => {
                     bg: "var(--shade2)",
                     fontWeight: "bold",
                   }}
-                  onClick={redirectSignup}
                 >
                   Signup
                 </Tab>
@@ -90,6 +90,9 @@ const Login = () => {
             </ModalHeader>
             <ModalCloseButton />
             <TabPanels>
+              <TabPanel>
+
+              </TabPanel>
               <TabPanel>
                 {data ? (
                   <p>
@@ -100,7 +103,30 @@ const Login = () => {
                   <form onSubmit={handleFormSubmit}>
                     <ModalBody>
                       <FormControl isRequired>
-                        <InputGroup mb="5" borderWidth='1px' borderColor='var(--shade5)' borderRadius='10'>
+                        <InputGroup borderWidth='1px' borderColor='var(--shade5)' borderRadius='10'>
+                          <InputLeftAddon
+                            width="35%"
+                            bg="var(--shade5)"
+                            color="white"
+                            mr='3'
+                          >
+                            <span style={{ color: "red", marginRight: "0.5rem" }}>
+                              *
+                            </span>
+                            Username
+                          </InputLeftAddon>
+                          <input
+                            type="name"
+                            name="username"
+                            // id="signup-username"
+                            value={formState.name}
+                            onChange={handleChange}
+                          />
+                          <InputRightElement>
+                            <FiUser />
+                          </InputRightElement>
+                        </InputGroup>
+                        <InputGroup my="5" borderWidth='1px' borderColor='var(--shade5)' borderRadius='10'>
                           <InputLeftAddon
                             width="35%"
                             bg="var(--shade5)"
@@ -115,7 +141,7 @@ const Login = () => {
                           <input
                             type="email"
                             name="email"
-                            // id="login-email"
+                            // id="signup-email"
                             value={formState.email}
                             onChange={handleChange}
                           />
@@ -138,7 +164,7 @@ const Login = () => {
                           <input
                             type={show ? "text" : "password"}
                             name="password"
-                            // id="login-password"
+                            // id="signup-password"
                             value={formState.password}
                             onChange={handleChange}
                           />
@@ -173,7 +199,7 @@ const Login = () => {
                         color="white"
                         _hover={{ bg: "var(--shade2)", color: "var(--shade6)" }}
                       >
-                        Login
+                        Signup
                       </Button>
                     </ModalFooter>
                   </form>
@@ -185,9 +211,6 @@ const Login = () => {
                   </Box>
                 )}
               </TabPanel>
-              <TabPanel>
-
-              </TabPanel>
             </TabPanels>
           </Tabs>
         </ModalContent>
@@ -196,4 +219,4 @@ const Login = () => {
   );
 }
 
-export default Login;
+export default Signup;
