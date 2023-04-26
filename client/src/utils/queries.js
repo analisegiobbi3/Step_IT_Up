@@ -7,6 +7,7 @@ export const QUERY_POSTS = gql`
             title
             text
             author
+            likes
             createdAt
         }
     }
@@ -19,11 +20,12 @@ export const QUERY_USER_POST = gql`
             title
             text
             author
+            likes
             createdAt
             comments {
                 _id
                 commentText
-                comment Author
+                commentAuthor
                 createdAt
             }
         }

@@ -28,7 +28,7 @@ const resolvers = {
       return Post.find().sort({ createAt: -1 });
     },
     post: async (parent, { postId }) => {
-      return Post.fineOne({ _id: postId });
+      return Post.findOne({ _id: postId });
     },
     me: async (parent, args, context) => {
       if (context.user) {
@@ -69,12 +69,11 @@ const resolvers = {
     },
     addProfile: async (
       parent,
-      { username, age, sex, weight, height, goalWeight },
+      { age, sex, weight, height, goalWeight },
       context
     ) => {
       if (context.user) {
         return await Profile.create({
-          username,
           age,
           sex,
           weight,
@@ -130,6 +129,19 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in to comment!");
     },
+    addLike: async(parent, { postId, userId }, context) => {
+        if(context.user) {
+            return Post.findOneAndUpdate(
+                { _id: postId },
+                {
+                    $addToSet: {
+                        likes: { userId }
+                    }
+                },
+                { new: true, runValidators: true }
+            )
+        }
+    },
     editPost: async (parent, { postId, title, text }, context) => {
       if (context.user) {
         return Post.findOneAndUpdate(
@@ -154,6 +166,16 @@ const resolvers = {
       throw new AuthenticationError(
         "You need to be logged in to delete a post!"
       );
+    },
+    removeLike: async (parent, { postId, userId }, context) => {
+        if (context.user) {
+            return Post.findByIdAndUpdate(
+                { _id: postId },
+                { $pull: { likes: { _id: userId }}},
+                { new: true }
+            )
+
+        }
     },
     removeComment: async (parent, { postId, commentId }, context) => {
       if (context.user) {
