@@ -25,6 +25,12 @@ const postSchema = new Schema(
             default: Date.now,
             get: (timestamp) => dateFormat(timestamp),
         },
+        likes: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'User',
+            }
+        ],
         comments: [
             {
                 commentText: {

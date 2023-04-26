@@ -85,6 +85,21 @@ export const ADD_COMMENT = gql`
     }
 `
 
+export const ADD_LIKE = gql`
+    mutation addLike($postId: ID!, $userId: ID!){
+      addLike(postId: $postId, userId: $userId){
+        _id
+      }
+    }
+`
+export const REMOVE_LIKE = gql`
+    mutation removeLike($userId: ID){
+      removePost(userId: $userId){
+        _id
+      }
+    }
+`;
+
 // export const REMOVE_COMMENT = gql`
 //     mutation removeComment($commentId: ID){
 //       removeComment(commentId: $commentId){

@@ -20,7 +20,6 @@ const typeDef = gql`
 
   type Profile {
     _id: ID!
-    username: String!
     age: Int!
     sex: String!
     weight: Int!
@@ -35,6 +34,7 @@ const typeDef = gql`
     author: String
     createdAt: String
     comments: [Comment]!
+    likes: [User]!
   }
 
   type Comment {
@@ -76,7 +76,6 @@ const typeDef = gql`
     removePost(postId: ID!): Post
     removeComment(postId: ID!, commentId: ID!): Post
     addProfile(
-      username: String!
       age: Int!
       sex: String!
       weight: Int!
