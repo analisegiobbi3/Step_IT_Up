@@ -86,12 +86,12 @@ const resolvers = {
     },
     updateProfile: async (
       parent,
-      { id, age, weight, height, goalWeight },
+      { profileId, age, weight, height, goalWeight },
       context
     ) => {
       if (context.user) {
         return await Profile.findOneAndUpdate(
-          { _id: id },
+          { _id: profileId },
           { age },
           { weight },
           { height },
