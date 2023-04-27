@@ -21,6 +21,7 @@ import CreateRoutine from "./components/CreateRoutine";
 import Profile from "./pages/Profile";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import Playlists from "./pages/Playlists"
 
 import './styles/Global.css';
 
