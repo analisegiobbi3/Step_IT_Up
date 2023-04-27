@@ -1,31 +1,24 @@
 // import package and local style sheet
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Link } from 'react-router-dom'
+import { useQuery } from '@apollo/client';
+
+import { QUERY_POSTS } from '../utils/queries';
+import Posts from '../components/Posts';
 
 import {
-  Accordion, AccordionItem, AccordionButton,
-  AccordionPanel, AccordionIcon,
-  SimpleGrid, Grid, GridItem, Box, Flex, Spacer, IconButton,
-  Radio, RadioGroup, Stack, Checkbox, useToast,
-  Input, InputGroup, InputLeftAddon,
-  Heading, Text, Textarea, Button, 
-  Card, CardHeader, CardBody, CardFooter, useDisclosure,
-  Modal, ModalOverlay, ModalContent, ModalHeader,
-  ModalFooter, ModalBody, ModalCloseButton,
-  ButtonGroup,
-
-
+  Box, Flex, Spacer, Stack, Heading, Button, Spinner,
 } from '@chakra-ui/react'
-
-import { AiOutlineLike, AiFillLike } from "react-icons/ai";
-import { BiCommentAdd } from "react-icons/bi";
-import { FiCheck, FiX, FiMinusSquare } from "react-icons/fi";
 
 import '../styles/Blog.css';
 
 const Blog = () => {
 
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [filter, setFilter] = useState(false);
+  const { loading, data } = useQuery(QUERY_POSTS);
+  const posts = data?.posts || [];
+
+  // Auth.getProfile().data.username,
 
   return (
     <Box className='blog-page'>
@@ -35,138 +28,27 @@ const Blog = () => {
         </Box>
         <Spacer />
         <Box mr='5'>
-          <Button variant='solid' mb='5'>My Posts</Button>
+          {filter ?
+            <Button variant='solid' mb='5' bg='var(--shade5)' onClick={() => setFilter(!filter)}>My Posts</Button>
+            :
+            <Button variant='solid' mb='5' bg='var(--shade1)' onClick={() => setFilter(!filter)}>My Posts</Button>
+          }
         </Box>
         <Box>
-          <Button onClick={onOpen} variant='solid' mb='5'>Create Post</Button>
+          <Button variant='solid' mb='5' bg='var(--shade1)'><Link to="/posts/createPost">Create Post</Link></Button>
         </Box>
       </Flex>
       <Stack>
-        {/* repeat for blog map */}
-        <Card size='lg' mb='5'>
-          <CardHeader display='flex' justifyContent='space-between' alignItems='center'>
-            <Heading size='lg'>Blog Topic</Heading>
-            <Button>Delete (only visible if user matches)</Button>
-          </CardHeader>
-          <CardBody py='0'>
-            <Text white-space='pre-line'>Blog content</Text>
-          </CardBody>
-          <CardFooter justifyContent='space-between' alignItems='center'>
-            <Text>Username, created Date</Text>
-            <Spacer />
-            <IconButton variant='ghost' mr='2' size='lg' _hover={{ bg: 'var(--shade5)' , color: 'white'}} icon={<AiOutlineLike />} />
-            <Text>#like</Text>
-          </CardFooter>
-          <Accordion allowMultiple>
-            <AccordionItem>
-              <h2>
-                <AccordionButton _expanded={{ bg: 'var(--shade2)', color: 'white' }}>
-                  <Box as="span" flex='1' textAlign='right' pr='2'>
-                    View Comments
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pl='6'>
-                {/* repeat for comments */}
-                <Flex justifyContent='space-between' alignItems='center' mb='2'>
-                  <Text>comment 1</Text>
-                  <Spacer />
-                  <Text>username, created date</Text>
-                  <IconButton ml='2' size='sm' icon={<FiMinusSquare />} onClick={onOpen} />
-                </Flex>
-                {/* end of repeat for comments */}
-                <Flex justifyContent='space-between' alignItems='center' mb='2'>
-                  <Text>comment 1</Text>
-                  <Spacer />
-                  <Text>username, created date</Text>
-                  <IconButton ml='2' size='sm' icon={<FiMinusSquare />} onClick={onOpen} />
-                </Flex>
-              </AccordionPanel>
-            </AccordionItem>
-            <AccordionItem>
-                <h2>
-                  <Flex alignItems='center'>
-                  <AccordionButton _expanded={{ bg: 'var(--shade4)', color: 'white' }} >
-                    <Box as="span" flex='1' textAlign='right' pr='2'>Add Comment</Box><BiCommentAdd />
-                  </AccordionButton>
-                  </Flex>
-                </h2>
-                <AccordionPanel pb={4} pl='6'>
-                  <Flex alignItems='center'>
-                    <Input mr='2' placeholder='click to add comments'/>
-                    <ButtonGroup justifyContent='center' size='sm' ml='2'>
-                      <IconButton icon={<FiCheck />} />
-                      <IconButton icon={<FiX />} />
-                    </ButtonGroup>
-                  </Flex>
-                </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-        </Card>
-        {/* end of repeat for blog */}
-        
-        <Card size='lg' mb='5'>
-          <CardHeader display='flex' justifyContent='space-between' alignItems='center'>
-            <Heading size='lg'>Another Topic</Heading>
-            <Button>Delete (only visible if user matches)</Button>
-          </CardHeader>
-          <CardBody py='0'>
-            <Text white-space='pre-line'>Blog content</Text>
-          </CardBody>
-          <CardFooter justifyContent='space-between' alignItems='center'>
-            <Text>Username, created Date</Text>
-            <Spacer />
-            <IconButton variant='ghost' mr='2' size='lg' _hover={{ bg: 'var(--shade5)' , color: 'white'}} icon={<AiOutlineLike />} />
-            <Text>#like</Text>
-          </CardFooter>
-          <Accordion allowMultiple>
-            <AccordionItem>
-              <h2>
-                <AccordionButton _expanded={{ bg: 'var(--shade2)', color: 'white' }}>
-                  <Box as="span" flex='1' textAlign='right' pr='2'>
-                    View Comments
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
-              <AccordionPanel pl='6'>
-                {/* repeat for comments */}
-                <Flex justifyContent='space-between' alignItems='center' mb='2'>
-                  <Text>comment 1</Text>
-                  <Spacer />
-                  <Text>username, created date</Text>
-                  <IconButton ml='2' size='sm' icon={<FiMinusSquare />} onClick={onOpen} />
-                </Flex>
-                {/* end of repeat for comments */}
-                <Flex justifyContent='space-between' alignItems='center' mb='2'>
-                  <Text>comment 1</Text>
-                  <Spacer />
-                  <Text>username, created date</Text>
-                  <IconButton ml='2' size='sm' icon={<FiMinusSquare />} onClick={onOpen} />
-                </Flex>
-              </AccordionPanel>
-            </AccordionItem>
-            <AccordionItem>
-                <h2>
-                  <Flex alignItems='center'>
-                  <AccordionButton _expanded={{ bg: 'var(--shade4)', color: 'white' }} >
-                    <Box as="span" flex='1' textAlign='right' pr='2'>Add Comment</Box><BiCommentAdd />
-                  </AccordionButton>
-                  </Flex>
-                </h2>
-                <AccordionPanel pb={4} pl='6'>
-                  <Flex alignItems='center'>
-                    <Input mr='2' placeholder='click to add comments'/>
-                    <ButtonGroup justifyContent='center' size='sm' ml='2'>
-                      <IconButton icon={<FiCheck />} />
-                      <IconButton icon={<FiX />} />
-                    </ButtonGroup>
-                  </Flex>
-                </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-        </Card>
+        {loading ? (
+          <Box m='auto' mb='10'>
+            <Link to="/"><Spinner /> Loading...</Link>
+          </Box>
+        ) : (
+          <Posts
+            posts={posts}
+          // filter={filter}
+          />
+        )}
       </Stack>
     </Box>
   );

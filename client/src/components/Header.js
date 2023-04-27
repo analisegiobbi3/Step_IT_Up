@@ -1,5 +1,5 @@
 // import package and local style sheet
-import React from 'react';
+import React from "react";
 import { Link } from 'react-router-dom';
 import Auth from '../utils/auth';
 import '../styles/Header.css';
@@ -15,6 +15,7 @@ import { BsPersonCircle } from "react-icons/bs";
 
 // page navigation bar
 function Header() {
+
   const logout = (event) => {
     event.preventDefault()
     Auth.logout()
@@ -30,7 +31,7 @@ function Header() {
                     <Image src='./logo.png' alt='Step It Up' width='60px' mr='2' />
                   </Tooltip>
                 </Link>
-                <Link to='/blog'>
+                <Link to='/posts'>
                   <Tooltip label='Blog' bg='var(--shade1)' color='white'>
                     <IconButton variant='link' px='3' aria-label='Home' icon={<BiMessageDetail />} />
                   </Tooltip>
@@ -45,7 +46,7 @@ function Header() {
                     <IconButton variant='link' px='3' aria-label='Tracker' icon={<ImStatsBars2 />} />
                   </Tooltip>
                 </Link>
-                <Link to='/routine'>
+                <Link to='/routines'>
                   <Tooltip label='Routine' bg='var(--shade1)' color='white'>
                     <IconButton variant='link' px='3' aria-label='Routine' icon={<ImList />} />
                   </Tooltip>
