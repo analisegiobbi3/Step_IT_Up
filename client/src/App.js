@@ -9,16 +9,16 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+import Header from "./components/Header";
 import Home from "./pages/Home";
 import Blog from "./pages/Blog";
+import CreatePost from './components/CreatePost'
+import EditPost from './components/EditPost'
 import Calendar from "./pages/Calendar";
 import Tracker from "./pages/Tracker";
 import Routine from "./pages/Routine";
-import Posts from "./pages/Posts";
-import ViewPost from "./pages/ViewPost";
+import CreateRoutine from "./components/CreateRoutine";
 import Profile from "./pages/Profile";
-import Header from "./components/Header";
-import CreatePost from './pages/CreatePost'
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Playlists from "./pages/Playlists"
@@ -60,16 +60,15 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} /> 
-              <Route path="/blog" element={<Blog />} /> 
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/posts" element={<Blog />} />
+              <Route path="/posts/createPost" element={<CreatePost />} />
+              <Route path="/posts/editPost/:postId" element={<EditPost />} />
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/tracker" element={<Tracker />} />
-              <Route path="/routine" element={<Routine />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/posts" element={<Posts />} /> 
-              <Route path="/playlists" element={<Playlists />} />
-              <Route path="/posts/addPost" element={<CreatePost />} />
-              <Route path="/posts/:postId" element={<ViewPost />} />
+              <Route path="/routines" element={<Routine />} />
+              <Route path="/routines/createRoutine" element={<CreateRoutine />} />
             </Routes>
           </div>
         </div>

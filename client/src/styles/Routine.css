@@ -12,6 +12,12 @@
     font-family: var(--font);
 }
 
+/* no routine message */
+.routine-page .css-1dklj6k {
+    color: var(--shade2);
+    font-family: var(--font);
+}
+
 /* new routine button */
 .routine-page .css-1qyqv0q {
     font-size: 2vw;
