@@ -11,7 +11,7 @@ import {
 
 import { ImCalendar, ImStatsBars2, ImList } from "react-icons/im";
 import { BiMessageDetail, BiLogIn, BiLogOut } from "react-icons/bi";
-import { BsPersonCircle } from "react-icons/bs";
+import { BsPersonCircle, BsMusicPlayerFill } from "react-icons/bs";
 
 // page navigation bar
 function Header() {
@@ -48,6 +48,11 @@ function Header() {
                 <Link to='/routine'>
                   <Tooltip label='Routine' bg='var(--shade1)' color='white'>
                     <IconButton variant='link' px='3' aria-label='Routine' icon={<ImList />} />
+                  </Tooltip>
+                </Link>
+                <Link to='/playlists'>
+                  <Tooltip label='Playlists' bg='var(--shade1)' color='white'>
+                    <IconButton variant='link' px='3' aria-label='Playlists' icon={<BsMusicPlayerFill />} />
                   </Tooltip>
                 </Link>
             </Box>

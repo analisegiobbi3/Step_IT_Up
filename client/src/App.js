@@ -21,6 +21,7 @@ import Header from "./components/Header";
 import CreatePost from './pages/CreatePost'
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import Playlists from "./pages/Playlists"
 
 import './styles/Global.css';
 
@@ -66,6 +67,7 @@ function App() {
               <Route path="/routine" element={<Routine />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/posts" element={<Posts />} /> 
+              <Route path="/playlists" element={<Playlists />} />
               <Route path="/posts/addPost" element={<CreatePost />} />
               <Route path="/posts/:postId" element={<ViewPost />} />
             </Routes>
