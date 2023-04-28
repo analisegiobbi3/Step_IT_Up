@@ -68,6 +68,7 @@ function App() {
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/tracker" element={<Tracker />} />
               <Route path="/routines" element={<Routine />} />
+              <Route path="/playlists" element={<Playlists />}/>
               <Route path="/routines/createRoutine" element={<CreateRoutine />} />
             </Routes>
           </div>

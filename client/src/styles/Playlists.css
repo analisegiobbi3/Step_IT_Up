@@ -1,8 +1,30 @@
 h1 {
     text-align: center;
-    font-family: var(--font);
+    font-family: 'Pathway Gothic One', sans-serif;
     color: white;
-    font-size: 25px;
+    font-size: 40px;
     margin-top: 20px;
     margin-bottom: 20px;
+    border-bottom: solid #e1bcba;
 } 
+
+.playlist-card {
+    margin-left: 5px;
+    margin-right: 5px;
+    outline: solid #32496c;
+
+}
+
+.spotify-button {
+    color: #e1bcba;
+}
+
+.spotify-button:hover {
+    color: #1DB954;
+}
+
+.playlist-name {
+    color: #32496c;
+    text-align: center;
+    font-family: 'Pathway Gothic One', sans-serif;
+}

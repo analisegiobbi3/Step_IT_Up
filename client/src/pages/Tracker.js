@@ -1,6 +1,11 @@
 // import package and local style sheet
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import Chart from "chart.js/auto"
+import { CategoryScale } from "chart.js";
+import LineChart from "../components/Chart";
+
+
 
 import {
   Grid, GridItem, Box, Select,
@@ -12,10 +17,14 @@ import {
 
 import '../styles/Tracker.css';
 
+Chart.register(CategoryScale)
+
 const Tracker = () => {
 
   const { register, setValue, getValues } = useForm();
   const [showDates, setShowDates] = React.useState(false)
+  const [calorieTrendData, setCalorieTrendData] = useState('')
+  const [weightTrendData, setWeightTrendData] = useState('')
 
   const DateRange = () => (
     <div>
@@ -95,9 +104,11 @@ const Tracker = () => {
         </GridItem>
         <GridItem colSpan={8} bg='papayawhip' p='5' borderRadius='1rem'>
           <Heading size='lg' textTransform='uppercase' mb='5'>Calorie Trend</Heading>
+          {/* <LineChart chartData={chartData}/> */}
         </GridItem>
         <GridItem colSpan={8} bg='var(--shade2)' p='5' borderRadius='1rem'>
           <Heading size='lg' textTransform='uppercase' mb='5'>Weight Trend</Heading>
+          {/* <LineChart chartData={chartData}/> */}
         </GridItem>
       </Grid>
     </Box>
