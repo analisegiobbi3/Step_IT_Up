@@ -124,7 +124,6 @@ export const QUERY_USER = gql`
                 commentCreatedAt
             }
       }
-      }
       profile {
         _id
         age
