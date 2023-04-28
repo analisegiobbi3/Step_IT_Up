@@ -61,6 +61,8 @@ export const QUERY_PROFILES = gql`
         weight
         height
         goalWeight
+        activityLevel
+        calories
     }
   }
 `;
@@ -74,6 +76,8 @@ export const QUERY_SINGLE_PROFILE = gql`
         weight
         height
         goalWeight
+        calories
+        activityLevel
 
     }
 }
@@ -120,21 +124,24 @@ export const QUERY_USER = gql`
                 commentCreatedAt
             }
       }
-        profile {
-            _id
-            age
-            sex
-            weight
-            height
-            goalWeight
-        }
-        routines {
-            _id
-            title
-            routine
-        }
+      }
+      profile {
+        _id
+        age
+        sex
+        weight
+        height
+        goalWeight
+        calories
+        activityLevel
+      }
+      routines {
+        _id
+        title
+        routine
       }
     }
+  }
 `;
 
 export const QUERY_ME = gql`
@@ -159,20 +166,36 @@ export const QUERY_ME = gql`
           commentCreatedAt
         }
       }
-        profile {
-          _id
-          age
-          sex
-          weight
-          height
-          goalWeight
-        }
-        routines {
-          _id
-          title
-          routine
-        }
+      profile {
+        _id
+        age
+        sex
+        weight
+        height
+        goalWeight
+        calories
+        activityLevel
+      }
+      routines {
+        _id
+        title
+        routine
       }
     }
+  }
 `;
 
+export const QUERY_MYPROFILE = gql`
+  query myProfile {
+    myProfile {
+      _id
+      age
+      sex
+      weight
+      height
+      goalWeight
+      calories
+      activityLevel
+    }
+  }
+`;

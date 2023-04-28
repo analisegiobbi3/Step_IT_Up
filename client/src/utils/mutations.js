@@ -26,26 +26,31 @@ export const LOGIN_USER = gql`
 `;
 
 export const ADD_PROFILE = gql`
-  mutation addProfile($newAge: Int!, $newSex: String!, $newWeight: Int!, $newHeight: Int!, $newGoalWeight: Int!) {
-    addProfile(age: $newAge, sex: $newSex, weight: $newWeight, height: $newHeight, goalWeight: $newGoalWeight) {
+  mutation addProfile($newAge: Int!, $newSex: String!, $newWeight: Int!, $newHeight: Int!, $newGoalWeight: Int!, $activityLevel: Int!, $calories: Int) {
+    addProfile(age: $newAge, sex: $newSex, weight: $newWeight, height: $newHeight, goalWeight: $newGoalWeight, activityLevel: $activityLevel, calories: $calories) {
         _id
         age
         sex
         weight
         height
         goalWeight
+        calories
+        activityLevel
     }
 }
 `;
 
 export const UPDATE_PROFILE = gql`
-  mutation updateProfile($profileId: ID!, $age: Int!, $weight: Int!, $height: Int!, $goalWeight: Int!) {
-    updateProfile(profileId: $profileId, age: $age, weight: $weight, height: $height, goalWeight: $goalWeight) {
+  mutation updateProfile($profileId: ID!, $age: Int, $sex: String, $weight: Int, $height: Int, $goalWeight: Int, $calories: Int, $activityLevel: Int) {
+    updateProfile(profileId: $profileId, age: $age, sex: $sex, weight: $weight, height: $height, goalWeight: $goalWeight, calories: $calories, activityLevel: $activityLevel) {
       _id
       age
+      sex
       weight
       height
       goalWeight
+      calories
+      activityLevel
     } 
   }
 `;
