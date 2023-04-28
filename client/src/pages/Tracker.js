@@ -1,13 +1,11 @@
 // import package and local style sheet
-import React, { useState } from "react";
+import React from "react";
+import { useQuery } from "@apollo/client";
 import { useForm } from "react-hook-form";
-import Chart from "chart.js/auto"
-import { CategoryScale } from "chart.js";
+import { CategoryScale, LinearScale, Chart } from "chart.js";
 import LineChart from "../components/Chart";
 
 import { QUERY_CALORIES, QUERY_WEIGHT } from '../utils/queries'
-
-
 
 import {
   Grid, GridItem, Box, Select,
@@ -18,10 +16,10 @@ import {
 } from '@chakra-ui/react'
 
 import '../styles/Tracker.css';
-import { useQuery } from "@apollo/client";
 
 
-Chart.register(CategoryScale)
+
+Chart.register(CategoryScale, LinearScale)
 
 const Tracker = () => {
 
