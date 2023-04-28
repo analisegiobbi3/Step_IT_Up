@@ -1,5 +1,5 @@
 // import package and local style sheet
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import AddProfile from "../components/AddProfile";
@@ -46,22 +46,31 @@ const HandleNewData = () => {
 
 const Profile = () => {
   const { loading, data } = useQuery(QUERY_ME);
-  const me = data?.me.profile || [];
+  const me = data?.me.profile;
 
-  const [age, setAge] = useState(me.age);
-  const [sex, setSex] = useState(me.sex);
-  const [weight, setWeight] = useState(me.weight);
-  const [height, setHeight] = useState(me.height);
-  const [goalWeight, setGoalWeight] = useState(me.goalWeight);
-  const [activityLevel, setActivityLevel] = useState(me.activityLevel);
-  const [calories, setCalories] = useState(me.calories);
+  const [age, setAge] = useState('');
+  const [sex, setSex] = useState('');
+  const [weight, setWeight] = useState('');
+  const [height, setHeight] = useState('');
+  const [goalWeight, setGoalWeight] = useState('');
+  const [activityLevel, setActivityLevel] = useState('');
+  const [calories, setCalories] = useState('');
   const [showCalories, setShowCalories] = useState(false);
 
-
+useEffect(() => {
+  if(!me) return
+  setAge(me.age);
+  setSex(me.sex);
+  setHeight(me.height);
+  setWeight(me.weight);
+  setGoalWeight(me.goalWeight);
+  setActivityLevel(me.activityLevel);
+  setCalories(me.calories);
+}, [me])
   
   const { profileId } = useParams();
   const [updateProfile, { error }] = useMutation(UPDATE_PROFILE, {
-    variables: { profileId: profileId }
+    variables: { profileId: me?._id }
   });
 
   const handleFormSubmit = async (e) => {
@@ -77,19 +86,20 @@ const Profile = () => {
     }
   };
 
-  const calculateCalories = () => {
+  const calculateCalories = (e) => {
+
     setShowCalories(true);
-    if(me.sex === 'Male') {
-      const bmr = 88.362 + (13.397 * (me.goalWeight * 2.2) + (4.799 * me.height) - (5.677 * me.age))
-      setCalories(bmr * activityLevel)
+    if(sex === 'Male') {
+      const bmr = 88.362 + (13.397 * (goalWeight * 2.2) + (4.799 * height) - (5.677 * age))
+      setCalories(Math.round(bmr * activityLevel))
 
     } else {
       const bmr =
-        447.593 + (9.247 * (me.goalWeight * 2.2) + 3.098 * me.height - 4.330 * me.age)
-        setCalories(bmr * activityLevel)
+        447.593 + (9.247 * (goalWeight * 2.2) + 3.098 * height - 4.330 * age)
+        setCalories(Math.round(bmr * activityLevel))
     }
   }
-  if (data?.me.profile) {
+  if (me) {
     return (
       <div>
         {Auth.loggedIn() ? (
@@ -101,26 +111,26 @@ const Profile = () => {
                 <label>Age</label>
                 <input
                   type="number"
-                  defaultValue={me.age}
+                  value={age}
                   // value={me.age}
                   className="form-input"
                   onChange={(e) => setAge(parseInt(e.target.value))}
                 />
                 <label>Birth Sex</label>
-                <select value={me.sex} onChange={(e) => setSex(e.target.value)}>
+                <select value={sex} onChange={(e) => setSex(e.target.value)}>
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
                 </select>
                 <label>Height</label>
                 <input
-                  defaultValue={me.height}
+                  value={height}
                   // value={me.height}
                   className="form-input"
                   onChange={(e) => setHeight(parseInt(e.target.value))}
                 />
                 <label>Weight</label>
                 <input
-                  defaultValue={me.weight}
+                  value={weight}
                   // value={me.goalWeight}
                   className="form-input"
                   onChange={(e) => setWeight(parseInt(e.target.value))}
@@ -132,24 +142,24 @@ const Profile = () => {
                       on this app.
                     </FormHelperText> */}
                 <input
-                  defaultValue={me.goalWeight}
+                  value={goalWeight}
                   // value={me.goalWeight}
                   className="form-input"
                   onChange={(e) => setGoalWeight(parseInt(e.target.value))}
                 />
                 <label>Activity Level</label>
                 <select
-                  defaultValue={me.activityLevel}
+                  value={activityLevel}
                   onChange={(e) => setActivityLevel(e.target.value)}
                 >
                   <option value="1.375">Sedentary</option>
                   <option value="1.55">Moderate</option>
                   <option value="1.9">High</option>
                 </select>
-                <button onClick={calculateCalories}>
+                <button type="button" onClick={calculateCalories}>
                   Calculate your calorie intake according to your goal weight
                 </button>
-                <div>{showCalories ? <p>{calories}</p> : ""}</div>
+                <div>{calories ? <p>{calories}</p> : ""}</div>
                 <div className="button">
                   <button type="submit">save changes</button>
                 </div>

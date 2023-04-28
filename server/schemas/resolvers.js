@@ -98,7 +98,7 @@ const resolvers = {
     },
     addProfile: async (
       parent,
-      { age, sex, weight, height, goalWeight },
+      { age, sex, weight, height, goalWeight, activityLevel, calories },
       context
     ) => {
       if (context.user) {
@@ -118,19 +118,19 @@ const resolvers = {
     },
     updateProfile: async (
       parent,
-      { profileId, age, weight, height, goalWeight },
+      { profileId, age, sex, weight, height, goalWeight, activityLevel, calories },
       context
     ) => {
       if (context.user) {
         return await Profile.findOneAndUpdate(
           { _id: profileId },
-          { age },
-          { sex },
-          { weight },
-          { height },
-          { goalWeight },
-          { activityLevel },
-          { calories },
+          { age,
+           sex ,
+           weight ,
+           height ,
+           goalWeight ,
+           activityLevel ,
+           calories },
           { new: true }
         );
       }
