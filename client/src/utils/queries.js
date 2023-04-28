@@ -42,6 +42,8 @@ export const QUERY_PROFILES = gql`
         weight
         height
         goalWeight
+        activityLevel
+        calories
     }
   }
 `;
@@ -55,6 +57,8 @@ export const QUERY_SINGLE_PROFILE = gql`
         weight
         height
         goalWeight
+        calories
+        activityLevel
 
     }
 }
@@ -86,33 +90,35 @@ export const QUERY_USER = gql`
       username
       email
       posts {
-            _id
-            title
-            text
-            author
-            createdAt
-            comments {
-                _id
-                commentText
-                commentAuthor
-                createdAt
-            }
+        _id
+        title
+        text
+        author
+        createdAt
+        comments {
+          _id
+          commentText
+          commentAuthor
+          createdAt
+        }
       }
-        profile {
-            _id
-            age
-            sex
-            weight
-            height
-            goalWeight
-        }
-        routines {
-            _id
-            title
-            routine
-        }
+      profile {
+        _id
+        age
+        sex
+        weight
+        height
+        goalWeight
+        calories
+        activityLevel
+      }
+      routines {
+        _id
+        title
+        routine
       }
     }
+  }
 `;
 
 export const QUERY_ME = gql`
@@ -134,20 +140,36 @@ export const QUERY_ME = gql`
           createdAt
         }
       }
-        profile {
-          _id
-          age
-          sex
-          weight
-          height
-          goalWeight
-        }
-        routines {
-          _id
-          title
-          routine
-        }
+      profile {
+        _id
+        age
+        sex
+        weight
+        height
+        goalWeight
+        calories
+        activityLevel
+      }
+      routines {
+        _id
+        title
+        routine
       }
     }
+  }
 `;
 
+export const QUERY_MYPROFILE = gql`
+  query myProfile {
+    myProfile {
+      _id
+      age
+      sex
+      weight
+      height
+      goalWeight
+      calories
+      activityLevel
+    }
+  }
+`;

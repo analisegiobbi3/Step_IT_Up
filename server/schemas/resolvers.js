@@ -25,9 +25,7 @@ const resolvers = {
     },
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate("posts")
-        .populate("profile")
-        .populate("routines");
+        return User.findOne({ _id: context.user._id }).populate("profile");
       }
       throw new AuthenticationError("You need to be logged in!");
     },
@@ -36,6 +34,12 @@ const resolvers = {
     },
     profile: async (parent, { profileId }) => {
       return Profile.findOne({ _id: profileId });
+    },
+    myProfile: async (parent, args, context) => {
+      if (context.user) {
+        return Profile.findOne({ _id: context.user._id })
+      }
+      throw new AuthenticationError("You need to be logged in!")
     },
     posts: async () => {
       return Post.find().sort({ createAt: -1 });
@@ -98,13 +102,17 @@ const resolvers = {
       context
     ) => {
       if (context.user) {
-        return await Profile.create({
+         const profile = await Profile.create({
           age,
           sex,
           weight,
           height,
           goalWeight,
+          activityLevel,
+          calories
         });
+        await User.updateOne({_id: context.user._id}, {profile: profile._id})
+        return profile
       }
       throw new AuthenticationError("You need to be logged in!");
     },
@@ -117,9 +125,12 @@ const resolvers = {
         return await Profile.findOneAndUpdate(
           { _id: profileId },
           { age },
+          { sex },
           { weight },
           { height },
           { goalWeight },
+          { activityLevel },
+          { calories },
           { new: true }
         );
       }

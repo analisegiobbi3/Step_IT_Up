@@ -1,6 +1,6 @@
 // import package and local style sheet
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import AddProfile from "../components/AddProfile";
 import {
@@ -12,7 +12,10 @@ import {
   Button,
   RadioGroup,
   Radio,
-  HStack
+  HStack,
+  Modal,
+  ModalContent,
+  ModalHeader
 } from "@chakra-ui/react";
 
 import { QUERY_ME } from "../utils/queries";
@@ -50,14 +53,22 @@ const Profile = () => {
   const [weight, setWeight] = useState(me.weight);
   const [height, setHeight] = useState(me.height);
   const [goalWeight, setGoalWeight] = useState(me.goalWeight);
+  const [activityLevel, setActivityLevel] = useState(me.activityLevel);
+  const [calories, setCalories] = useState(me.calories);
+  const [showCalories, setShowCalories] = useState(false);
 
-  const [updateProfile, { error }] = useMutation(UPDATE_PROFILE);
+
+  
+  const { profileId } = useParams();
+  const [updateProfile, { error }] = useMutation(UPDATE_PROFILE, {
+    variables: { profileId: profileId }
+  });
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
       const { data } = await updateProfile({
-        variables: { age, weight, height, goalWeight },
+        variables: { age, weight, height, goalWeight, calories, activityLevel },
       });
 
       window.location.reload();
@@ -65,6 +76,19 @@ const Profile = () => {
       console.error(err);
     }
   };
+
+  const calculateCalories = () => {
+    setShowCalories(true);
+    if(me.sex === 'Male') {
+      const bmr = 88.362 + (13.397 * (me.goalWeight * 2.2) + (4.799 * me.height) - (5.677 * me.age))
+      setCalories(bmr * activityLevel)
+
+    } else {
+      const bmr =
+        447.593 + (9.247 * (me.goalWeight * 2.2) + 3.098 * me.height - 4.330 * me.age)
+        setCalories(bmr * activityLevel)
+    }
+  }
   if (data?.me.profile) {
     return (
       <div>
@@ -73,42 +97,33 @@ const Profile = () => {
             {loading ? (
               <div>Loading....</div>
             ) : (
-              // <Box maxW="480px">
               <form onSubmit={handleFormSubmit}>
                 <label>Age</label>
                 <input
                   type="number"
-                  defaultValue={age}
-                  value={age}
+                  defaultValue={me.age}
+                  // value={me.age}
                   className="form-input"
                   onChange={(e) => setAge(parseInt(e.target.value))}
                 />
                 <label>Birth Sex</label>
-                {/* <RadioGroup onChange={(e) => setSex(e.target.value)}>
-          <HStack spacing='24px'>
-          <Radio
-          value='Male'>
-          Male
-          </Radio>
-          <Radio 
-          value='Female'>
-          Female
-          </Radio>
-          </HStack>
-          </RadioGroup> */}
-                <label>Weight</label>
-                <input
-                  defaultValue={weight}
-                  value={weight}
-                  className="form-input"
-                  onChange={(e) => setWeight(parseInt(e.target.value))}
-                />
+                <select value={me.sex} onChange={(e) => setSex(e.target.value)}>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
                 <label>Height</label>
                 <input
-                  defaultValue={height}
-                  value={height}
+                  defaultValue={me.height}
+                  // value={me.height}
                   className="form-input"
                   onChange={(e) => setHeight(parseInt(e.target.value))}
+                />
+                <label>Weight</label>
+                <input
+                  defaultValue={me.weight}
+                  // value={me.goalWeight}
+                  className="form-input"
+                  onChange={(e) => setWeight(parseInt(e.target.value))}
                 />
                 <label>Goal Weight</label>
                 {/* <FormHelperText>
@@ -117,18 +132,29 @@ const Profile = () => {
                       on this app.
                     </FormHelperText> */}
                 <input
-                  defaultValue={goalWeight}
-                  value={goalWeight}
+                  defaultValue={me.goalWeight}
+                  // value={me.goalWeight}
                   className="form-input"
                   onChange={(e) => setGoalWeight(parseInt(e.target.value))}
                 />
-
+                <label>Activity Level</label>
+                <select
+                  defaultValue={me.activityLevel}
+                  onChange={(e) => setActivityLevel(e.target.value)}
+                >
+                  <option value="1.375">Sedentary</option>
+                  <option value="1.55">Moderate</option>
+                  <option value="1.9">High</option>
+                </select>
+                <button onClick={calculateCalories}>
+                  Calculate your calorie intake according to your goal weight
+                </button>
+                <div>{showCalories ? <p>{calories}</p> : ""}</div>
                 <div className="button">
                   <button type="submit">save changes</button>
                 </div>
                 {error && <div className="danger">Something went wrong..</div>}
               </form>
-              // </Box>
             )}
           </>
         ) : (

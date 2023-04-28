@@ -43,6 +43,8 @@ const typeDef = gql`
     weight: Int!
     height: Int!
     goalWeight: Int!
+    activityLevel: Int!
+    calories: Int
   }
 
   type Post {
@@ -79,6 +81,7 @@ const typeDef = gql`
     profiles: [Profile]
     profile(profileId: ID!): Profile
     me: User
+    myProfile: Profile
     users: [User]
     user(username: String!): User
     routine: Routine
@@ -107,13 +110,18 @@ const typeDef = gql`
       weight: Int!
       height: Int!
       goalWeight: Int!
+      activityLevel: Int!
+      calories: Int
     ): Profile
     updateProfile(
       profileId: ID!
-      age: Int!
-      weight: Int!
-      height: Int!
-      goalWeight: Int!
+      age: Int
+      sex: String
+      weight: Int
+      height: Int
+      goalWeight: Int
+      activityLevel: Int
+      calories: Int
     ): Profile
     addRoutine(title: String, routine: String): Routine
     addRoutineSchedule(date: String!, routine: String!): RoutineSchedule
