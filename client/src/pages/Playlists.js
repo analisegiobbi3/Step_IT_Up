@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Button, Stack, Wrap, WrapItem, Center } from '@chakra-ui/react'
+import { Button, Center, SimpleGrid, Card, CardFooter, CardHeader, Heading } from '@chakra-ui/react'
 import "../styles/Playlists.css"
+import { BsSpotify } from "react-icons/bs";
 import env from 'react-dotenv'
 
 
@@ -49,22 +50,28 @@ const Playlists = () => {
 
     return(
         <div>
-        <h1>Step IT Up With Some Music</h1>
-            <Wrap>
-            {playlists.map((playlist, index) => (
-                <WrapItem>
-                    <Center w='180px' h='80px' bg='purple.200'>
+            <h1>Step IT Up With Some Music</h1>
+            <SimpleGrid spacing={5} templateColumns='repeat(auto-fill, minmax(200px, 1fr))'>
+                {playlists.map((playlist, index) => (
+                    <Card variant='filled' className="playlist-card">
                         <div key={index}>
-                            <Button>
-                                <a href={playlist.link} target="_blank" rel="noreferrer">{playlist.name}</a>
-                            </Button>
+                            <CardHeader>
+                                <Center>
+                                    <Heading className="playlist-name" size='md'>{playlist.name}</Heading>
+                                </Center>
+                            </CardHeader>
+                            <Center>
+                                <CardFooter>
+                                    <Button className="spotify-button">
+                                        <a href={playlist.link} target="_blank" rel="noreferrer">{<BsSpotify size='50px' />}</a>
+                                    </Button>
+                                </CardFooter>
+                            </Center>
                         </div>
-                    </Center>
-                </WrapItem>
+                    </Card>
                 ))}
-            </Wrap>
-      </div>
-
+            </SimpleGrid>
+        </div>
     )
 }
 
