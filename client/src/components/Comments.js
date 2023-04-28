@@ -1,34 +1,40 @@
-import React from 'react'
-// import { useMutation } from "@apollo/client"
-import { Card, CardBody, CardFooter, Text } from '@chakra-ui/react'
-// import { REMOVE_COMMENT } from '../utils/mutations'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-const Comments = ({ comments = [] }) => {
+import {
+    Accordion, AccordionItem, AccordionButton,
+    AccordionPanel, AccordionIcon,
+    Box, Flex, Spacer, IconButton,
+    Stack, Input, Heading, Text, Button,
+    Card, CardHeader, CardBody, CardFooter,
+    ButtonGroup,
+} from '@chakra-ui/react'
+
+import { AiOutlineLike, AiFillLike } from "react-icons/ai";
+import { BiCommentAdd } from "react-icons/bi";
+import { FiCheck, FiX, FiMinusSquare } from "react-icons/fi";
+
+import '../styles/Blog.css';
+
+const Comments = ({
+    comments,
+}) => {
     if (!comments.length) {
-        return <h3>No one has commented on this post yet</h3>
-    }
-    // const [removeComment] = useMutation(REMOVE_COMMENT)
-    // const handleOnClick = () => {
-    //     removeComment({ variables: { commentId }})
-    // }
+        return;
+    };
 
     return (
         <div>
-            <h2>Comments</h2>
-            <div>
-                {comments && comments.map((comment) => {
-                    <Card key={comment._id}>
-                         <CardBody>
-                            <Text>{comment.commentText}</Text>
-                        </CardBody>
-                        <CardFooter>
-                            By: {comment.commentAuthor} on {comment.createdAt}
-                        </CardFooter>
-                    </Card>
-                })}
-            </div>
+            {comments.map((comment) => (
+                <Flex key={comment._id} justifyContent='space-between' alignItems='center' mb='2'>
+                    <Text>{comment.commentText}</Text>
+                    <Spacer />
+                    <Text>{comment.commentAuthor}, {comment.commentCreatedAt}</Text>
+                    <IconButton ml='2' size='sm' icon={<FiMinusSquare />} />
+                </Flex>
+            ))}
         </div>
-    )
-}
+    );
+};
 
 export default Comments;

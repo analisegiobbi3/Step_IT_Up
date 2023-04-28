@@ -8,14 +8,14 @@ import { ADD_USER } from "../utils/mutations";
 import Auth from '../utils/auth';
 
 import {
-  Box, Button, FormControl,
+  Box, Button, FormControl, Spinner,
   InputGroup, InputLeftAddon, InputRightElement,
   Modal, ModalOverlay, ModalContent, ModalHeader,
   ModalFooter, ModalBody, ModalCloseButton, useDisclosure,
   Tabs, TabList, TabPanels, Tab, TabPanel,
 } from '@chakra-ui/react'
 
-import { FiUser, FiMail, FiLock, FiUnlock } from "react-icons/fi";
+import { FiUser, FiMail, FiEyeOff, FiEye } from "react-icons/fi";
 
 import '../styles/LoginSignup.css';
 
@@ -56,7 +56,6 @@ const Signup = () => {
   const { isOpen } = useDisclosure({ defaultIsOpen: true })
   const navigate = useNavigate();
   const returnToHome = () => navigate('/');
-  const redirectLogin = () => navigate('/login');
   const [show, setShow] = React.useState(false)
 
   return (
@@ -73,9 +72,8 @@ const Signup = () => {
                     bg: "var(--shade2)",
                     fontWeight: "bold",
                   }}
-                  onClick={redirectLogin}
                 >
-                  Login
+                <Link to="/login">Login</Link>
                 </Tab>
                 <Tab
                   _selected={{
@@ -95,10 +93,9 @@ const Signup = () => {
               </TabPanel>
               <TabPanel>
                 {data ? (
-                  <p>
-                    Success! You may now head{" "}
-                    <Link to="/">back to the homepage.</Link>
-                  </p>
+                  <Box m='auto' mb='10'>
+                  <Link to="/"><Spinner /> Signup success! Logging...</Link>
+                </Box>
                 ) : (
                   <form onSubmit={handleFormSubmit}>
                     <ModalBody>
@@ -118,7 +115,6 @@ const Signup = () => {
                           <input
                             type="name"
                             name="username"
-                            // id="signup-username"
                             value={formState.name}
                             onChange={handleChange}
                           />
@@ -141,7 +137,6 @@ const Signup = () => {
                           <input
                             type="email"
                             name="email"
-                            // id="signup-email"
                             value={formState.email}
                             onChange={handleChange}
                           />
@@ -164,7 +159,6 @@ const Signup = () => {
                           <input
                             type={show ? "text" : "password"}
                             name="password"
-                            // id="signup-password"
                             value={formState.password}
                             onChange={handleChange}
                           />
@@ -177,7 +171,7 @@ const Signup = () => {
                               _hover={{ bg: "var(--shade2)" }}
                               onClick={() => setShow(!show)}
                             >
-                              {show ? <FiUnlock /> : <FiLock />}
+                              {show ? <FiEye /> : <FiEyeOff />}
                             </Button>
                           </InputRightElement>
                         </InputGroup>
@@ -206,7 +200,7 @@ const Signup = () => {
                 )}
 
                 {error && (
-                  <Box className="my-3 p-3 bg-danger text-white">
+                  <Box  m='5' p='3'>
                     {error.message}
                   </Box>
                 )}

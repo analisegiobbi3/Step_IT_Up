@@ -70,7 +70,12 @@
   ## [Questions](#table-of-contents)
   For any inquiries regarding the application, please use the github or email below: 
 
-  [Github](http://github.com/n/a)
+  [Analise's Github](http://github.com/analisegiobbi3)
+  [Savita's Github](http://github.com/savitamanchanda)
+  [Fanny's Github](http://github.com/fannychen623)
+  [Jonathan's Github](http://github.com/jonytoast)
+  [Benji's Github](http://github.com/BenjiCCB)
 
-  [Email: n/a](mailto:n/a)
+
+
 

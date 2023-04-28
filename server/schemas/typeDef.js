@@ -61,13 +61,7 @@ const typeDef = gql`
     _id: ID
     commentText: String
     commentAuthor: String
-    createdAt: String
-  }
-
-  type Comment {
-    _id: ID
-    title: String
-    routine: String
+    commentCreatedAt: String
   }
 
   type Auth {
@@ -98,12 +92,23 @@ const typeDef = gql`
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     addPost(title: String!, text: String!): Post
-    addLike(postID: ID!, likes: ID): Post
-    removeLike(postID: ID!, likes: ID): Post
+    addLike(postId: ID!, userId: ID!): Post
+    removeLike(postId: ID!, userId: ID!): Post
     addComment(postId: ID!, commentText: String!): Post
     editPost(postId: ID!, title: String!, text: String!): Post
     removePost(postId: ID!): Post
     removeComment(postId: ID!, commentId: ID!): Post
+    addRoutine(title: String!, routine: String!): Routine
+    removeRoutine(routineId: ID!): Routine
+    addRoutineSchedule(date: String!, routine: String!): RoutineSchedule
+    updateRoutineSchedule(routineId: ID!, routine: String!): RoutineSchedule
+    removeRoutineSchedule(routineId: ID): RoutineSchedule
+    addWeightSchedule(date: String!, weight: Int!): WeightSchedule
+    updateWeightSchedule(weightId: ID!, weight: String!): WeightSchedule
+    removeWeightSchedule(weightId: ID): WeightSchedule
+    addCalorieSchedule(date: String!, calorie: Int!): CalorieSchedule
+    updateCalorieSchedule(calorieId: ID!, calorie: String!): CalorieSchedule
+    removeCalorieSchedule(calorieId: ID): CalorieSchedule
     addProfile(
       age: Int!
       sex: String!
@@ -123,16 +128,6 @@ const typeDef = gql`
       activityLevel: Int
       calories: Int
     ): Profile
-    addRoutine(title: String, routine: String): Routine
-    addRoutineSchedule(date: String!, routine: String!): RoutineSchedule
-    updateRoutineSchedule(routineID: ID!, routine: String!): RoutineSchedule
-    removeRoutineSchedule(routineID: ID): RoutineSchedule
-    addWeightSchedule(date: String!, weight: Int!): WeightSchedule
-    updateWeightSchedule(weightID: ID!, weight: String!): WeightSchedule
-    removeWeightSchedule(weightID: ID): WeightSchedule
-    addCalorieSchedule(date: String!, calorie: Int!): CalorieSchedule
-    updateCalorieSchedule(calorieID: ID!, calorie: String!): CalorieSchedule
-    removeCalorieSchedule(calorieID: ID): CalorieSchedule
   }
 `;
 

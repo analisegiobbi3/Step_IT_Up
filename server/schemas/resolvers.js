@@ -169,11 +169,7 @@ const resolvers = {
       if (context.user) {
         return Post.findOneAndUpdate(
           { _id: postId },
-          {
-            $addToSet: {
-              likes: { userId }
-            }
-          },
+          { $addToSet: { likes: userId } },
           { new: true, runValidators: true }
         )
       }
@@ -232,11 +228,7 @@ const resolvers = {
         "You need to be logged in to delete a comment!"
       );
     },
-    addRoutine: async (
-      parent,
-      { title, routine },
-      context
-    ) => {
+    addRoutine: async (parent, { title, routine }, context) => {
       if (context.user) {
         return await Routine.create({
           title,
@@ -244,6 +236,21 @@ const resolvers = {
         });
       }
       throw new AuthenticationError("You need to be logged in!");
+    },
+    removeRoutine: async (parent, { routineId }, context) => {
+      if (context.user) {
+        const routine = await Routine.findOneAndDelete({
+          _id: routineId,
+        });
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { routines: routine._id } }
+        );
+        return routine;
+      }
+      throw new AuthenticationError(
+        "You need to be logged in to delete a routine!"
+      );
     },
     addRoutineSchedule: async (
       parent,

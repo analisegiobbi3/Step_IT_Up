@@ -7,8 +7,26 @@ export const QUERY_POSTS = gql`
             title
             text
             author
-            likes
+            likes {
+              username
+            }
             createdAt
+            comments {
+              _id
+              commentText
+              commentAuthor
+              commentCreatedAt
+          }
+        }
+    }
+`
+
+export const QUERY_POST = gql`
+    query getPost($postId: ID!) {
+        post(postId: $postId){
+            _id
+            title
+            text
         }
     }
 `
@@ -20,18 +38,19 @@ export const QUERY_USER_POST = gql`
             title
             text
             author
-            likes
+            likes {
+              username
+            }
             createdAt
             comments {
                 _id
                 commentText
                 commentAuthor
-                createdAt
+                commentCreatedAt
             }
         }
     }
 `
-
 
 export const QUERY_PROFILES = gql`
   query allProfiles {
@@ -90,17 +109,21 @@ export const QUERY_USER = gql`
       username
       email
       posts {
-        _id
-        title
-        text
-        author
-        createdAt
-        comments {
-          _id
-          commentText
-          commentAuthor
-          createdAt
-        }
+            _id
+            title
+            text
+            author
+            createdAt
+            likes {
+              username
+            }
+            comments {
+                _id
+                commentText
+                commentAuthor
+                commentCreatedAt
+            }
+      }
       }
       profile {
         _id
@@ -133,11 +156,14 @@ export const QUERY_ME = gql`
         text
         author
         createdAt
+        likes {
+              username
+            }
         comments {
           _id
           commentText
           commentAuthor
-          createdAt
+          commentCreatedAt
         }
       }
       profile {

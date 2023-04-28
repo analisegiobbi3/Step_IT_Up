@@ -43,7 +43,7 @@ const postSchema = new Schema(
                     type: String,
                     required: true,
                 },
-                createdAt: {
+                commentCreatedAt: {
                     type: Date,
                     default: Date.now,
                     get: (timestamp) => dateFormat(timestamp),
