@@ -198,3 +198,24 @@ export const QUERY_MYPROFILE = gql`
     }
   }
 `;
+
+export const QUERY_WEIGHT = gql`
+  query weightSchedules {
+    weightSchedules {
+      _id
+      date
+      weight
+    }
+  }
+`
+
+export const QUERY_CALORIES = gql`
+  query calorieSchedules {
+    calorieSchedules {
+      _id
+      date
+      calories
+    }
+  }
+`
+

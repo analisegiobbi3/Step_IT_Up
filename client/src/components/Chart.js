@@ -4,7 +4,6 @@ import { Line } from "react-chartjs-2";
 function LineChart( { chartData }) {
     return (
         <div>
-            <h2>TBD</h2>
             <Line
                 data={chartData}
                 options={{
@@ -15,7 +14,22 @@ function LineChart( { chartData }) {
                         },
                         legend: {
                              display: false,
+                        },
+                    },
+                    scales: {
+                        x: {
+                            type: "time",
+                            time: {
+                                unit: "day",
+                                displayFormats: {
+                                    day: "MMM D",
+                                }
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
                         }
+
                     }
                 }}
             />
