@@ -5,16 +5,25 @@
     padding: 3vw;
 }
 
-/* date */
-.calendar-page .css-k3gghb {
-    color: var(--shade6);
+/* list date */
+.calendar-page .css-k2u5zu {
     font-family: var(--font);
+    font-size: 3vw;
+    color: var(--shade6);
+    border: none;
+    padding: 0;
 }
 
 /* routine, calorie, and weight sub-headings */
 .calendar-page .css-tgwblw, .calendar-page .css-h0uhjz  {
     color: var(--shade2);
     font-family: var(--font);
+}
+
+/* add/remove tracker button */
+.calendar-page .css-8j2k67:hover {
+    background: var(--shade1);
+    color: white;
 }
 
 /* add, delete, edit buttons */
@@ -28,6 +37,15 @@
     background: var(--shade5);
 }
 
+/* add, delete, edit buttons */
+.calendar-page input[type="number"] {
+    padding: 0.75vw;
+    border-radius: 0.5rem;
+    border: none;
+    margin-right: 1vw;
+}
+
+/* calendar styling */
 .react-calendar {
     width: 100%;
     background-color: white;

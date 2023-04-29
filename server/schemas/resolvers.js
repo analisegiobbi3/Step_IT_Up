@@ -1,4 +1,4 @@
-const { Profile, User, Post, Routine } = require('../models');
+const { Profile, User, Post, Routine, Tracker } = require('../models');
 const { AuthenticationError } = require('apollo-server-express');
 const { signToken } = require('../utils/auth');
 
@@ -10,22 +10,21 @@ const resolvers = {
         .populate("posts")
         .populate("profile")
         .populate("routines")
-        .populate("routineSchedule")
-        .populate("weightSchedule")
-        .populate("calorieSchedule");
+        .populate("tracker");
     },
     user: async (parent, { username }) => {
       return User.findOne({ username })
         .populate("posts")
         .populate("profile")
         .populate("routines")
-        .populate("routineSchedule")
-        .populate("weightSchedule")
-        .populate("calorieSchedule");
+        .populate("tracker");
     },
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate("profile");
+        return User.findOne({ _id: context.user._id }).populate("posts")
+          .populate("profile")
+          .populate("routines")
+          .populate("tracker");
       }
       throw new AuthenticationError("You need to be logged in!");
     },
@@ -49,27 +48,6 @@ const resolvers = {
     },
     routines: async () => {
       return Routine.find({});
-    },
-    routine: async (parent, { routineId }) => {
-      return Routine.findOne({ _id: routineId });
-    },
-    routineSchedules: async () => {
-      return RoutineSchedule.find({});
-    },
-    routineSchedule: async (parent, { routineScheduleId }) => {
-      return RoutineSchedule.findOne({ _id: routineScheduleId });
-    },
-    weightSchedules: async () => {
-      return WeightSchedule.find({});
-    },
-    weightSchedule: async (parent, { weightScheduleId }) => {
-      return WeightSchedule.findOne({ _id: weightScheduleId });
-    },
-    calorieSchedules: async () => {
-      return CalorieSchedule.find({});
-    },
-    calorieSchedule: async (parent, { calorieScheduleId }) => {
-      return CalorieSchedule.findOne({ _id: calorieScheduleId });
     },
   },
 
@@ -174,7 +152,7 @@ const resolvers = {
         )
       }
     },
-    editPost: async (parent, { postId, title, text }, context) => {
+    updatePost: async (parent, { postId, title, text }, context) => {
       if (context.user) {
         return Post.findOneAndUpdate(
           { _id: postId },
@@ -228,14 +206,20 @@ const resolvers = {
         "You need to be logged in to delete a comment!"
       );
     },
-    addRoutine: async (parent, { title, routine }, context) => {
+    addRoutine: async (parent, { title, text }, context) => {
       if (context.user) {
-        return await Routine.create({
+        const routine = await Routine.create({
           title,
-          routine
+          text,
+          author: context.user.username,
         });
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { routines: routine._id } }
+        );
+        return routine;
       }
-      throw new AuthenticationError("You need to be logged in!");
+      throw new AuthenticationError("You need to be logged in to create routine!");
     },
     removeRoutine: async (parent, { routineId }, context) => {
       if (context.user) {
@@ -252,134 +236,71 @@ const resolvers = {
         "You need to be logged in to delete a routine!"
       );
     },
-    addRoutineSchedule: async (
-      parent,
-      { date, routine },
-      context
-    ) => {
+    addTracker: async (parent, { date }, context) => {
       if (context.user) {
-        return await RoutineSchedule.create({
+        const tracker = await Tracker.create({
           date,
-          routine
-        });
-      }
-      throw new AuthenticationError("You need to be logged in!");
-    },
-    updateRoutineSchedule: async (
-      parent,
-      { routineScheduleId, complete },
-      context
-    ) => {
-      if (context.user) {
-        return await RoutineSchedule.findOneAndUpdate(
-          { _id: routineScheduleId },
-          { complete }
-        );
-      }
-      throw new AuthenticationError("You need to be logged in!");
-    },
-  removeRoutineSchedule: async (
-    parent, { routineScheduleId }, 
-    context) => {
-    if (context.user) {
-      const routineSchedule = await RoutineSchedule.findOneAndDelete({
-        _id: routineScheduleId,
-      });
-      await User.findOneAndUpdate(
-        { _id: context.user._id },
-        { $pull: { routineSchedule: RoutineSchedule._id } }
-      );
-      return routineSchedule;
-    }
-    throw new AuthenticationError(
-      "You need to be logged in to delete a post!"
-    );
-  },
-    addWeightSchedule: async (
-      parent,
-      { date, weight },
-      context
-    ) => {
-      if (context.user) {
-        return await WeightSchedule.create({
-          date,
-          weight
-        });
-      }
-      throw new AuthenticationError("You need to be logged in!");
-    },
-    updateWeightSchedule: async (
-      parent,
-      { weightScheduleId, weight },
-      context
-    ) => {
-      if (context.user) {
-        return await WeightSchedule.findOneAndUpdate(
-          { _id: weightScheduleId },
-          { weight }
-        );
-      }
-      throw new AuthenticationError("You need to be logged in!");
-    },
-    removeWeightSchedule: async (
-      parent, { weightScheduleId }, 
-      context) => {
-      if (context.user) {
-        const weightSchedule = await WeightSchedule.findOneAndDelete({
-          _id: weightScheduleId,
         });
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $pull: { weightSchedule: WeightSchedule._id } }
+          { $addToSet: { tracker: tracker._id } }
         );
-        return weightSchedule;
+        return tracker;
+      }
+      throw new AuthenticationError("You need to be logged in to start tracking!");
+    },
+    updateTracker: async (parent, { trackerId, weight, calorie }, context) => {
+      if (context.user) {
+        return await Tracker.findOneAndUpdate(
+          { _id: trackerId },
+          { $set: { weight: weight, calorie: calorie } },
+          { new: true }
+        );
+      }
+    },
+    addScheduledRoutines: async (parent, { trackerId, routineName }, context) => {
+      if (context.user) {
+        return Tracker.findOneAndUpdate(
+          { _id: trackerId },
+          { $addToSet: { scheduledRoutines: { routineName: routineName}, }, },
+          { new: true, runValidators: true }
+        );
+      }
+      throw new AuthenticationError("You need to be logged in to update routine!");
+    },
+    updateScheduledRoutines: async (parent, { scheduledRoutinesId, complete }, context) => {
+      if (context.user) {
+        return await Tracker.findOneAndUpdate(
+          { "scheduledRoutines._id": scheduledRoutinesId },
+          { $set: { "scheduledRoutines.$.complete": complete } },
+          { new: true }
+        );
+      }
+    },
+    removeScheduledRoutines: async (parent, { trackerId, scheduledRoutinesId }, context) => {
+      if (context.user) {
+        return Tracker.findOneAndUpdate(
+          { _id: trackerId },
+          { $pull: { scheduledRoutines: {_id: scheduledRoutinesId,},}, }
+        );
       }
       throw new AuthenticationError(
-        "You need to be logged in to delete a post!"
+        "You need to be logged in to remove a scheduled routine!"
       );
     },
-    addCalorieSchedule: async (
-      parent,
-      { date, calorie },
-      context
-    ) => {
+    removeTracker: async (parent, { trackerId }, context) => {
       if (context.user) {
-        return await CalorieSchedule.create({
-          date,
-          calorie
-        });
-      }
-      throw new AuthenticationError("You need to be logged in!");
-    },
-    
-    updateCalorieSchedule: async (
-      parent,
-      { calorieScheduleId, calorie },
-      context
-    ) => {
-      if (context.user) {
-        return await CalorieSchedule.findOneAndUpdate(
-          { _id: calorieScheduleId },
-          { calorie }
-        );
-      }
-      throw new AuthenticationError("You need to be logged in!");
-    },
-    removeCalorieSchedule: async (
-      parent, { calorieScheduleId }, 
-      context) => {
-      if (context.user) {
-        const calorieSchedule = await CalorieSchedule.findOneAndDelete({
-          _id: calorieScheduleId,
+        const tracker = await Tracker.findOneAndDelete({
+          _id: trackerId,
         });
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $pull: { calorieSchedule: CalorieSchedule._id } }
+          { $pull: { tracker: tracker._id } }
         );
-        return calorieSchedule;
+        return tracker;
       }
       throw new AuthenticationError(
-        "You need to be logged in to delete a post!"
+        "You need to be logged in to delete a track!"
       );
     },
   },

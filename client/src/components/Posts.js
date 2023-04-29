@@ -64,14 +64,16 @@ const Posts = ({ posts }) => {
     event.preventDefault();
     const { id } = event.target;
 
-    try {
-      const { postData } = await removePost({
-        variables: { postId: id },
-      });
-
-      window.location.assign('/posts');
-    } catch (e) {
-      console.error(e);
+    if (id !== '') {
+      try {
+        const { postData } = await removePost({
+          variables: { postId: id },
+        });
+  
+        window.location.assign('/posts');
+      } catch (e) {
+        console.error(e);
+      }
     }
 
   };
@@ -84,7 +86,7 @@ const Posts = ({ posts }) => {
   };
 
   const handleAddLike = async (postId) => {
-
+    
     try {
       const { addLikeData } = await addLike({
         variables: { postId,  userId },

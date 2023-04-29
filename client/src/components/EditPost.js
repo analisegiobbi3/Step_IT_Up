@@ -4,7 +4,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_POST } from '../utils/queries';
-import { EDIT_POST } from "../utils/mutations";
+import { UPDATE_POST } from "../utils/mutations";
 
 import {
   Box, Button, FormControl, Spinner,
@@ -40,14 +40,14 @@ const EditPost = () => {
     });
   };
 
-  const [editPost, { error, postData }] = useMutation(EDIT_POST);
+  const [updatePost, { error, postData }] = useMutation(UPDATE_POST);
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     console.log(formState);
 
     try {
-      const { postData } = await editPost({
+      const { postData } = await updatePost({
         variables: { postId, ...formState},
       });
 
