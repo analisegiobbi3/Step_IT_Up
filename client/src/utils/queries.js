@@ -32,8 +32,8 @@ export const QUERY_POST = gql`
 `
 
 export const QUERY_USER_POST = gql`
-    query getUserPost($postId: ID!) {
-        post(postId: $postId){
+    query getUserPost($userId: ID!) {
+        post(userId: $userId){
             _id
             title
             text
@@ -86,8 +86,9 @@ export const QUERY_ROUTINES = gql`
   query allRoutines {
     routines {
       _id
+      author
       title
-      routine
+      text
     }
   }
 `;
@@ -96,8 +97,9 @@ export const QUERY_SINGLE_ROUTINE = gql`
   query singleRoutine {
     routine {
       _id
+      author
       title
-      routine
+      text
     }
   }
 `;
@@ -125,19 +127,31 @@ export const QUERY_USER = gql`
             }
       }
       profile {
-        _id
-        age
-        sex
-        weight
-        height
-        goalWeight
-        calories
-        activityLevel
+          _id
+          age
+          sex
+          weight
+          height
+          goalWeight
+          calories
+          activityLevel
       }
       routines {
+          _id
+          author
+          title
+          text
+      }
+      tracker {
         _id
-        title
-        routine
+        date
+        scheduledRoutines {
+          _id
+          routineName
+          complete
+        }
+        weight
+        calorie
       }
     }
   }
@@ -177,8 +191,20 @@ export const QUERY_ME = gql`
       }
       routines {
         _id
+        author
         title
-        routine
+        text
+      }
+      tracker {
+        _id
+        date
+        scheduledRoutines {
+          _id
+          routineName
+          complete
+        }
+        weight
+        calorie
       }
     }
   }

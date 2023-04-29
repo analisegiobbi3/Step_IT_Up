@@ -1,39 +1,28 @@
 const { gql } = require('apollo-server-express')
 
 const typeDef = gql`
+
+  type Auth {
+    token: ID!
+    user: User
+  }
+
   type User {
-    _id: ID
-    username: String
-    email: String
-    password: String
+    _id: ID!
+    username: String!
+    email: String!
+    password: String!
     posts: [Post]
-    profile: Profile
+    profile: [Profile]
     routines: [Routine]
-  }
-
-  type RoutineSchedule {
-    _id: ID
-    date: String
-    routine: String
-    complete: Boolean
-  }
-
-  type WeightSchedule {
-    _id: ID
-    date: String
-    weight: Int
-  }
-
-  type CalorieSchedule {
-    _id: ID
-    date: String
-    calorie: Int
+    tracker: [Tracker]
   }
 
   type Routine {
-    _id: ID
-    title: String
-    routine: String
+    _id: ID!
+    author: String!
+    title: String!
+    text: String!
   }
 
   type Profile {
@@ -64,9 +53,18 @@ const typeDef = gql`
     commentCreatedAt: String
   }
 
-  type Auth {
-    token: ID!
-    user: User
+  type Tracker {
+    _id: ID!
+    date: String!
+    scheduledRoutines: [ScheduledRoutines]
+    weight: Int
+    calorie: Int
+  }
+
+  type ScheduledRoutines {
+    _id: ID
+    routineName: String
+    complete: Boolean
   }
 
   type Query {
@@ -78,56 +76,29 @@ const typeDef = gql`
     myProfile: Profile
     users: [User]
     user(username: String!): User
-    routine: Routine
     routines: [Routine]
-    routineSchedule: RoutineSchedule
-    routineSchedules: [RoutineSchedule]
-    weightSchedule: WeightSchedule
-    weightSchedules: [WeightSchedule]
-    calorieSchedule: CalorieSchedule
-    calorieSchedules: [CalorieSchedule]
   }
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
+    addProfile(age: Int!, sex: String!, weight: Int!, height: Int!, goalWeight: Int!, activityLevel: Int!, calories: Int): Profile
+    updateProfile(profileId: ID!, age: Int, sex: String, weight: Int, height: Int, goalWeight: Int, activityLevel: Int, calories: Int): Profile
     addPost(title: String!, text: String!): Post
     addLike(postId: ID!, userId: ID!): Post
     removeLike(postId: ID!, userId: ID!): Post
     addComment(postId: ID!, commentText: String!): Post
-    editPost(postId: ID!, title: String!, text: String!): Post
+    updatePost(postId: ID!, title: String!, text: String!): Post
     removePost(postId: ID!): Post
     removeComment(postId: ID!, commentId: ID!): Post
-    addRoutine(title: String!, routine: String!): Routine
+    addRoutine(title: String!, text: String!): Routine
     removeRoutine(routineId: ID!): Routine
-    addRoutineSchedule(date: String!, routine: String!): RoutineSchedule
-    updateRoutineSchedule(routineId: ID!, routine: String!): RoutineSchedule
-    removeRoutineSchedule(routineId: ID): RoutineSchedule
-    addWeightSchedule(date: String!, weight: Int!): WeightSchedule
-    updateWeightSchedule(weightId: ID!, weight: String!): WeightSchedule
-    removeWeightSchedule(weightId: ID): WeightSchedule
-    addCalorieSchedule(date: String!, calorie: Int!): CalorieSchedule
-    updateCalorieSchedule(calorieId: ID!, calorie: String!): CalorieSchedule
-    removeCalorieSchedule(calorieId: ID): CalorieSchedule
-    addProfile(
-      age: Int!
-      sex: String!
-      weight: Int!
-      height: Int!
-      goalWeight: Int!
-      activityLevel: Int!
-      calories: Int
-    ): Profile
-    updateProfile(
-      profileId: ID!
-      age: Int
-      sex: String
-      weight: Int
-      height: Int
-      goalWeight: Int
-      activityLevel: Int
-      calories: Int
-    ): Profile
+    addTracker(date: String!): Tracker
+    updateTracker(trackerId: ID!, weight: Int, calorie: Int): Tracker
+    removeTracker(trackerId: ID!): Tracker
+    addScheduledRoutines(trackerId: ID!, routineName: String!): Tracker
+    updateScheduledRoutines(scheduledRoutinesId: ID!, complete: Boolean!): Tracker
+    removeScheduledRoutines(trackerId: ID!, scheduledRoutinesId: ID!): Tracker
   }
 `;
 

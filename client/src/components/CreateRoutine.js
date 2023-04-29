@@ -11,7 +11,6 @@ import {
   Card, CardHeader, CardBody, CardFooter,
   Tabs, TabList, TabPanels, Tab, TabPanel,
   Input, InputGroup, InputLeftAddon,
-  Editable, EditableInput, EditablePreview,
   Radio, RadioGroup, Checkbox, Select,
   Modal, ModalOverlay, ModalContent, ModalHeader,
   ModalFooter, ModalBody, ModalCloseButton, useDisclosure,
@@ -72,12 +71,14 @@ const CreateRoutine = () => {
   };
 
   const [addRoutine, { error, data }] = useMutation(ADD_ROUTINE);
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
     try {
+
       const { data } = await addRoutine({
-        variables: { title: routineName, routine},
+        variables: { title: routineName, text: routine},
       });
 
       window.location.assign('/routines');
@@ -306,7 +307,6 @@ const CreateRoutine = () => {
                   name="routineName"
                   value={routineName}
                   placeholder="Click to name the routine"
-                  defaultValue="New Routine"
                   onChange={(e)=> {setRoutineName(e.target.value)}}
                   />
                 </CardHeader>

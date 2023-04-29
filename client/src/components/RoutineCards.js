@@ -30,6 +30,7 @@ const RoutineCards = ({ routines }) => {
   };
 
   if (!routines.length) {
+    console.log(routines)
     return <Heading>You don't have any routines. Click "New Routine" to get started!</Heading>;
   };
 
@@ -43,7 +44,7 @@ const RoutineCards = ({ routines }) => {
           </CardHeader>
           <CardBody py='0'>
             <Text>
-              {routine.routine}
+              {routine.text}
             </Text>
           </CardBody>
           <CardFooter>
