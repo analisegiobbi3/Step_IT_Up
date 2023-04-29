@@ -58,11 +58,6 @@ export const ADD_POST = gql`
             text
             author
             createdAt
-            comments{
-                _id
-                commentText
-                commentAuthor
-            }
         }
     }
 `
@@ -73,9 +68,7 @@ export const ADD_COMMENT = gql`
             _id
             title
             text
-            author
-            createdAt
-            comments{
+            comments {
                 _id
                 commentText
                 commentAuthor
@@ -111,9 +104,9 @@ export const REMOVE_LIKE = gql`
 //     }
 // `
 
-export const EDIT_POST = gql`
-    mutation editPost($postId: ID!, $title: String!, $text: String!){
-      editPost(postId: $postId, title: $title, text: $text){
+export const UPDATE_POST = gql`
+    mutation updatePost($postId: ID!, $title: String!, $text: String!){
+      updatePost(postId: $postId, title: $title, text: $text){
         _id
         title
         text
@@ -129,11 +122,11 @@ export const REMOVE_POST = gql`
 `;
 
 export const ADD_ROUTINE = gql`
-  mutation addRoutine($title: String, $routine: String) {
-    addRoutine(title: $title, routine: $routine) {
+  mutation addRoutine($title: String!, $text: String!) {
+    addRoutine(title: $title, text: $text) {
       _id
       title
-      routine
+      text
     }
   }
 `;
@@ -144,4 +137,75 @@ export const REMOVE_ROUTINE = gql`
         _id
       }
     }
+`;
+
+export const ADD_TRACKER = gql`
+  mutation addTracker($date: String!) {
+    addTracker(date: $date) {
+      _id
+      date
+      scheduledRoutines {
+        _id
+        routineName
+        complete
+      }
+      weight
+      calorie
+    }
+  }
+`;
+
+export const UPDATE_TRACKER = gql`
+  mutation updateTracker($trackerId: ID!, $weight: Int, $calorie: Int) {
+    updateTracker(trackerId: $trackerId, weight: $weight, calorie: $calorie) {
+      _id
+      weight
+      calorie
+    }
+  }
+`;
+
+export const REMOVE_TRACKER = gql`
+  mutation removeTracker($trackerId: ID!) {
+    removeTracker(trackerId: $trackerId) {
+      _id
+    }
+  }
+`;
+
+export const ADD_SCHEDULED_ROUTINES = gql`
+  mutation addScheduledRoutines($trackerId: ID!, $routineName: String!) {
+    addScheduledRoutines(trackerId: $trackerId, routineName: $routineName) {
+      _id
+      date
+      scheduledRoutines {
+        _id
+        routineName
+        complete
+      }
+      weight
+      calorie
+    }
+  }
+`;
+
+export const UPDATE_SCHEDULED_ROUTINES = gql`
+  mutation updateScheduledRoutines($scheduledRoutinesId: ID!, $complete: Boolean!) {
+    updateScheduledRoutines(scheduledRoutinesId: $scheduledRoutinesId, complete: $complete) {
+      _id
+      scheduledRoutines {
+        _id
+        routineName
+        complete
+      }
+    }
+  }
+`;
+
+export const REMOVE_SCHEDULED_ROUTINES = gql`
+  mutation removeScheduledRoutines($trackerId: ID!, $scheduledRoutinesId: ID!) {
+    removeScheduledRoutines(trackerId: $trackerId, scheduledRoutinesId: $scheduledRoutinesId) {
+      _id
+    }
+  }
 `;

@@ -18,8 +18,6 @@ const Blog = () => {
   const { loading, data } = useQuery(QUERY_POSTS);
   const posts = data?.posts || [];
 
-  // Auth.getProfile().data.username,
-
   return (
     <Box className='blog-page'>
       <Flex mb='5'>

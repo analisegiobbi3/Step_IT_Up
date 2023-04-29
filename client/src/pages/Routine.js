@@ -3,20 +3,19 @@ import React from "react";
 import { Link } from 'react-router-dom'
 import { useQuery } from '@apollo/client';
 
-import { QUERY_ROUTINES } from '../utils/queries';
+import { QUERY_ME } from '../utils/queries';
 import RoutineCards from '../components/RoutineCards';
 
 import {
-  SimpleGrid, Flex, Box, Spacer, 
-  Heading, Button, Spinner,
+  Flex, Box, Spacer, Heading, Button, Spinner,
 } from '@chakra-ui/react'
 
 import '../styles/Routine.css';
 
 const Routine = () => {
 
-  const { loading, data } = useQuery(QUERY_ROUTINES);
-  const routines = data?.routines || [];
+  const { loading, data } = useQuery(QUERY_ME);
+  const routines = data?.me.routines || [];
 
   return (
     <Box className='routine-page'>

@@ -1,45 +1,105 @@
 // import package and local style sheet
 import React, { useState } from "react";
 import { Link } from 'react-router-dom'
+import { useStateWithCallbackInstant, useStateWithCallbackLazy } from 'use-state-with-callback';
+
+import { useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
+import { QUERY_ME } from '../utils/queries';
+import { ADD_TRACKER, REMOVE_TRACKER } from "../utils/mutations";
+
+import CalendarList from '../components/CalendarList';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-
-import {
-  Grid, GridItem, Stack, StackDivider,
-  Card, CardHeader, CardBody, CardFooter,
-  Flex, Box, Divider, Spacer, Tooltip,
-  ButtonGroup, Button, IconButton,
-  Heading, Text, Input, Checkbox,
-  Editable, EditableInput, EditablePreview, useEditableControls,
-  Drawer, DrawerBody, DrawerFooter, DrawerHeader,
-  DrawerOverlay, DrawerContent, useDisclosure,
-} from '@chakra-ui/react'
-
-import { FiCheck, FiX, FiEdit, FiPlusSquare, FiMinusSquare, FiExternalLink } from "react-icons/fi";
-
 import '../styles/Calendar.css';
 
+import {
+  Grid, GridItem, Box, Spacer,
+  IconButton, Spinner, Text, Input,
+  Card, CardHeader, CardBody,
+} from '@chakra-ui/react'
+
+import { FiPlusSquare, FiMinusSquare } from "react-icons/fi";
+
 const CalendarPage = () => {
-  const [date, setDate] = useState(new Date());
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  // emulates a fetch (useQuery expects a Promise)
+  const emulateFetch = _ => {
+    return new Promise(resolve => {
+      resolve([{ data: "ok" }]);
+    });
+  };
 
-  function EditableControls() {
-    const {
-      isEditing,
-      getSubmitButtonProps,
-      getCancelButtonProps,
-      getEditButtonProps,
-    } = useEditableControls()
+  const { loading, data, refetch } = useQuery(QUERY_ME, emulateFetch, {
+    refetchOnWindowFocus: false,
+    enabled: true
+  });
 
-    return isEditing ? (
-      <ButtonGroup size='sm'>
-        <IconButton icon={<FiCheck />} {...getSubmitButtonProps()} />
-        <IconButton icon={<FiX />} {...getCancelButtonProps()} />
-      </ButtonGroup>
-    ) : (
-      <IconButton ml='3' size='md' icon={<FiEdit />} {...getEditButtonProps()} />
-    )
+
+  // const { loading, data } = useQuery(QUERY_ME);
+  const tracker = data?.me.tracker || [];
+
+  const trackedDates = tracker.map(({ date }) => date)
+  const checkTrackHistory = (d) => {
+    return d == dateTime;
   }
+
+  const [showList, setShowList] = useState(false);
+  const [trackerIndex, setTrackerIndex] = useStateWithCallbackLazy(false);
+  const [tracked, setTracked] = useStateWithCallbackLazy(false)
+
+  const [date, setDate] = useStateWithCallbackInstant(new Date(localStorage.getItem('storedDate')).getTime() || new Date().getTime(), newDate => {
+    if (trackedDates.find(checkTrackHistory)) {
+      setTrackerIndex(tracker.findIndex(x => x.date == dateTime))
+      setTracked(true)
+    } else {
+      setTrackerIndex('')
+      setTracked(false)
+    }
+    localStorage.setItem('storedDate', date);
+  });
+
+  const dateTime = new Date(date).getTime()
+
+  const handleChangeDate = (e) => {
+    setShowList(true)
+    setTracked(false)
+    setDate(e)
+  };
+
+  const [addTracker, { addTrackerData }] = useMutation(ADD_TRACKER);
+
+  const handleAddTracker = async (event) => {
+    event.preventDefault();
+
+    try {
+      const { addTrackerData } = await addTracker({
+        variables: { date: date },
+      });
+
+      localStorage.setItem('storedDate', date);
+      refetch();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const [removeTracker, { removeTrackerData }] = useMutation(REMOVE_TRACKER);
+
+  const handleRemoveTracker = async (event) => {
+    event.preventDefault();
+
+    try {
+      const { removeTrackerData } = await removeTracker({
+        variables: { trackerId: tracker[trackerIndex]._id },
+      });
+
+      setShowList(false)
+      setTracked(false)
+      refetch();
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <Box className='calendar-page'>
@@ -47,124 +107,55 @@ const CalendarPage = () => {
         <GridItem colSpan={5}>
           <div className="calendar">
             <div className='calendar-container'>
-              <Calendar onChange={setDate} value={date} calendarType="US" />
+              <Calendar
+                onChange={handleChangeDate}
+                value={new Date(date)}
+                calendarType="US" />
             </div>
           </div>
         </GridItem>
         <GridItem colSpan={5}>
-          <Card>
-            <CardHeader>
-              <Heading textTransform='uppercase'>{date.toDateString()}</Heading>
+          {showList ? (<Card>
+            <CardHeader display='flex' justifyContent='space-between'>
+              <Box>
+                <Input size='lg' textTransform='uppercase' value={date.toDateString()} />
+              </Box>
+              <Spacer />
+              {tracked ? (
+                <Box m='auto' mb='10' display='flex' alignItems='center'>
+                  <Text>Remove tracked history for this day.</Text>
+                  <IconButton bg='var(--shade5)' color='white' ml='3' size='md' icon={<FiMinusSquare />} onClick={handleRemoveTracker} />
+                </Box>
+              ) : (
+                <Box m='auto' mb='10' display='flex' alignItems='center'>
+                  <Text>No tracking history, start tracking?</Text>
+                  <IconButton bg='var(--shade5)' color='white' ml='3' size='md' icon={<FiPlusSquare />} onClick={handleAddTracker} />
+                </Box>
+              )}
             </CardHeader>
             <CardBody>
-              <Stack divider={<StackDivider />} spacing='4'>
+              {tracked ? (
                 <Box>
-                  <Flex>
-                    <Box>
-                      <Heading size='lg' textTransform='uppercase' mb='5'>Routines</Heading>
+                  {loading ? (
+                    <Box m='auto' mb='10'>
+                      <Link to="/"><Spinner /> Loading...</Link>
                     </Box>
-                    <Spacer />
-                    <Box>
-                      <IconButton ml='3' size='md' icon={<FiPlusSquare />} onClick={onOpen} />
-                    </Box>
-                  </Flex>
-                  {/* duplicate this section for routines */}
-                  <Text fontSize='sm'>
-                    <IconButton variant='solid' aria-label='Remove Circle' size='sm' mr='5' icon={<FiMinusSquare />} />
-                    <Checkbox size='lg' colorScheme='green'>
-                      Routine 1
-                    </Checkbox>
-                  </Text>
-                  {/* end of section */}
+                  ) : (
+                    <CalendarList
+                      trackerIndex={trackerIndex}
+                    />
+                  )}
                 </Box>
-                <Box>
-                  <Flex>
-                    <Box>
-                      <Heading size='lg' textTransform='uppercase' mb='5'>Calories (C)</Heading>
-                    </Box>
-                    <Spacer />
-                    <Box>
-                      <Editable
-                        textAlign='left'
-                        isPreviewFocusable={false}
-                      >
-                        <EditablePreview />
-                        <Input as={EditableInput} />
-                        <EditableControls />
-                      </Editable>
-                    </Box>
-                  </Flex>
-                </Box>
-                <Box>
-                  <Flex>
-                    <Box>
-                      <Heading size='lg' textTransform='uppercase' mb='5'>Weight (lbs)</Heading>
-                    </Box>
-                    <Spacer />
-                    <Box>
-                      <Editable
-                        textAlign='left'
-                        isPreviewFocusable={false}
-                      >
-                        <EditablePreview />
-                        <Input as={EditableInput} />
-                        <EditableControls />
-                      </Editable>
-                    </Box>
-                  </Flex>
-                </Box>
-              </Stack>
+              ) : (
+                <Box></Box>
+              )}
             </CardBody>
           </Card>
+          ) : (
+            <Box></Box>
+          )}
         </GridItem>
       </Grid>
-      <Drawer placement='left' size='sm' onClose={onClose} isOpen={isOpen}>
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerHeader borderBottomWidth='1px' color='var(--shade6)'>Select routine(s) to preview and add</DrawerHeader>
-          <DrawerBody>
-            <Box overflowY="auto" maxHeight="100vh">
-              <Stack>
-                <Flex justifyContent='space-between' alignItems='center'>
-                  <Box>
-                    <Text as='b' my='2'>Routines:</Text>
-                  </Box>
-                  <Box>
-                    <Link to='/routine' >
-                      <Tooltip label='Add / Edit / View Routines'>
-                        <IconButton aria-label='Routine' bg='var(--shade1)' color='white' _hover={{ bg: 'var(--shade5)' }} icon={<FiExternalLink />} />
-                      </Tooltip>
-                    </Link>
-                  </Box>
-                </Flex>
-                <Checkbox>Routine 1</Checkbox>
-                <Checkbox>Routine 1</Checkbox>
-                <Checkbox>Routine 1</Checkbox>
-                <Checkbox>Routine 1</Checkbox>
-                <Divider borderWidth='3px' borderColor='var(--shade1)' />
-                <Text as='b' my='5'>Preview: </Text>
-                <Card>
-                  <CardHeader>
-                    <Heading size='md'>Routine 1</Heading>
-                  </CardHeader>
-                  <CardBody>
-                    <Text>View a summary of all your customers over the last month.</Text>
-                  </CardBody>
-                  <CardFooter>
-                    <Button bg='var(--shade1)' color='white' _hover={{ bg: 'var(--shade5)' }}>Delete</Button>
-                  </CardFooter>
-                </Card>
-              </Stack>
-            </Box>
-          </DrawerBody>
-          <DrawerFooter borderTopWidth='1px'>
-            <Button variant='outline' mr={3} onClick={onClose}>
-              Cancel
-            </Button>
-            <Button bg='var(--shade1)' color='white' _hover={{ bg: 'var(--shade5)' }}>Add Routine(s)</Button>
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
     </Box>
   );
 }
