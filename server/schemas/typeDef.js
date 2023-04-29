@@ -32,6 +32,8 @@ const typeDef = gql`
     weight: Int!
     height: Int!
     goalWeight: Int!
+    activityLevel: Int!
+    calories: Int
   }
 
   type Post {
@@ -71,6 +73,7 @@ const typeDef = gql`
     profiles: [Profile]
     profile(profileId: ID!): Profile
     me: User
+    myProfile: Profile
     users: [User]
     user(username: String!): User
     routines: [Routine]
@@ -79,8 +82,8 @@ const typeDef = gql`
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addProfile(age: Int!, sex: String!, weight: Int!, height: Int!, goalWeight: Int!): Profile
-    updateProfile(profileId: ID!, age: Int!, weight: Int!, height: Int!, goalWeight: Int!): Profile
+    addProfile(age: Int!, sex: String!, weight: Int!, height: Int!, goalWeight: Int!, activityLevel: Int!, calories: Int): Profile
+    updateProfile(profileId: ID!, age: Int, sex: String, weight: Int, height: Int, goalWeight: Int, activityLevel: Int, calories: Int): Profile
     addPost(title: String!, text: String!): Post
     addLike(postId: ID!, userId: ID!): Post
     removeLike(postId: ID!, userId: ID!): Post

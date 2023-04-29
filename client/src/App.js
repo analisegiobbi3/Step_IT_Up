@@ -21,6 +21,7 @@ import CreateRoutine from "./components/CreateRoutine";
 import Profile from "./pages/Profile";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import Playlists from "./pages/Playlists"
 
 import './styles/Global.css';
 
@@ -67,6 +68,7 @@ function App() {
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/tracker" element={<Tracker />} />
               <Route path="/routines" element={<Routine />} />
+              <Route path="/playlists" element={<Playlists />}/>
               <Route path="/routines/createRoutine" element={<CreateRoutine />} />
             </Routes>
           </div>

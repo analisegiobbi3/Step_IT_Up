@@ -61,6 +61,8 @@ export const QUERY_PROFILES = gql`
         weight
         height
         goalWeight
+        activityLevel
+        calories
     }
   }
 `;
@@ -74,6 +76,8 @@ export const QUERY_SINGLE_PROFILE = gql`
         weight
         height
         goalWeight
+        calories
+        activityLevel
 
     }
 }
@@ -122,19 +126,21 @@ export const QUERY_USER = gql`
                 commentCreatedAt
             }
       }
-      profile {
-          _id
-          age
-          sex
-          weight
-          height
-          goalWeight
-      }
-      routines {
-          _id
-          author
-          title
-          text
+        profile {
+            _id
+            age
+            sex
+            weight
+            height
+            goalWeight
+            calories
+            activityLevel
+        }
+        routines {
+            _id
+            author
+            title
+            text
       }
       tracker {
         _id
@@ -173,17 +179,19 @@ export const QUERY_ME = gql`
           commentCreatedAt
         }
       }
-      profile {
-        _id
-        age
-        sex
-        weight
-        height
-        goalWeight
-      }
-      routines {
-        _id
-        author
+        profile {
+          _id
+          age
+          sex
+          weight
+          height
+          goalWeight
+          calories
+          activityLevel
+        }
+        routines {
+          _id
+          author
         title
         text
       }
@@ -201,4 +209,39 @@ export const QUERY_ME = gql`
     }
   }
 `;
+
+export const QUERY_MYPROFILE = gql`
+  query myProfile {
+    myProfile {
+      _id
+      age
+      sex
+      weight
+      height
+      goalWeight
+      calories
+      activityLevel
+    }
+  }
+`;
+
+export const QUERY_WEIGHT = gql`
+  query weightSchedules {
+    weightSchedules {
+      _id
+      date
+      weight
+    }
+  }
+`
+
+export const QUERY_CALORIES = gql`
+  query calorieSchedules {
+    calorieSchedules {
+      _id
+      date
+      calories
+    }
+  }
+`
 
