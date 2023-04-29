@@ -39,12 +39,12 @@ const AddProfile = () => {
       const bmr =
         88.362 +
         (13.397 * (newGoalWeight * 2.2) + 4.799 * newHeight - 5.677 * newAge);
-      setCalories(bmr * activityLevel);
+      setCalories(Math.round(bmr * activityLevel));
     } else {
       const bmr =
         447.593 +
         (9.247 * (newGoalWeight * 2.2) + 3.098 * newHeight - 4.33 * newAge);
-      setCalories(bmr * activityLevel);
+      setCalories(Math.round(bmr * activityLevel));
     }
   };
     return (
@@ -92,7 +92,7 @@ const AddProfile = () => {
               <label>Activity Level</label>
               <select
                 defaultValue={activityLevel}
-                onChange={(e) => setActivityLevel(e.target.value)}
+                onChange={(e) => setActivityLevel(parseInt(e.target.value))}
               >
                 <option value="1.375">Sedentary</option>
                 <option value="1.55">Moderate</option>
