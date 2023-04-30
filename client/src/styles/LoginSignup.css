@@ -1,9 +1,12 @@
 /* styling for the Routine page */
-.login-modal {
+.login-modal, .signup-modal {
     font-family: var(--font);
 }
 
+.css-133nkbt {
+    display: block;
+}
 
-.login-modal input {
+.login-modal input, .signup-modal input {
     border-color: var(--shade1);
 }

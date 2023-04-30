@@ -1,6 +1,6 @@
 import React from 'react';
 import { useMutation } from '@apollo/client';
-import { REMOVE_ROUTINE } from "../utils/mutations";
+import { REMOVE_ROUTINE } from '../utils/mutations';
 
 import {
   Box, SimpleGrid, Heading, Text, Button,
@@ -31,7 +31,7 @@ const RoutineCards = ({ routines }) => {
 
   if (!routines.length) {
     console.log(routines)
-    return <Heading>You don't have any routines. Click "New Routine" to get started!</Heading>;
+    return <Heading>You don't have any routines. Click 'New Routine' to get started!</Heading>;
   };
 
   return (

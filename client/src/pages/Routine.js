@@ -1,5 +1,5 @@
 // import package and local style sheet
-import React from "react";
+import React from 'react';
 import { Link } from 'react-router-dom'
 import { useQuery } from '@apollo/client';
 
@@ -25,12 +25,12 @@ const Routine = () => {
         </Box>
         <Spacer />
         <Box>
-          <Button variant='solid' mb='5'><Link to="/routines/createRoutine">New Routine</Link></Button>
+          <Button variant='solid' mb='5'><Link to='/routines/createRoutine'>New Routine</Link></Button>
         </Box>
       </Flex>
       {loading ? (
           <Box m='auto' mb='10'>
-            <Link to="/"><Spinner /> Loading...</Link>
+            <Link to='/'><Spinner /> Loading...</Link>
           </Box>
         ) : (
           <RoutineCards

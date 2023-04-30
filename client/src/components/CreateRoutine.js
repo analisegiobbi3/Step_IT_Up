@@ -1,20 +1,19 @@
 // import package and local style sheet
-import React, { useState } from "react";
-import { Link, useNavigate } from 'react-router-dom'
-import { useForm } from "react-hook-form";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'
+import { useForm } from 'react-hook-form';
 
 import { useMutation } from '@apollo/client';
-import { ADD_ROUTINE } from "../utils/mutations";
+import { ADD_ROUTINE } from '../utils/mutations';
 
 import {
-  SimpleGrid, Stack, Flex, Box, Spacer, Divider,
+  SimpleGrid, Stack, Box,Divider, Text, Button,
   Card, CardHeader, CardBody, CardFooter,
   Tabs, TabList, TabPanels, Tab, TabPanel,
   Input, InputGroup, InputLeftAddon,
   Radio, RadioGroup, Checkbox, Select,
   Modal, ModalOverlay, ModalContent, ModalHeader,
   ModalFooter, ModalBody, ModalCloseButton, useDisclosure,
-  Heading, Text, Button, Spinner,
 } from '@chakra-ui/react'
 
 import '../styles/Routine.css';
@@ -22,11 +21,14 @@ import '../styles/Routine.css';
 const CreateRoutine = () => {
 
   const { register, setValue, getValues } = useForm();
-  const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true })
+  const { isOpen } = useDisclosure({ defaultIsOpen: true })
   const [workout, setWorkout] = useState('')
   const [checkbox, setCheckbox] = useState(false);
   const [routine, setRoutine] = useState('')
   const [routineName, setRoutineName] = useState('');
+
+  const navigate = useNavigate();
+  const redirectRoutines = () => navigate('/routines');
 
   const outlineRoutine = () => {
     const count = getValues('count');
@@ -88,14 +90,14 @@ const CreateRoutine = () => {
   };
 
   return (
-    <Box className="routine-modal">
-      <Modal isOpen={isOpen} onClose={onClose} width='5000px' isCentered>
+    <Box className='routine-modal'>
+      <Modal isOpen={isOpen} onClose={redirectRoutines} width='5000px' isCentered>
         <ModalOverlay />
-        <ModalContent maxW="75vw">
+        <ModalContent maxW='75vw'>
           <ModalHeader fontSize='3xl' color='var(--shade6)'>New Routine</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Box overflowY="auto" maxHeight="500px">
+            <Box overflowY='auto' maxHeight='500px'>
               <Text as='b'>1. Select from a list of a popular workouts: </Text>
               <Tabs variant='enclosed-colored' mt='5'>
                 <TabList>
@@ -303,10 +305,10 @@ const CreateRoutine = () => {
               <Card borderWidth='1px' width='fit-content' m='5'>
                 <CardHeader pb='0'>
                   <input
-                  type="text"
-                  name="routineName"
+                  type='text'
+                  name='routineName'
                   value={routineName}
-                  placeholder="Click to name the routine"
+                  placeholder='Click to name the routine'
                   onChange={(e)=> {setRoutineName(e.target.value)}}
                   />
                 </CardHeader>
@@ -322,7 +324,7 @@ const CreateRoutine = () => {
           </ModalBody>
 
           <ModalFooter justifyContent='space-between'>
-            <Button colorScheme='gray' mr={3} onClick={onClose}>Close</Button>
+            <Button colorScheme='gray' mr={3} onClick={redirectRoutines}>Close</Button>
             <Button onClick={handleFormSubmit} bg='var(--shade1)' color='white' _hover={{ bg: 'var(--shade6)' }}>Add Routine</Button>
           </ModalFooter>
         </ModalContent>

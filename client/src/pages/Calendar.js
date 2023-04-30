@@ -1,12 +1,12 @@
 // import package and local style sheet
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom'
 import { useStateWithCallbackInstant, useStateWithCallbackLazy } from 'use-state-with-callback';
 
 import { useQuery } from '@apollo/client';
 import { useMutation } from '@apollo/client';
 import { QUERY_ME } from '../utils/queries';
-import { ADD_TRACKER, REMOVE_TRACKER } from "../utils/mutations";
+import { ADD_TRACKER, REMOVE_TRACKER } from '../utils/mutations';
 
 import CalendarList from '../components/CalendarList';
 import Calendar from 'react-calendar';
@@ -19,13 +19,13 @@ import {
   Card, CardHeader, CardBody,
 } from '@chakra-ui/react'
 
-import { FiPlusSquare, FiMinusSquare } from "react-icons/fi";
+import { FiPlusSquare, FiMinusSquare } from 'react-icons/fi';
 
 const CalendarPage = () => {
   // emulates a fetch (useQuery expects a Promise)
   const emulateFetch = _ => {
     return new Promise(resolve => {
-      resolve([{ data: "ok" }]);
+      resolve([{ data: 'ok' }]);
     });
   };
 
@@ -105,12 +105,12 @@ const CalendarPage = () => {
     <Box className='calendar-page'>
       <Grid templateColumns='repeat(10, 1fr)' gap={6}>
         <GridItem colSpan={5}>
-          <div className="calendar">
+          <div className='calendar'>
             <div className='calendar-container'>
               <Calendar
                 onChange={handleChangeDate}
                 value={new Date(date)}
-                calendarType="US" />
+                calendarType='US' />
             </div>
           </div>
         </GridItem>
@@ -138,7 +138,7 @@ const CalendarPage = () => {
                 <Box>
                   {loading ? (
                     <Box m='auto' mb='10'>
-                      <Link to="/"><Spinner /> Loading...</Link>
+                      <Link to='/'><Spinner /> Loading...</Link>
                     </Box>
                   ) : (
                     <CalendarList
