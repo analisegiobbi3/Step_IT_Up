@@ -138,7 +138,7 @@ const Posts = ({ posts }) => {
     refetch();
   };
 
-  if (!posts) {
+  if (!posts.length) {
     console.log(posts)
     return <Heading>No Post yet. Be the first to motivate!</Heading>;
   }
