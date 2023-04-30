@@ -12,7 +12,7 @@ const typeDef = gql`
     username: String!
     email: String!
     password: String!
-    profile: [Profile]
+    profile: Profile
     routines: [Routine]
     posts: [Post]
     liked: [Post]

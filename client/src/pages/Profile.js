@@ -127,7 +127,7 @@ const Profile = () => {
                           <FormLabel>Height</FormLabel>
                           <FormHelperText mb="20px">(cm)</FormHelperText>
                           <Input
-                            value={height}
+                            defaultValue={height}
                             // value={me.height}
                             className="form-input"
                             onChange={(e) =>
@@ -168,7 +168,7 @@ const Profile = () => {
                         <FormControl isRequired mb="20px">
                           <FormLabel>Activity Level</FormLabel>
                           <Select
-                            value={activityLevel}
+                            defaultValue={activityLevel}
                             onChange={(e) =>
                               setActivityLevel(parseInt(e.target.value))
                             }
