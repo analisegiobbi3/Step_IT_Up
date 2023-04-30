@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { CategoryScale, LinearScale, Chart } from 'chart.js';
 import LineChart from '../components/Chart';
 
-import { QUERY_CALORIES, QUERY_WEIGHT } from '../utils/queries'
+import { QUERY_ME } from '../utils/queries'
 
 import {
   Grid, GridItem, Box, Select,
@@ -26,8 +26,7 @@ const Tracker = () => {
   const { register, setValue, getValues } = useForm();
   const [showDates, setShowDates] = React.useState(false)
   
-  const { calorieData } = useQuery(QUERY_CALORIES)
-  const { weightData } = useQuery(QUERY_WEIGHT)
+  const { loading, data } = useQuery(QUERY_ME)
 
   const DateRange = () => (
     <div>

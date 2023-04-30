@@ -69,15 +69,15 @@ const typeDef = gql`
   }
 
   type Query {
-    posts: [Post]!
-    post(postId: ID!): Post
-    profiles: [Profile]
-    profile(profileId: ID!): Profile
     me: User
-    myProfile: Profile
     users: [User]
     user(username: String!): User
+    myProfile: Profile
+    profiles: [Profile]
+    profile(profileId: ID!): Profile
     routines: [Routine]
+    posts: [Post]!
+    post(postId: ID!): Post
   }
 
   type Mutation {
