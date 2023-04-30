@@ -19,15 +19,16 @@
 }
 
 /* my post & create post buttons */
-.blog-page .css-7c0i0n, .blog-page .css-zp6kg6 {
+.blog-page .css-7c0i0n, .blog-page .css-73fmtx {
     font-size: 2vw;
     padding: 25px;
     color: white;
 }
 
 /* my post & create post buttons */
-.blog-page .css-7c0i0n:hover, .blog-page .css-zp6kg6:hover {
-    background-color: var(--shade2);
+.blog-page .css-7c0i0n:hover, .blog-page .css-73fmtx:hover {
+    background-color: var(--shade6);
+    border: 1px solid white
 }
 
 /* icon buttons */

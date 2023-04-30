@@ -12,9 +12,10 @@ const typeDef = gql`
     username: String!
     email: String!
     password: String!
-    posts: [Post]
     profile: [Profile]
     routines: [Routine]
+    posts: [Post]
+    liked: [Post]
     tracker: [Tracker]
   }
 
@@ -42,8 +43,8 @@ const typeDef = gql`
     text: String
     author: String
     createdAt: String
-    comments: [Comment]!
-    likes: [User]!
+    comments: [Comment]
+    likes: [User]
   }
 
   type Comment {
@@ -68,7 +69,7 @@ const typeDef = gql`
   }
 
   type Query {
-    posts(username: String): [Post]!
+    posts: [Post]!
     post(postId: ID!): Post
     profiles: [Profile]
     profile(profileId: ID!): Profile
@@ -84,15 +85,15 @@ const typeDef = gql`
     login(email: String!, password: String!): Auth
     addProfile(age: Int!, sex: String!, weight: Int!, height: Int!, goalWeight: Int!, activityLevel: Int!, calories: Int): Profile
     updateProfile(profileId: ID!, age: Int, sex: String, weight: Int, height: Int, goalWeight: Int, activityLevel: Int, calories: Int): Profile
-    addPost(title: String!, text: String!): Post
-    addLike(postId: ID!, userId: ID!): Post
-    removeLike(postId: ID!, userId: ID!): Post
-    addComment(postId: ID!, commentText: String!): Post
-    updatePost(postId: ID!, title: String!, text: String!): Post
-    removePost(postId: ID!): Post
-    removeComment(postId: ID!, commentId: ID!): Post
     addRoutine(title: String!, text: String!): Routine
     removeRoutine(routineId: ID!): Routine
+    addPost(title: String!, text: String!): Post
+    updatePost(postId: ID!, title: String!, text: String!): Post
+    removePost(postId: ID!): Post
+    addComment(postId: ID!, commentText: String!): Post
+    removeComment(postId: ID!, commentId: ID!): Post
+    addLike(postId: ID!): Post
+    removeLike(postId: ID!): Post
     addTracker(date: String!): Tracker
     updateTracker(trackerId: ID!, weight: Int, calorie: Int): Tracker
     removeTracker(trackerId: ID!): Tracker

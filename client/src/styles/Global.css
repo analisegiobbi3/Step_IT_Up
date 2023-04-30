@@ -12,19 +12,6 @@
 /* import font used throughout pages */
 @import url('https://fonts.googleapis.com/css2?family=Pathway+Gothic+One&display=swap');
 
-/* create background color transition/animation */
-/* @keyframes animatedBackground {
-  0% { background-position: -0 85%; }
-  100% { background-position: -1350px 85%; }
-} */
-
-/* define transition gradient */
-/* @keyframes gradient {
-0% { background-position: 50% 0%; }
-50% { background-position: 50% 100%; }
-100% { background-position: 50% 0%; }
-} */
-
 .global {
 background: linear-gradient(0deg, var(--shade1), var(--shade1), var(--shade4), var(--shade5),  var(--shade6), var(--shade6));
 background-size: 100% 100%;

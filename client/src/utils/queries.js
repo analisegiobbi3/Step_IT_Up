@@ -1,5 +1,132 @@
 import { gql } from '@apollo/client'
 
+export const QUERY_USER = gql`
+  query user($username: String!) {
+    user(username: $username) {
+      _id
+      username
+      email
+      profile {
+        _id
+        age
+        sex
+        weight
+        height
+        goalWeight
+        calories
+        activityLevel
+      }
+      routines {
+        _id
+        author
+        title
+        text
+      }
+      posts {
+        _id
+        title
+        text
+        author
+        createdAt
+        likes {
+          username
+        }
+        comments {
+            _id
+            commentText
+            commentAuthor
+            commentCreatedAt
+        }
+      }
+      liked {
+        _id
+      }
+      tracker {
+        _id
+        date
+        scheduledRoutines {
+          _id
+          routineName
+          complete
+        }
+        weight
+        calorie
+      }
+    }
+  }
+`;
+
+export const QUERY_ME = gql`
+  query me {
+    me {
+      _id
+      username
+      email
+      profile {
+        _id
+        age
+        sex
+        weight
+        height
+        goalWeight
+        calories
+        activityLevel
+      }
+      routines {
+        _id
+        author
+      title
+      text
+      }
+      posts {
+        _id
+        title
+        text
+        author
+        createdAt
+        likes {
+              username
+            }
+        comments {
+          _id
+          commentText
+          commentAuthor
+          commentCreatedAt
+        }
+      }
+      liked {
+        _id
+      }
+      tracker {
+        _id
+        date
+        scheduledRoutines {
+          _id
+          routineName
+          complete
+        }
+        weight
+        calorie
+      }
+    }
+  }
+`;
+
+export const QUERY_MYPROFILE = gql`
+  query myProfile {
+    myProfile {
+      _id
+      age
+      sex
+      weight
+      height
+      goalWeight
+      calories
+      activityLevel
+    }
+  }
+`;
+
 export const QUERY_POSTS = gql`
     query getPosts {
         posts {
@@ -8,7 +135,7 @@ export const QUERY_POSTS = gql`
             text
             author
             likes {
-              username
+              _id
             }
             createdAt
             comments {
@@ -24,30 +151,20 @@ export const QUERY_POSTS = gql`
 export const QUERY_POST = gql`
     query getPost($postId: ID!) {
         post(postId: $postId){
+          _id
+          title
+          text
+          author
+          likes {
             _id
-            title
-            text
-        }
-    }
-`
-
-export const QUERY_USER_POST = gql`
-    query getUserPost($userId: ID!) {
-        post(userId: $userId){
+          }
+          createdAt
+          comments {
             _id
-            title
-            text
-            author
-            likes {
-              username
-            }
-            createdAt
-            comments {
-                _id
-                commentText
-                commentAuthor
-                commentCreatedAt
-            }
+            commentText
+            commentAuthor
+            commentCreatedAt
+          }
         }
     }
 `
@@ -82,148 +199,6 @@ export const QUERY_SINGLE_PROFILE = gql`
     }
 }
 `
-export const QUERY_ROUTINES = gql`
-  query allRoutines {
-    routines {
-      _id
-      author
-      title
-      text
-    }
-  }
-`;
-
-export const QUERY_SINGLE_ROUTINE = gql`
-  query singleRoutine {
-    routine {
-      _id
-      author
-      title
-      text
-    }
-  }
-`;
-
-export const QUERY_USER = gql`
-  query user($username: String!) {
-    user(username: $username) {
-      _id
-      username
-      email
-      posts {
-            _id
-            title
-            text
-            author
-            createdAt
-            likes {
-              username
-            }
-            comments {
-                _id
-                commentText
-                commentAuthor
-                commentCreatedAt
-            }
-      }
-      profile {
-          _id
-          age
-          sex
-          weight
-          height
-          goalWeight
-          calories
-          activityLevel
-      }
-      routines {
-          _id
-          author
-          title
-          text
-      }
-      tracker {
-        _id
-        date
-        scheduledRoutines {
-          _id
-          routineName
-          complete
-        }
-        weight
-        calorie
-      }
-    }
-  }
-`;
-
-export const QUERY_ME = gql`
-  query me {
-    me {
-      _id
-      username
-      email
-      posts {
-        _id
-        title
-        text
-        author
-        createdAt
-        likes {
-              username
-            }
-        comments {
-          _id
-          commentText
-          commentAuthor
-          commentCreatedAt
-        }
-      }
-      profile {
-        _id
-        age
-        sex
-        weight
-        height
-        goalWeight
-        calories
-        activityLevel
-      }
-      routines {
-        _id
-        author
-        title
-        text
-      }
-      tracker {
-        _id
-        date
-        scheduledRoutines {
-          _id
-          routineName
-          complete
-        }
-        weight
-        calorie
-      }
-    }
-  }
-`;
-
-export const QUERY_MYPROFILE = gql`
-  query myProfile {
-    myProfile {
-      _id
-      age
-      sex
-      weight
-      height
-      goalWeight
-      calories
-      activityLevel
-    }
-  }
-`;
 
 export const QUERY_WEIGHT = gql`
   query weightSchedules {

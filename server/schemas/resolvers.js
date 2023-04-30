@@ -7,24 +7,27 @@ const resolvers = {
   Query: {
     users: async () => {
       return User.find()
-        .populate("posts")
         .populate("profile")
         .populate("routines")
+        .populate("posts")
+        .populate("liked")
         .populate("tracker");
     },
     user: async (parent, { username }) => {
       return User.findOne({ username })
-        .populate("posts")
         .populate("profile")
         .populate("routines")
+        .populate("posts")
+        .populate("liked")
         .populate("tracker");
     },
     me: async (parent, args, context) => {
       if (context.user) {
         return User.findOne({ _id: context.user._id })
-          .populate("posts")
           .populate("profile")
           .populate("routines")
+          .populate("posts")
+          .populate("liked")
           .populate("tracker");
       }
       throw new AuthenticationError("You need to be logged in!");
@@ -42,13 +45,10 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!")
     },
     posts: async () => {
-      return Post.find().sort({ createAt: -1 });
+      return Post.find().sort({ createdAt: 1 });
     },
     post: async (parent, { postId }) => {
       return Post.findOne({ _id: postId });
-    },
-    routines: async () => {
-      return Routine.find({});
     },
   },
 
@@ -81,7 +81,7 @@ const resolvers = {
       context
     ) => {
       if (context.user) {
-         const profile = await Profile.create({
+        const profile = await Profile.create({
           age,
           sex,
           weight,
@@ -90,7 +90,7 @@ const resolvers = {
           activityLevel,
           calories
         });
-        await User.updateOne({_id: context.user._id}, {profile: profile._id})
+        await User.updateOne({ _id: context.user._id }, { profile: profile._id })
         return profile
       }
       throw new AuthenticationError("You need to be logged in!");
@@ -103,109 +103,19 @@ const resolvers = {
       if (context.user) {
         return await Profile.findOneAndUpdate(
           { _id: profileId },
-          { age,
-           sex ,
-           weight ,
-           height ,
-           goalWeight ,
-           activityLevel ,
-           calories },
+          {
+            age,
+            sex,
+            weight,
+            height,
+            goalWeight,
+            activityLevel,
+            calories
+          },
           { new: true }
         );
       }
       throw new AuthenticationError("You need to be logged in!");
-    },
-    addPost: async (parent, { title, text }, context) => {
-      if (context.user) {
-        const post = await Post.create({
-          title,
-          text,
-          author: context.user.username,
-        });
-        await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $addToSet: { posts: post._id } }
-        );
-        return post;
-      }
-      throw new AuthenticationError("You need to be logged in to post!");
-    },
-    addComment: async (parent, { postId, commentText }, context) => {
-      if (context.user) {
-        return Post.findOneAndUpdate(
-          { _id: postId },
-          {
-            $addToSet: {
-              comments: { commentText, commentAuthor: context.user.username },
-            },
-          },
-          { new: true, runValidators: true }
-        );
-      }
-      throw new AuthenticationError("You need to be logged in to comment!");
-    },
-    addLike: async (parent, { postId, userId }, context) => {
-      if (context.user) {
-        return Post.findOneAndUpdate(
-          { _id: postId },
-          { $addToSet: { likes: userId } },
-          { new: true, runValidators: true }
-        )
-      }
-    },
-    updatePost: async (parent, { postId, title, text }, context) => {
-      if (context.user) {
-        return Post.findOneAndUpdate(
-          { _id: postId },
-          { $set: { title: title, text: text, author: context.user.username } },
-          { new: true }
-        );
-      }
-    },
-    removePost: async (parent, { postId }, context) => {
-      if (context.user) {
-        const post = await Post.findOneAndDelete({
-          _id: postId,
-          author: context.user.username,
-        });
-        await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $pull: { posts: post._id } }
-        );
-        return post;
-      }
-      throw new AuthenticationError(
-        "You need to be logged in to delete a post!"
-      );
-    },
-    removeLike: async (parent, { postId, userId }, context) => {
-      if (context.user) {
-        return Post.findByIdAndUpdate(
-          { _id: postId },
-          { $pull: { likes: { _id: userId } } },
-          { new: true }
-        )
-
-      }
-    },
-    removeComment: async (parent, { postId, commentId }, context) => {
-      if (context.user) {
-        return Post.findOneAndUpdate(
-          { _id: postId },
-          {
-            $pull: {
-              comments: {
-                _id: commentId,
-                commentAuthor: context.user.username,
-              },
-            },
-          },
-          { new: true }
-        );
-      }
-      throw new AuthenticationError(
-        "You need to be logged in to delete a comment!"
-      );
     },
     addRoutine: async (parent, { title, text }, context) => {
       if (context.user) {
@@ -237,6 +147,96 @@ const resolvers = {
         "You need to be logged in to delete a routine!"
       );
     },
+    addPost: async (parent, { title, text }, context) => {
+      if (context.user) {
+        const post = await Post.create({
+          title,
+          text,
+          author: context.user.username,
+        });
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { posts: post._id } }
+        );
+        return post;
+      }
+      throw new AuthenticationError("You need to be logged in to post!");
+    },
+    updatePost: async (parent, { postId, title, text }, context) => {
+      if (context.user) {
+        return Post.findOneAndUpdate(
+          { _id: postId },
+          { $set: { title: title, text: text, author: context.user.username } },
+          { new: true }
+        );
+      }
+    },
+    removePost: async (parent, { postId }, context) => {
+      if (context.user) {
+        const post = await Post.findOneAndDelete({
+          _id: postId,
+          author: context.user.username,
+        });
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { posts: post._id } }
+        );
+        return post;
+      }
+      throw new AuthenticationError(
+        "You need to be logged in to delete a post!"
+      );
+    },
+    addComment: async (parent, { postId, commentText }, context) => {
+      if (context.user) {
+        return Post.findOneAndUpdate(
+          { _id: postId },
+          { $addToSet: { comments: { commentText, commentAuthor: context.user.username }, }, },
+          { new: true, runValidators: true }
+        );
+      }
+      throw new AuthenticationError("You need to be logged in to comment!");
+    },
+    removeComment: async (parent, { postId, commentId }, context) => {
+      if (context.user) {
+        return Post.findOneAndUpdate(
+          { _id: postId },
+          { $pull: { comments: { _id: commentId, }, }, }
+        );
+      }
+      throw new AuthenticationError(
+        "You need to be logged in to remove a comment"
+      );
+    },
+    addLike: async (parent, { postId }, context) => {
+      if (context.user) {
+        const post = await Post.findOneAndUpdate(
+          {_id: postId} ,
+          { $addToSet: { likes: context.user._id } }
+        );
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { liked: post._id } }
+        );
+        return post;
+      }
+      throw new AuthenticationError(
+        "You need to be logged in to delete a post!"
+      );
+    },
+    removeLike: async (parent, { postId }, context) => {
+      if (context.user) {
+        const post = await Post.findOneAndUpdate(
+          {_id: postId} ,
+          { $pull: { likes: context.user._id } }
+        );
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { liked: post._id } }
+        );
+        return post;
+      }
+    },
     addTracker: async (parent, { date }, context) => {
       if (context.user) {
         const tracker = await Tracker.create({
@@ -263,7 +263,7 @@ const resolvers = {
       if (context.user) {
         return Tracker.findOneAndUpdate(
           { _id: trackerId },
-          { $addToSet: { scheduledRoutines: { routineName: routineName}, }, },
+          { $addToSet: { scheduledRoutines: { routineName: routineName }, }, },
           { new: true, runValidators: true }
         );
       }
@@ -282,7 +282,7 @@ const resolvers = {
       if (context.user) {
         return Tracker.findOneAndUpdate(
           { _id: trackerId },
-          { $pull: { scheduledRoutines: {_id: scheduledRoutinesId,},}, }
+          { $pull: { scheduledRoutines: { _id: scheduledRoutinesId, }, }, }
         );
       }
       throw new AuthenticationError(

@@ -3,7 +3,7 @@
     background-color: var(--shade6);
     height: fit-content;
     font-family: var(--font);
-    padding: 1vw;
+    padding: 1.25vw 2vw;
     border-bottom: 0.75vw solid var(--shade2)
 }
 

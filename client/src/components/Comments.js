@@ -1,24 +1,62 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+
+import { useQuery, useMutation } from '@apollo/client';
+import { QUERY_POST } from '../utils/queries';
+import { REMOVE_COMMENT } from '../utils/mutations';
 
 import {
-    Accordion, AccordionItem, AccordionButton,
-    AccordionPanel, AccordionIcon,
-    Box, Flex, Spacer, IconButton,
-    Stack, Input, Heading, Text, Button,
-    Card, CardHeader, CardBody, CardFooter,
-    ButtonGroup,
+    Box, Flex, Spacer, IconButton, Text, 
 } from '@chakra-ui/react'
 
-import { AiOutlineLike, AiFillLike } from "react-icons/ai";
-import { BiCommentAdd } from "react-icons/bi";
-import { FiCheck, FiX, FiMinusSquare } from "react-icons/fi";
+import { FiMinusSquare } from 'react-icons/fi';
 
 import '../styles/Blog.css';
 
-const Comments = ({
-    comments,
-}) => {
+const Comments = ({ postId, username }) => {
+
+    // emulates a fetch (useQuery expects a Promise)
+    const emulateFetch = _ => {
+        return new Promise(resolve => {
+            resolve([{ data: 'ok' }]);
+        });
+    };
+
+    const { loading, data, refetch } = useQuery(QUERY_POST, {
+        variables: { postId: postId },
+    }, emulateFetch, {
+        refetchOnWindowFocus: false,
+        enabled: true
+    });
+
+    const comments = data?.post.comments || [];
+
+    const [removeComment, { removeCommentData }] = useMutation(REMOVE_COMMENT);
+
+    const handleRemoveComment = async (event) => {
+        event.preventDefault();
+        const { id } = event.target;
+
+        if (id !== '') {
+            try {
+                const { removeCommentData } = await removeComment({
+                    variables: { postId, commentId: id },
+                });
+
+                refetch();
+            } catch (e) {
+                console.error(e);
+            }
+        }
+    };
+
+    const matchUser = (author) => {
+        if (author == username) {
+            return true
+        } else {
+            return false
+        }
+    }
+
     if (!comments.length) {
         return;
     };
@@ -30,7 +68,13 @@ const Comments = ({
                     <Text>{comment.commentText}</Text>
                     <Spacer />
                     <Text>{comment.commentAuthor}, {comment.commentCreatedAt}</Text>
-                    <IconButton ml='2' size='sm' icon={<FiMinusSquare />} />
+                    {matchUser(`${comment.commentAuthor}`) ?
+                        (<IconButton ml='2' size='sm'
+                            icon={<FiMinusSquare />}
+                            id={comment._id}
+                            onClick={handleRemoveComment} />)
+                        :
+                        (<Box></Box>)}
                 </Flex>
             ))}
         </div>
