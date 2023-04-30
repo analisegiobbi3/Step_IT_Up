@@ -112,7 +112,7 @@ const Posts = ({ posts }) => {
   };
 
   const handleAddLike = async (postId) => {
-
+    
     try {
       const { addLikeData } = await addLike({
         variables: { postId },

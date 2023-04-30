@@ -7,3 +7,10 @@
 .profile-page .css-g6pte, .profile-page .css-16xaqf9 {
   font-size: 2.25vw;
 }
+
+.calories {
+border: 1px solid rgb(239, 239, 255);
+padding-left: 10px;
+font-size: 18px;
+
+}
