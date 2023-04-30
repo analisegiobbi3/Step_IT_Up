@@ -19,20 +19,26 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
+  profile: {
+    type: Schema.Types.ObjectId,
+    ref: 'Profile',
+  },
+  routines: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Routine',
+    },
+  ],
   posts: [
     {
       type: Schema.Types.ObjectId,
       ref: 'Post',
     },
   ],
-  profile: {
-      type: Schema.Types.ObjectId,
-      ref: 'Profile',
-    },
-  routines: [
+  liked: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Routine',
+      ref: 'Post',
     },
   ],
   tracker: [

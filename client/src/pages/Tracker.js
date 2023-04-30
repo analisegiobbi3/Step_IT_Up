@@ -1,9 +1,9 @@
 // import package and local style sheet
-import React from "react";
-import { useQuery } from "@apollo/client";
-import { useForm } from "react-hook-form";
-import { CategoryScale, LinearScale, Chart } from "chart.js";
-import LineChart from "../components/Chart";
+import React from 'react';
+import { useQuery } from '@apollo/client';
+import { useForm } from 'react-hook-form';
+import { CategoryScale, LinearScale, Chart } from 'chart.js';
+import LineChart from '../components/Chart';
 
 import { QUERY_CALORIES, QUERY_WEIGHT } from '../utils/queries'
 
@@ -34,18 +34,18 @@ const Tracker = () => {
       <InputGroup my='5'>
         <InputLeftAddon>Start Date</InputLeftAddon>
         <Input
-          placeholder="Select Date and Time"
-          size="md"
-          type="date"
+          placeholder='Select Date and Time'
+          size='md'
+          type='date'
           {...register('startDate', { required: false })}
         />
       </InputGroup>
       <InputGroup>
         <InputLeftAddon>End Date</InputLeftAddon>
         <Input
-          placeholder="Select Date and Time"
-          size="md"
-          type="date"
+          placeholder='Select Date and Time'
+          size='md'
+          type='date'
           {...register('endDate', { required: false })}
         />
       </InputGroup>

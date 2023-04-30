@@ -6,6 +6,7 @@ import {
   ApolloProvider,
   createHttpLink,
 } from "@apollo/client";
+
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -19,8 +20,7 @@ import Tracker from "./pages/Tracker";
 import Routine from "./pages/Routine";
 import CreateRoutine from "./components/CreateRoutine";
 import Profile from "./pages/Profile";
-import Login from "./components/Login";
-import Signup from "./components/Signup";
+import LoginSignup from "./pages/LoginSignup";
 import Playlists from "./pages/Playlists"
 
 import './styles/Global.css';
@@ -59,8 +59,7 @@ function App() {
           <div>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
+              <Route path="/loginSignup" element={<LoginSignup />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/posts" element={<Blog />} />
               <Route path="/posts/createPost" element={<CreatePost />} />
@@ -68,8 +67,8 @@ function App() {
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/tracker" element={<Tracker />} />
               <Route path="/routines" element={<Routine />} />
-              <Route path="/playlists" element={<Playlists />}/>
               <Route path="/routines/createRoutine" element={<CreateRoutine />} />
+              <Route path="/playlists" element={<Playlists />}/>
             </Routes>
           </div>
         </div>

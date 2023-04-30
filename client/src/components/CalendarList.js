@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { useQuery } from '@apollo/client';
 import { useMutation } from '@apollo/client';
 import { QUERY_ME } from '../utils/queries';
-import { UPDATE_TRACKER, ADD_SCHEDULED_ROUTINES, UPDATE_SCHEDULED_ROUTINES, REMOVE_SCHEDULED_ROUTINES } from "../utils/mutations";
+import { UPDATE_TRACKER, ADD_SCHEDULED_ROUTINES, UPDATE_SCHEDULED_ROUTINES, REMOVE_SCHEDULED_ROUTINES } from '../utils/mutations';
 
 import {
   chakra, Stack, StackDivider, Flex, Box,
@@ -18,7 +18,7 @@ import {
 } from '@chakra-ui/react'
 
 
-import { FiCheck, FiX, FiEdit, FiPlusSquare, FiMinusSquare, FiExternalLink, FiEye } from "react-icons/fi";
+import { FiCheck, FiX, FiEdit, FiPlusSquare, FiMinusSquare, FiExternalLink, FiEye } from 'react-icons/fi';
 
 import 'react-calendar/dist/Calendar.css';
 import '../styles/Calendar.css';
@@ -43,7 +43,7 @@ const CalendarList = ({ trackerIndex }) => {
   // emulates a fetch (useQuery expects a Promise)
   const emulateFetch = _ => {
     return new Promise(resolve => {
-      resolve([{ data: "ok" }]);
+      resolve([{ data: 'ok' }]);
     });
   };
 
@@ -117,7 +117,7 @@ const CalendarList = ({ trackerIndex }) => {
         >
           {state.isChecked && <Box w={2} h={2} bg='var(--shade4)' />}
         </Flex>
-        <Text color="gray.700" {...getLabelProps()}>{props.value}</Text>
+        <Text color='gray.700' {...getLabelProps()}>{props.value}</Text>
       </chakra.label>
     )
   }
@@ -188,7 +188,7 @@ const CalendarList = ({ trackerIndex }) => {
     <Box>
       {loading ? (
         <Box m='auto' mb='10'>
-          <Link to="/"><Spinner /> Loading...</Link>
+          <Link to='/'><Spinner /> Loading...</Link>
         </Box>
       ) : (
         <Box>
@@ -250,8 +250,8 @@ const CalendarList = ({ trackerIndex }) => {
                     <EditablePreview />
                     <EditableInput
                       as={EditableInput}
-                      type="number"
-                      name="weight"
+                      type='number'
+                      name='weight'
                       value={weight}
                       onChange={(e) => { setWeight(e.target.value) }}
                     />
@@ -278,8 +278,8 @@ const CalendarList = ({ trackerIndex }) => {
                     <EditablePreview />
                     <EditableInput
                       as={EditableInput}
-                      type="number"
-                      name="calorie"
+                      type='number'
+                      name='calorie'
                       value={calorie}
                       onChange={(e) => { setCalorie(e.target.value) }}
                     />
@@ -294,7 +294,7 @@ const CalendarList = ({ trackerIndex }) => {
             <DrawerContent>
               <DrawerHeader borderBottomWidth='1px' color='var(--shade6)'>Select routine(s) to preview and add</DrawerHeader>
               <DrawerBody>
-                <Box overflowY="auto" maxHeight="100vh">
+                <Box overflowY='auto' maxHeight='100vh'>
                   <Stack>
                     <Flex justifyContent='space-between' alignItems='center'>
                       <Box>

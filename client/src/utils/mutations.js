@@ -55,6 +55,25 @@ export const UPDATE_PROFILE = gql`
   }
 `;
 
+export const ADD_ROUTINE = gql`
+  mutation addRoutine($title: String!, $text: String!) {
+    addRoutine(title: $title, text: $text) {
+      _id
+      title
+      text
+    }
+  }
+`;
+
+export const REMOVE_ROUTINE = gql`
+    mutation removeRoutine($routineId: ID!){
+      removeRoutine(routineId: $routineId){
+        _id
+      }
+    }
+`;
+
+
 export const ADD_POST = gql`
     mutation addPost($title: String!, $text: String!){
         addPost(title: $title, text: $text){
@@ -66,48 +85,6 @@ export const ADD_POST = gql`
         }
     }
 `
-
-export const ADD_COMMENT = gql`
-    mutation addComment($postId: ID!, $commentText: String!){
-        addComment(postId: $postId, commentText: $commentText){
-            _id
-            title
-            text
-            comments {
-                _id
-                commentText
-                commentAuthor
-                commentCreatedAt
-            }
-        }
-    }
-`
-
-export const ADD_LIKE = gql`
-    mutation addLike($postId: ID!, $userId: ID!){
-      addLike(postId: $postId, userId: $userId){
-        _id
-        likes{
-          _id
-        }
-      }
-    }
-`
-export const REMOVE_LIKE = gql`
-    mutation removeLike($postId: ID!, $userId: ID){
-      removePost(postId: $postId, userId: $userId){
-        _id
-      }
-    }
-`;
-
-// export const REMOVE_COMMENT = gql`
-//     mutation removeComment($commentId: ID){
-//       removeComment(commentId: $commentId){
-//         _id
-//       }
-//     }
-// `
 
 export const UPDATE_POST = gql`
     mutation updatePost($postId: ID!, $title: String!, $text: String!){
@@ -126,19 +103,43 @@ export const REMOVE_POST = gql`
     }
 `;
 
-export const ADD_ROUTINE = gql`
-  mutation addRoutine($title: String!, $text: String!) {
-    addRoutine(title: $title, text: $text) {
-      _id
-      title
-      text
+export const ADD_COMMENT = gql`
+    mutation addComment($postId: ID!, $commentText: String!){
+        addComment(postId: $postId, commentText: $commentText){
+            _id
+            title
+            text
+            comments {
+                _id
+                commentText
+                commentAuthor
+                commentCreatedAt
+            }
+        }
     }
-  }
-`;
+`
 
-export const REMOVE_ROUTINE = gql`
-    mutation removeRoutine($routineId: ID!){
-      removeRoutine(routineId: $routineId){
+export const REMOVE_COMMENT = gql`
+    mutation removeComment($postId: ID!, $commentId: ID!){
+      removeComment(postId: $postId, commentId: $commentId){
+        _id
+      }
+    }
+`
+
+export const ADD_LIKE = gql`
+    mutation addLike($postId: ID!){
+      addLike(postId: $postId){
+        _id
+        likes{
+          _id
+        }
+      }
+    }
+`
+export const REMOVE_LIKE = gql`
+    mutation removeLike($postId: ID!){
+      removePost(postId: $postId){
         _id
       }
     }
