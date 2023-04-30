@@ -75,5 +75,5 @@ const Playlists = () => {
     )
 }
 
-export default Playlists
+export default Playlists;
 

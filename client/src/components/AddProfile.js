@@ -165,7 +165,7 @@ const AddProfile = () => {
                         >
                           calculate your calorie intake
                         </Button>
-                        <div className="clories">
+                        <div className="calories">
                           {showCalories ? <p>{calories} calories/day</p> : ""}
                         </div>
                       </FormControl>
