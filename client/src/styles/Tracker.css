@@ -1,6 +1,6 @@
 /* styling for the Routine page */
 .tracker-page {
-    min-height: 100vh;
+    min-height: 140vh;
     height: fit-content;
     padding: 3vw;
     font-family: var(--font);
