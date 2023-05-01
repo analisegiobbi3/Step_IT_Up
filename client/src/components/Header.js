@@ -25,7 +25,7 @@ function Header() {
   }
   return (
     <div>
-      {Auth.loggedIn() ? (
+      {Auth.loggedIn() && !Auth.isTokenExpired() ? (
         <nav className='navBar' separator='   '>
           <Flex alignItems='center'>
             <Box width='50vw' display='flex'>

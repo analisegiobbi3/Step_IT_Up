@@ -1,3 +1,4 @@
+/* styling for profile page and profile modal */
 .profile {
   font-family: var(--font);
   min-height: 100vh;
@@ -17,8 +18,4 @@
   border-color: var(--shade6);
   background-color: var(--shade2);
   opacity: 0.75;
-}
-
-.profile-page .css-10t4a5e {
-  background-color: rgba(255, 255, 255, 0.435);
 }

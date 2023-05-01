@@ -139,7 +139,7 @@ export const ADD_LIKE = gql`
 `
 export const REMOVE_LIKE = gql`
     mutation removeLike($postId: ID!){
-      removePost(postId: $postId){
+      removeLike(postId: $postId){
         _id
       }
     }

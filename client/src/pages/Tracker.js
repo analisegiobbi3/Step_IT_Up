@@ -1,10 +1,9 @@
 // import package and local style sheet
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
-import { useStateWithCallbackInstant, useStateWithCallbackLazy } from 'use-state-with-callback';
+import { useStateWithCallbackInstant } from 'use-state-with-callback';
 import { CategoryScale, LinearScale, Chart } from 'chart.js';
 import LineGraph from '../components/LineGraph';
-import { Line } from 'react-chartjs-2';
 
 import { QUERY_ME } from '../utils/queries'
 
@@ -38,6 +37,7 @@ const Tracker = () => {
   const trackerDates = tracker.map(record => record.date);
   const trackerStartDate = Math.min.apply(null, trackerDates)
   const [routineSet, setRoutineSet] = useState([])
+  const [routinesPlanned, setRoutinesPlanned] = useState(0)
   const [weightSet, setWeightSet] = useState([])
   const [calorieSet, setCalorieSet] = useState([])
 
@@ -104,8 +104,10 @@ const Tracker = () => {
     if (dateRange.startDate <= dateRange.endDate) {
       let filteredRoutinesList = []
       let completion = 0
+      let futureRoutines = 0
       let routineList = createRoutineSets()[0]
       for (let i = 0; i < routineList.length; i++) {
+        if (routineList[i].date >= today) { futureRoutines++ }
         if (routineList[i].date >= dateRange.startDate && routineList[i].date <= dateRange.endDate) {
           filteredRoutinesList.push({ routineName: routineList[i].routineName, complete: routineList[i].complete })
           if (routineList[i].complete === true) { completion++ }
@@ -133,6 +135,7 @@ const Tracker = () => {
       weightSet.push(filteredWeightList.sort((a, b) => parseFloat(a.x) - parseFloat(b.x)))
       calorieSet.push(filteredCalorieList.sort((a, b) => parseFloat(a.x) - parseFloat(b.x)))
       setRoutineCount(filteredRoutinesList.length)
+      setRoutinesPlanned(futureRoutines)
       setCompleteCount(completion)
       setPercentComplete(((completeCount / routineCount) * 100).toFixed(2))
       setRangeSelected(true)
@@ -144,6 +147,15 @@ const Tracker = () => {
     }
   });
 
+  const percentColor = () => {
+    if (percentComplete <= 60) {
+      return 'red'
+    } else if (percentComplete <= 80) {
+      return 'yellow'
+    } else if (percentComplete <= 100) {
+      return 'green'
+    }
+  }
   const DateRange = () => (
     <div>
       <InputGroup my='5'>
@@ -253,9 +265,9 @@ const Tracker = () => {
           <Heading size='lg' textTransform='uppercase' mb='5'>Routine Stats</Heading>
           {rangeSelected ? (
             <StatGroup textAlign='center' alignItems='center' mb='5'>
-              <Stat transform='scale(1.5)'>
+              <Stat transform='scale(2)'>
                 <StatLabel>Score</StatLabel>
-                <StatNumber>{percentComplete}%</StatNumber>
+                <StatNumber color={percentColor}>{percentComplete}%</StatNumber>
               </Stat>
               <Stat>
                 <StatLabel>Completed</StatLabel>
@@ -265,6 +277,11 @@ const Tracker = () => {
               <Stat>
                 <StatLabel>Scheduled</StatLabel>
                 <StatNumber>{routineCount}</StatNumber>
+                <StatHelpText>Routines</StatHelpText>
+              </Stat>
+              <Stat>
+                <StatLabel>Planned</StatLabel>
+                <StatNumber>{routinesPlanned}</StatNumber>
                 <StatHelpText>Routines</StatHelpText>
               </Stat>
               {/* <Stat>
