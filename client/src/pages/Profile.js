@@ -74,6 +74,7 @@ const Profile = () => {
   const { isOpen } = useDisclosure({ defaultIsOpen: true });
   const navigate = useNavigate();
   const returnToHome = () => navigate("/");
+  console.log(activityLevel);
 
   if (me) {
     return (
@@ -162,9 +163,9 @@ const Profile = () => {
                       <FormLabel>Activity Level</FormLabel>
                       <Select
                         placeholder='Select Option'
-                        defaultValue={activityLevel}
+                        value={String(activityLevel)}
                         onChange={(e) =>
-                          setActivityLevel(parseInt(e.target.value))
+                          setActivityLevel(parseFloat(e.target.value))
                         }
                       >
                         <option value="1.2">Sedentary</option>

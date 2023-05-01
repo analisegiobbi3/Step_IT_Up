@@ -33,7 +33,7 @@ const typeDef = gql`
     weight: Int!
     height: Int!
     goalWeight: Int!
-    activityLevel: Int!
+    activityLevel: Float!
     calories: Int
   }
 
@@ -83,8 +83,8 @@ const typeDef = gql`
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addProfile(age: Int!, sex: String!, weight: Int!, height: Int!, goalWeight: Int!, activityLevel: Int!, calories: Int): Profile
-    updateProfile(profileId: ID!, age: Int, sex: String, weight: Int, height: Int, goalWeight: Int, activityLevel: Int, calories: Int): Profile
+    addProfile(age: Int!, sex: String!, weight: Int!, height: Int!, goalWeight: Int!, activityLevel: Float!, calories: Int): Profile
+    updateProfile(profileId: ID!, age: Int, sex: String, weight: Int, height: Int, goalWeight: Int, activityLevel: Float, calories: Int): Profile
     addRoutine(title: String!, text: String!): Routine
     removeRoutine(routineId: ID!): Routine
     addPost(title: String!, text: String!): Post
