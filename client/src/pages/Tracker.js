@@ -134,7 +134,7 @@ const Tracker = () => {
       calorieSet.length=0
       weightSet.push(filteredWeightList.sort((a, b) => parseFloat(a.x) - parseFloat(b.x)))
       calorieSet.push(filteredCalorieList.sort((a, b) => parseFloat(a.x) - parseFloat(b.x)))
-      setRoutineCount(filteredRoutinesList.length)
+      setRoutineCount(filteredRoutinesList.length-futureRoutines)
       setRoutinesPlanned(futureRoutines)
       setCompleteCount(completion)
       setPercentComplete(((completeCount / routineCount) * 100).toFixed(2))

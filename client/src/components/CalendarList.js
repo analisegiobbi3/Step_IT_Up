@@ -294,7 +294,7 @@ const CalendarList = ({ trackerIndex }) => {
             <DrawerContent>
               <DrawerHeader borderBottomWidth='1px' color='var(--shade6)'>Select routine(s) to preview and add</DrawerHeader>
               <DrawerBody>
-                <Box overflowY='auto' maxHeight='100vh'>
+                <Box>
                   <Stack>
                     <Flex justifyContent='space-between' alignItems='center'>
                       <Box>
@@ -308,8 +308,13 @@ const CalendarList = ({ trackerIndex }) => {
                         </Link>
                       </Box>
                     </Flex>
+                    <Box overflowY='auto' maxHeight='28vh'>
                     {routines.map((routine, index) => (
-                      <Flex key={routine._id} justifyContent='space-between' alignItems='center'>
+                      <Flex key={routine._id} 
+                      justifyContent='space-between' 
+                      alignItems='center'
+                      my='3'
+                      >
                         <Box>
                           <CustomCheckbox defaultChecked={false} {...getCheckboxProps({ value: `${routine.title}` })} />
                         </Box>
@@ -324,6 +329,7 @@ const CalendarList = ({ trackerIndex }) => {
                         </Box>
                       </Flex>
                     ))}
+                    </Box>
                     <Divider borderWidth='3px' borderColor='var(--shade1)' />
                     <Text as='b'>Preview: </Text>
                     <Card borderWidth='3px' borderColor='var(--shade5)'>
