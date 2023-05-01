@@ -166,8 +166,8 @@ const AddProfile = () => {
                             borderColor='var(--shade5)'
                             borderRadius='10'
                             placeholder='Select Option'
-                            defaultValue={activityLevel}
-                            onChange={(e) => setActivityLevel(parseInt(e.target.value))}
+                            defaultValue={String(activityLevel)}
+                            onChange={(e) => setActivityLevel(parseFloat(e.target.value))}
                           >
                             <option value="1.2">Sedentary</option>
                             <option value="1.375">Moderate</option>
