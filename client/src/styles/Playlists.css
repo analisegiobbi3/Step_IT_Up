@@ -1,22 +1,28 @@
-h1 {
+.playlists-page {
+    min-height: 100vh;
+    height: fit-content;
+    padding: 3vw;
+}
+
+.playlists-page h1 {
     text-align: center;
-    font-family: 'Pathway Gothic One', sans-serif;
+    font-family: var(--font);
     color: white;
-    font-size: 40px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border-bottom: solid #e1bcba;
+    font-size: 4vw;
+    padding-bottom: 3vw;
+    margin-bottom: 3vw;
+    border-bottom: 1vh solid var(--shade1);
 } 
 
 .playlist-card {
     margin-left: 5px;
     margin-right: 5px;
-    outline: solid #32496c;
-
+    outline: solid var(--shade6);
 }
 
 .spotify-button {
-    color: #e1bcba;
+    color: var(--shade1);
+    margin: 1vw;
 }
 
 .spotify-button:hover {
@@ -24,7 +30,7 @@ h1 {
 }
 
 .playlist-name {
-    color: #32496c;
+    color: var(--shade6);
     text-align: center;
     font-family: 'Pathway Gothic One', sans-serif;
 }

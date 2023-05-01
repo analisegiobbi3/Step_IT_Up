@@ -81,15 +81,8 @@ const resolvers = {
       context
     ) => {
       if (context.user) {
-        const profile = await Profile.create({
-          age,
-          sex,
-          weight,
-          height,
-          goalWeight,
-          activityLevel,
-          calories
-        });
+        const profile = await Profile.create(
+          { age, sex, weight, height, goalWeight, activityLevel, calories });
         await User.updateOne({ _id: context.user._id }, { profile: profile._id })
         return profile
       }
@@ -103,15 +96,7 @@ const resolvers = {
       if (context.user) {
         return await Profile.findOneAndUpdate(
           { _id: profileId },
-          {
-            age,
-            sex,
-            weight,
-            height,
-            goalWeight,
-            activityLevel,
-            calories
-          },
+          { age, sex, weight, height, goalWeight, activityLevel, calories },
           { new: true }
         );
       }
@@ -149,11 +134,8 @@ const resolvers = {
     },
     addPost: async (parent, { title, text }, context) => {
       if (context.user) {
-        const post = await Post.create({
-          title,
-          text,
-          author: context.user.username,
-        });
+        const post = await Post.create(
+          { title, text, author: context.user.username, });
         await User.findOneAndUpdate(
           { _id: context.user._id },
           { $addToSet: { posts: post._id } }
@@ -211,7 +193,7 @@ const resolvers = {
     addLike: async (parent, { postId }, context) => {
       if (context.user) {
         const post = await Post.findOneAndUpdate(
-          {_id: postId} ,
+          { _id: postId } ,
           { $addToSet: { likes: context.user._id } }
         );
         await User.findOneAndUpdate(
@@ -227,8 +209,8 @@ const resolvers = {
     removeLike: async (parent, { postId }, context) => {
       if (context.user) {
         const post = await Post.findOneAndUpdate(
-          {_id: postId} ,
-          { $pull: { likes: context.user._id } }
+          { _id: postId } ,
+          { $pull: { likes: context.user._id, }, }
         );
         await User.findOneAndUpdate(
           { _id: context.user._id },

@@ -49,7 +49,7 @@ const Playlists = () => {
     }, [])
 
     return(
-        <div>
+        <div className='playlists-page'>
             <h1>Step IT Up With Some Music</h1>
             <SimpleGrid spacing={5} templateColumns='repeat(auto-fill, minmax(200px, 1fr))'>
                 {playlists.map((playlist, index) => (

@@ -34,8 +34,6 @@ const CalendarPage = () => {
     enabled: true
   });
 
-
-  // const { loading, data } = useQuery(QUERY_ME);
   const tracker = data?.me.tracker || [];
 
   const trackedDates = tracker.map(({ date }) => date)

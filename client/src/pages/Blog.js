@@ -50,6 +50,7 @@ const Blog = () => {
             ) : (
               <Posts
                 posts={myPosts}
+                filter={filter}
               />
             )}
           </Box>
@@ -62,6 +63,7 @@ const Blog = () => {
             ) : (
               <Posts
                 posts={allPosts}
+                filter={filter}
               />
             )}
           </Box>

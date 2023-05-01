@@ -1,16 +1,21 @@
-.profile-page {
+/* styling for profile page and profile modal */
+.profile {
   font-family: var(--font);
-  height: 100vh;
+  min-height: 100vh;
+  height: fit-content;
   padding: 3vw;
 }
 
-.profile-page .css-g6pte, .profile-page .css-16xaqf9 {
-  font-size: 2.25vw;
+/* input titles */
+.profile-page .css-g6pte{
+  font-size: 2vw;
+  color: var(--shade1);
 }
 
-.calories {
-border: 1px solid rgb(239, 239, 255);
-padding-left: 10px;
-font-size: 18px;
-
+/* inputs and select boxes */
+.profile-page .css-1kp110w, .profile-page .css-7p9xsp {
+  font-size: 1.5vw;
+  border-color: var(--shade6);
+  background-color: var(--shade2);
+  opacity: 0.75;
 }
