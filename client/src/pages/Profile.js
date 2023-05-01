@@ -2,24 +2,13 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
+
 import AddProfile from "../components/AddProfile";
 import '../styles/Profile.css';
 import {
-  Box,
-  FormControl,
-  FormLabel,
-  Input,
-  FormHelperText,
-  Button,
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
+  Box, Input, Button, Select, SimpleGrid,
+  FormControl, FormLabel, FormHelperText,
   useDisclosure,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
-  Select
 } from "@chakra-ui/react";
 
 import { QUERY_ME } from "../utils/queries";
@@ -73,11 +62,11 @@ const Profile = () => {
     setShowCalories(true);
     if (sex === "Male") {
       const bmr =
-        88.362 + (13.397 * (goalWeight/ 2.2) + (4.799 * height) - (5.677 * age));
+        88.362 + (13.397 * (goalWeight / 2.2) + (4.799 * height) - (5.677 * age));
       setCalories(Math.round(bmr * activityLevel));
     } else {
       const bmr =
-        447.593 + (9.247 * (goalWeight/ 2.2) + (3.098 * height) - (4.33 * age));
+        447.593 + (9.247 * (goalWeight / 2.2) + (3.098 * height) - (4.33 * age));
       setCalories(Math.round(bmr * activityLevel));
     }
   };
@@ -88,158 +77,178 @@ const Profile = () => {
 
   if (me) {
     return (
-      <div className="profile">
-        <Box className="profile-modal">
-          <Modal isOpen={isOpen} onClose={returnToHome}>
-            <ModalOverlay />
-            <ModalContent>
-              <ModalHeader>Are you ready to step it up?</ModalHeader>
-              <ModalCloseButton />
-              {Auth.loggedIn() ? (
-                <>
-                  {loading ? (
-                    <div>Loading....</div>
-                  ) : (
-                    <form onSubmit={handleFormSubmit}>
-                      <ModalBody>
-                        <FormControl isRequired mb="20px">
-                          <FormLabel>Age</FormLabel>
-                          <Input
-                            type="number"
-                            value={age}
-                            // value={me.age}
-                            className="form-input"
-                            onChange={(e) => setAge(parseInt(e.target.value))}
-                          />
-                        </FormControl>
-                        <FormControl isRequired mb="20px">
-                          <FormLabel>Birth Sex</FormLabel>
-                          <Select
-                            value={sex}
-                            onChange={(e) => setSex(e.target.value)}
-                          >
-                            <option value="">Please select an option</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                          </Select>
-                        </FormControl>
-                        <FormControl isRequired mb="20px">
-                          <FormLabel>Height</FormLabel>
-                          <FormHelperText mb="20px">(cm)</FormHelperText>
-                          <Input
-                            defaultValue={height}
-                            // value={me.height}
-                            className="form-input"
-                            onChange={(e) =>
-                              setHeight(parseInt(e.target.value))
-                            }
-                          />
-                        </FormControl>
-                        <FormControl isRequired mb="20px">
-                          <FormLabel>Weight</FormLabel>
-                          <FormHelperText mb="20px">(lbs)</FormHelperText>
-                          <Input
-                            value={weight}
-                            // value={me.goalWeight}
-                            className="form-input"
-                            onChange={(e) =>
-                              setWeight(parseInt(e.target.value))
-                            }
-                          />
-                        </FormControl>
-                        <FormControl isRequired mb="20px">
-                          <FormLabel>Goal Weight</FormLabel>
-                          <FormHelperText mb="20px">(lbs)</FormHelperText>
-                          <FormHelperText mb="20px">
-                            If you are working on maintenance, you can enter
-                            your current weight to help us personalise your
-                            experience on this app.
-                          </FormHelperText>
+      <Box className="profile">
+        {Auth.loggedIn() ? (
+          <>
+            {loading ? (
+              <div>Loading....</div>
+            ) : (
+              <form onSubmit={handleFormSubmit}>
+                <SimpleGrid columns={2} spacing={5} className="profile-page">
+                  <Box>
+                    <FormControl isRequired mb="20px">
+                      <FormLabel>Age </FormLabel>
+                      <Input
+                        type="number"
+                        value={age}
+                        className="form-input"
+                        onChange={(e) => setAge(parseInt(e.target.value))}
+                      />
+                    </FormControl>
+                  </Box>
+                  <Box>
+                    <FormControl isRequired mb="20px">
+                      <FormLabel>Birth Sex </FormLabel>
+                      <Select
+                        placeholder='Select Option'
+                        value={sex}
+                        onChange={(e) => setSex(e.target.value)}
+                      >
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                      </Select>
+                    </FormControl>
+                  </Box>
+                  <Box>
+                    <FormControl isRequired mb="20px">
+                      <FormLabel>Height
+                        <span style={{ color: 'var(--shade3)', marginLeft: '0.5rem', marginRight: '0.5rem' }}>
+                          (cm)
+                        </span>
+                      </FormLabel>
+                      <Input
+                        defaultValue={height}
+                        className="form-input"
+                        onChange={(e) =>
+                          setHeight(parseInt(e.target.value))
+                        }
+                      />
+                    </FormControl>
+                  </Box>
+                  <Box>
+                    <FormControl isRequired mb="20px">
+                      <FormLabel>Weight
+                        <span style={{ color: 'var(--shade3)', marginLeft: '0.5rem', marginRight: '0.5rem' }}>
+                          (lbs)
+                        </span>
+                      </FormLabel>
+                      <Input
+                        value={weight}
+                        className="form-input"
+                        onChange={(e) =>
+                          setWeight(parseInt(e.target.value))
+                        }
+                      />
+                    </FormControl>
+                  </Box>
+                  <Box>
+                    <FormControl isRequired mb="20px">
+                      <FormLabel>Goal Weight
+                        <span style={{ color: 'var(--shade3)', marginLeft: '0.5rem', marginRight: '0.5rem' }}>
+                          (lbs)
+                        </span>
+                      </FormLabel>
+                      <Input
+                        value={goalWeight}
+                        className="form-input"
+                        onChange={(e) =>
+                          setGoalWeight(parseInt(e.target.value))
+                        }
+                      />
+                    </FormControl>
+                  </Box>
+                  <Box>
+                    <FormControl isRequired mb="20px">
+                      <FormLabel>Activity Level</FormLabel>
+                      <Select
+                        placeholder='Select Option'
+                        defaultValue={activityLevel}
+                        onChange={(e) =>
+                          setActivityLevel(parseInt(e.target.value))
+                        }
+                      >
+                        <option value="1.2">Sedentary</option>
+                        <option value="1.375">Moderate</option>
+                        <option value="1.55">High</option>
+                      </Select>
+                    </FormControl>
+                  </Box>
+                </SimpleGrid>
+                <FormControl>
+                  <FormHelperText mb="20px" fontSize='2vw' color='var(--shade6)'>
+                    If you are working on maintenance, you can enter your
+                    current weight to help us personalize your experience
+                    on this app.
+                  </FormHelperText>
+                </FormControl>
+                <SimpleGrid columns={4} spacing={5}>
+                  <Box>
+                    <FormControl mb="20px">
+                      <Button
+                        type="button"
+                        colorScheme="facebook"
+                        onClick={calculateCalories}
+                        mb="20px"
+                        width='100%'
+                        fontSize='2vw'
+                        height='5vw'
+                        _hover={{
+                          bg: "var(--shade2)",
+                          color: "var(--shade6)",
+                        }}
+                      >
+                        Calculate Your Calorie Intake
+                      </Button>
+                    </FormControl>
+                  </Box>
+                  <Box className="calories">
+                    {calories ?
+                      <Input
+                        disabled={true}
+                        borderWidth='1px'
+                        borderColor='var(--shade1)'
+                        borderRadius='10'
+                        color='black'
+                        textAlign='center'
+                        fontSize='2vw'
+                        height='5vw'
+                        bg='rgba(255, 255, 255, 0.75)'
+                        value={`${calories}` + ' calories/day'}
+                      /> : ""}
+                  </Box>
+                  <Box></Box>
+                  <Box textAlign='end'>
+                    <Button
+                      bg="var(--shade1)"
+                      color="white"
+                      width='100%'
+                      fontSize='2vw'
+                      height='5vw'
+                      _hover={{
+                        bg: "var(--shade2)",
+                        color: "var(--shade6)",
+                      }}
+                      type="submit"
+                    >
+                      Update Profile
+                    </Button>
+                  </Box>
+                </SimpleGrid>
+                {error && (
+                  <div className="danger">Something went wrong..</div>
+                )}
 
-                          <Input
-                            value={goalWeight}
-                            // value={me.goalWeight}
-                            className="form-input"
-                            onChange={(e) =>
-                              setGoalWeight(parseInt(e.target.value))
-                            }
-                          />
-                        </FormControl>
-                        <FormControl isRequired mb="20px">
-                          <FormLabel>Activity Level</FormLabel>
-                          <Select
-                            defaultValue={activityLevel}
-                            onChange={(e) =>
-                              setActivityLevel(parseInt(e.target.value))
-                            }
-                          >
-                            <option value="">Please select an option</option>
-                            <option value="1.2">Sedentary</option>
-                            <option value="1.375">Moderate</option>
-                            <option value="1.55">High</option>
-                          </Select>
-                        </FormControl>
-                        <FormControl mb="20px">
-                          <Button
-                            type="button"
-                            colorScheme="facebook"
-                            onClick={calculateCalories}
-                            mb="20px"
-                            _hover={{
-                              bg: "var(--shade2)",
-                              color: "var(--shade6)",
-                            }}
-                          >
-                            calculate your calorie intake
-                          </Button>
-                          <div className="calories">
-                            {calories ? <p>{calories} calories/day</p> : ""}
-                          </div>
-                        </FormControl>
-                      </ModalBody>
-                      <ModalFooter>
-                        <div className="button">
-                          <Button
-                            colorScheme="facebook"
-                            mr={3}
-                            onClick={returnToHome}
-                            _hover={{
-                              bg: "var(--shade2)",
-                              color: "var(--shade6)",
-                            }}
-                          >
-                            close
-                          </Button>
-                          <Button
-                            bg="var(--shade1)"
-                            color="white"
-                            _hover={{
-                              bg: "var(--shade2)",
-                              color: "var(--shade6)",
-                            }}
-                            type="submit"
-                          >
-                            save changes
-                          </Button>
-                        </div>
-                        {error && (
-                          <div className="danger">Something went wrong..</div>
-                        )}
-                      </ModalFooter>
-                    </form>
-                  )}
-                </>
-              ) : (
-                <p>
-                  You need to be logged in to view your profile. Please{" "}
-                  <Link to="/login">login</Link> or{" "}
-                  <Link to="/signup">signup.</Link>
-                </p>
-              )}
-            </ModalContent>
-          </Modal>
-        </Box>
-      </div>
+              </form>
+            )}
+          </>
+        ) : (
+          <p>
+            You need to be logged in to view your profile. Please{" "}
+            <Link to="/login">login</Link> or{" "}
+            <Link to="/signup">signup.</Link>
+          </p>
+        )}
+      </Box>
     );
   } else {
     return <AddProfile />;
