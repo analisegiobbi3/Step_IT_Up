@@ -82,8 +82,12 @@ const LineGraph = ({ startDate, endDate, weight, graphData }) => {
 		}]
 	}
 
-	if (graphData) {
-		console.log(graphData[0])
+	if (!graphData) {
+		return (
+			<div>
+				<p>No trends for this time period.</p>
+			</div>
+		)
 	}
 	return (
 		<div>
