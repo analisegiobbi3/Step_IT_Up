@@ -16,8 +16,6 @@ import {
 
 import { FiBookmark, FiPlus } from 'react-icons/fi';
 
-import '../styles/CreateEditPost.css';
-
 const CreatePost = () => {
 
   const { isOpen } = useDisclosure({ defaultIsOpen: true })

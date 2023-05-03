@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom'
 
-import { useQuery } from '@apollo/client';
-import { useMutation } from '@apollo/client';
+import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_ME } from '../utils/queries';
 import { UPDATE_TRACKER, ADD_SCHEDULED_ROUTINES, UPDATE_SCHEDULED_ROUTINES, REMOVE_SCHEDULED_ROUTINES } from '../utils/mutations';
 

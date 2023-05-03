@@ -1,12 +1,13 @@
-// import package and local style sheet
+// import packages and local auth
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'
+import Auth from '../utils/auth';
 
+// import mutation
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
 
-import Auth from '../utils/auth';
-
+// import package components and icon
 import {
   Box, Button, FormControl, Spinner,
   InputGroup, InputLeftAddon, InputRightElement,
@@ -15,22 +16,29 @@ import {
 
 import { FiMail, FiEyeOff, FiEye } from 'react-icons/fi';
 
+// import local style sheet
 import '../styles/LoginSignup.css';
 
+// functional component for the login tab
 const Login = () => {
 
+  // define the form state, default empty
   const [formState, setFormState] = useState({ email: '', password: '' });
+  // define mutation
   const [login, { error, data }] = useMutation(LOGIN_USER);
 
+  // on email/password change
   const handleChange = (event) => {
     const { name, value } = event.target;
 
+    // set the form state to the new values
     setFormState({
       ...formState,
       [name]: value,
     });
   };
 
+  // on submitting the form (click login)
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 

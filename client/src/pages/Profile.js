@@ -1,25 +1,34 @@
-// import package and local style sheet
+// import packages and local auth
 import React, { useEffect, useState } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import Auth from "../utils/auth";
+
+// import queries and mutations
 import { useQuery, useMutation } from "@apollo/client";
-
-import AddProfile from "../components/AddProfile";
-import '../styles/Profile.css';
-import {
-  Box, Input, Button, Select, SimpleGrid,
-  FormControl, FormLabel, FormHelperText,
-  useDisclosure,
-} from "@chakra-ui/react";
-
 import { QUERY_ME } from "../utils/queries";
 import { UPDATE_PROFILE } from "../utils/mutations";
 
-import Auth from "../utils/auth";
+// import local components
+import AddProfile from "../components/AddProfile";
 
+// import package components
+import {
+  Box, Input, Button, Select, SimpleGrid,
+  FormControl, FormLabel, FormHelperText,
+} from "@chakra-ui/react";
+
+// import local style sheet
+import '../styles/Profile.css';
+
+// component to view or create profile
 const Profile = () => {
+
+  // query all data associated with the signed in user
   const { loading, data } = useQuery(QUERY_ME);
+  // extract the profile data 
   const me = data?.me.profile;
 
+  // set state of profile fields
   const [age, setAge] = useState("");
   const [sex, setSex] = useState("");
   const [weight, setWeight] = useState("");
@@ -27,8 +36,10 @@ const Profile = () => {
   const [goalWeight, setGoalWeight] = useState("");
   const [activityLevel, setActivityLevel] = useState("");
   const [calories, setCalories] = useState("");
+  // set state of calorie intake display, default to false
   const [showCalories, setShowCalories] = useState(false);
 
+  // if user already has a profile, set the states of the field to existing data
   useEffect(() => {
     if (!me) return;
     setAge(me.age);
@@ -40,24 +51,30 @@ const Profile = () => {
     setCalories(me.calories);
   }, [me]);
 
+  // 
   const { profileId } = useParams();
+  // mutation to update profile, pass in the id of the current user
   const [updateProfile, { error }] = useMutation(UPDATE_PROFILE, {
     variables: { profileId: me?._id },
   });
 
+  // update profile on submit
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
       const { data } = await updateProfile({
+        // pass in set fields
         variables: { age, weight, height, goalWeight, calories, activityLevel },
       });
 
+      // reload page on success
       window.location.reload();
     } catch (err) {
       console.error(err);
     }
   };
 
+  // 
   const calculateCalories = (e) => {
     setShowCalories(true);
     if (sex === "Male") {
@@ -71,19 +88,19 @@ const Profile = () => {
     }
   };
 
-  const { isOpen } = useDisclosure({ defaultIsOpen: true });
-  const navigate = useNavigate();
-  const returnToHome = () => navigate("/");
-  console.log(activityLevel);
-
+  // if profile exist for current user
   if (me) {
+    // display the profile page
     return (
       <Box className="profile">
+        {/* check that the user is logged in */}
         {Auth.loggedIn() ? (
           <>
+          {/* chcked if query is complete */}
             {loading ? (
               <div>Loading....</div>
             ) : (
+              // profile form, to be populated with query information
               <form onSubmit={handleFormSubmit}>
                 <SimpleGrid columns={2} spacing={5} className="profile-page">
                   <Box>
@@ -243,15 +260,16 @@ const Profile = () => {
             )}
           </>
         ) : (
+          // message if user is not logged in
           <p>
             You need to be logged in to view your profile. Please{" "}
-            <Link to="/login">login</Link> or{" "}
-            <Link to="/signup">signup.</Link>
+            <Link to="/loginSignup">Login/Signup</Link>
           </p>
         )}
       </Box>
     );
   } else {
+    // if profile does not exist for user, render profile modal component
     return <AddProfile />;
   }
 };
