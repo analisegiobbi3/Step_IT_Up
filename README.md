@@ -161,12 +161,16 @@ THEN I am given the opportunity to find matching musical playlists to accompany 
 ## **APPLICATION PAGES PREVIEW**
 ### Landing Page
 >![Homepage](./screenshots/landing.png "landing")
-### Login / Sign Up Modal
->![Login / Signup Page](./screenshots/login_signup.png "login/signup page")
+### Login Modal
+>![Login](./screenshots/login.png "login modal")
+### Signup Modal
+>![Signup](./screenshots/signup.png "signup modal")
 ### User Dashboard
 >![Dashboard](./screenshots/dashboard.png "signup modal")
+### Create Profile
+>![Profile 1](./screenshots/profile.png "profile modal")
 ### User Profile
->![Profile](./screenshots/profile.png "profile modal")
+>![Profile 2](./screenshots/profile2.png "profile page")
 ### Blog Home
 >![Blog](./screenshots/blog.png "blog")
 ### Commenting Functionality
@@ -183,5 +187,5 @@ THEN I am given the opportunity to find matching musical playlists to accompany 
 >![My Routines](./screenshots/my_routines.png "routines dashboard")
 ### Tracker
 >![Tracker](./screenshots/tracker.png "tracker")
-### My PLaylists
+### My Playlists
 >![Tracker](./screenshots/my_playlists.png "my playlists")
