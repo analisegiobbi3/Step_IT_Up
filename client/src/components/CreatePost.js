@@ -1,11 +1,13 @@
-// import package and local style sheet
+// import packages
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'
 
+// import query and mutation
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_ME } from '../utils/queries';
 import { ADD_POST } from '../utils/mutations';
 
+// import pacakge components and icon
 import {
   Box, Button, FormControl, Spinner,
   InputGroup, InputLeftAddon, Portal,
@@ -16,49 +18,66 @@ import {
 
 import { FiBookmark, FiPlus } from 'react-icons/fi';
 
-import '../styles/CreateEditPost.css';
-
+// functional component of the create post modal
 const CreatePost = () => {
 
+  // set modal to open on default
   const { isOpen } = useDisclosure({ defaultIsOpen: true })
+  // navigate to posts page on close
   const navigate = useNavigate();
   const redirectBlog = () => navigate('/posts');
-  const [formState, setFormState] = useState({ title: '', text: '' });
-  const [addPost, { error, postData }] = useMutation(ADD_POST);
 
+  // set the form state, default empty
+  const [formState, setFormState] = useState({ title: '', text: '' });
+
+  // query all data associated with the signed in user
   const { loading, data } = useQuery(QUERY_ME)
+
+  // extract the routines from the query data
   const routines = data?.me.routines || [];
 
+  // on click to add routine to post message
   const handleAddRoutine = (index) => {
 
+    // define the current text state
     const currentText = formState.text
-    let newText = currentText +  '\n\n' + routines[index].title + ': \n' + routines[index].text
-    setFormState({...formState, text: newText})
+    // define the new text and update state
+    let newText = currentText + '\n\n' + routines[index].title + ': \n' + routines[index].text
+    setFormState({ ...formState, text: newText })
   }
 
+  // on title/text change
   const handleChange = (event) => {
     const { name, value } = event.target;
 
+    // set the form state to the new values
     setFormState({
       ...formState,
       [name]: value,
     });
   };
 
+  // define add post mutation
+  const [addPost, { error, postData }] = useMutation(ADD_POST);
+
+  // on click (create post button)
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     console.log(formState);
 
     try {
+      // add post with variables postId and formstates
       const { postData } = await addPost({
         variables: { ...formState },
       });
 
+      // redirect to posts page
       window.location.assign('/posts');
     } catch (e) {
       console.error(e);
     }
 
+    // clear form state
     setFormState({
       title: '',
       text: '',
@@ -136,6 +155,7 @@ const CreatePost = () => {
                       </MenuButton>
                       <Portal>
                         <MenuList zIndex='popover'>
+                          {/* map through routines to create menu item for each routine */}
                           {routines.map((routine, index) => (
                             <MenuItem key={routine._id} onClick={() => { handleAddRoutine(`${index}`) }}>{routine.title}</MenuItem>
                           ))}

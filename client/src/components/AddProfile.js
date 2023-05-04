@@ -1,6 +1,13 @@
+// import packages and local auth
 import React, { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
+import Auth from '../utils/auth';
+
+// import mutation
 import { useMutation } from '@apollo/client';
+import { ADD_PROFILE } from "../utils/mutations";
+
+// import package component
 import {
   Box, Input, Button, Select, SimpleGrid,
   FormControl, FormLabel, FormHelperText,
@@ -9,12 +16,13 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-import { ADD_PROFILE } from "../utils/mutations";
-
-import Auth from '../utils/auth';
+// import local stylesheet
 import '../styles/Profile.css';
 
+// functional component for the add profile modal
 const AddProfile = () => {
+
+  // set state of profile fields, default blank
   const [newAge, setNewAge] = useState(' ');
   const [newSex, setNewSex] = useState(' ');
   const [newWeight, setNewWeight] = useState(' ');
@@ -24,24 +32,29 @@ const AddProfile = () => {
   const [calories, setCalories] = useState(' ');
   const [showCalories, setShowCalories] = useState(false);
 
+  // define mutation
   const [addProfile, { error }] = useMutation(ADD_PROFILE);
 
+  // on add profile (save button click)
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    console.log(newAge, newGoalWeight, newSex, newWeight, newHeight);
 
     try {
       const { data } = await addProfile({
         variables: { newAge, newSex, newWeight, newHeight, newGoalWeight, activityLevel, calories },
       });
 
+      // reload the page on submit
       window.location.reload();
     } catch (err) {
       console.error(err);
     }
   }
+
+  // calculate calorie intake
   const calculateCalories = () => {
     setShowCalories(true);
+    // based on fields, calculate and set calorie field
     if (newSex === "Male") {
       const bmr =
         88.362 +
@@ -55,10 +68,11 @@ const AddProfile = () => {
     }
   };
 
+  // set modal to open on default
   const { isOpen } = useDisclosure({ defaultIsOpen: true });
+  // navigate back to the home page on close
   const navigate = useNavigate();
   const returnToHome = () => navigate("/");
-
 
   return (
       <Box className="profile-modal">
@@ -67,8 +81,10 @@ const AddProfile = () => {
           <ModalContent>
             <ModalHeader color='var(--shade5)' fontSize='2vw'>Are you ready to Step It Up?</ModalHeader>
             <ModalCloseButton />
+            {/* check that the user is loggedIn */}
             {Auth.loggedIn() ? (
               <>
+              {/* add profile form */}
                 <form onSubmit={handleFormSubmit}>
                   <ModalBody>
                     <SimpleGrid columns={2} spacing={5}>
@@ -243,6 +259,7 @@ const AddProfile = () => {
                 </form>
               </>
             ) : (
+              // message if user is not logged in
               <p>
                 You need to be logged in to view your profile. Please{" "}
                 <Link to="/login">login</Link> or{" "}

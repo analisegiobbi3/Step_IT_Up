@@ -1,9 +1,12 @@
+// import packages
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+// import react css styling package
 import { ChakraProvider } from '@chakra-ui/react';
 import reportWebVitals from './reportWebVitals';
 
+// define the location to render the page/content in the public index.html file
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

@@ -1,14 +1,14 @@
-// import package and local style sheet
+// import package and local auth
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Auth from '../utils/auth';
-import '../styles/Header.css';
 
+// import package components
 import {
   Flex, Box, Tooltip, Image, IconButton,
 } from '@chakra-ui/react';
 
-
+// import icons
 import { 
   RiPagesLine, RiCalendarEventLine, RiLineChartLine,
   RiMusic2Line, RiAccountCircleLine,
@@ -16,16 +16,24 @@ import {
 } from 'react-icons/ri';
 import { BiDumbbell } from 'react-icons/bi';
 
-// page navigation bar
+// import local style sheet
+import '../styles/Header.css';
+
+// page header/navigation bar
 function Header() {
 
+  // on click logout
   const logout = (event) => {
     event.preventDefault()
+    // auth logout function
     Auth.logout()
   }
+
   return (
     <div>
+      {/* check that user is logged in and token is not expired */}
       {Auth.loggedIn() && !Auth.isTokenExpired() ? (
+        // if user is logged in, display all linked icon buttons and logout button
         <nav className='navBar' separator='   '>
           <Flex alignItems='center'>
             <Box width='50vw' display='flex'>
@@ -73,6 +81,8 @@ function Header() {
           </Flex>
         </nav>
       ) : (
+        // if user is not logged in or token is expired
+        // only display logo (to home) and login/signup icon
         <nav className='navBar' separator='   '>
           <Flex alignItems='center'>
             <Box width='50vw'>

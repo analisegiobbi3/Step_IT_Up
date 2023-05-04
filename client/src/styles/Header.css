@@ -1,4 +1,4 @@
-/* styling for the Nav Bar page */
+/* styling for the header/navigation bar */
 .navBar {
     background-color: var(--shade6);
     height: fit-content;
@@ -7,6 +7,7 @@
     border-bottom: 0.75vw solid var(--shade2)
 }
 
+/* link/icon color */
 .navBar a, .navBar button {
     color: white;
     font-size: 2vw;

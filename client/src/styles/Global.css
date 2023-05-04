@@ -12,17 +12,20 @@
 /* import font used throughout pages */
 @import url('https://fonts.googleapis.com/css2?family=Pathway+Gothic+One&display=swap');
 
+/* gradient background across all pages */
 .global {
 background: linear-gradient(0deg, var(--shade1), var(--shade1), var(--shade4), var(--shade5),  var(--shade6), var(--shade6));
 background-size: 100% 100%;
+/* background to fit viewport height or page content if greater than viewport height*/
 min-height: 100vh;
 height: fit-content;
 font-family: var(--font);
+/* custom cursor */
 cursor: url("../../public/weight.png") 35 10, auto;
 }
 
-/* global modal styles */
-/* modal */
+/* global modal styles (create/edit posts, create routine, and add profile */
+/* modal component */
 .css-wl0d9u {
   font-family: var(--font);
   font-size: 1.5vw;

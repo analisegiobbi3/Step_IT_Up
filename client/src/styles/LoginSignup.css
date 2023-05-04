@@ -7,6 +7,7 @@
     display: block;
 }
 
+/* input styling */
 .login-modal input, .signup-modal input {
     border-color: var(--shade1);
 }

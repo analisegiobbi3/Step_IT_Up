@@ -42,6 +42,7 @@
     color: var(--shade6);
 }
 
+/* comment input line */
 .blog-page input {
     width: 100vw;
 }

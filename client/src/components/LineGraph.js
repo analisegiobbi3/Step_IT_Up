@@ -1,9 +1,14 @@
+// import package
 import React from 'react';
+
+// import and define local downloaded packages
 import CanvasJSReact from '../utils/canvasjs.react';
 var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
+// functional component for the line graphs on the tracker page
 const LineGraph = ({ startDate, endDate, weight, graphData }) => {
+	// options applied if weight is true (weight graph)
 	const weightOptions = {
 		toolTip: {
 			enabled: true,
@@ -14,6 +19,7 @@ const LineGraph = ({ startDate, endDate, weight, graphData }) => {
 		backgroundColor: "#ffffff00",
 		height: 250,
 		axisY: {
+			// weight title and units
 			title: "Weight",
 			suffix: "lb",
 			gridThickness: 0,
@@ -25,6 +31,7 @@ const LineGraph = ({ startDate, endDate, weight, graphData }) => {
 			title: "Date",
 			labelFontWeight: "bold",
 			lineThickness: 3,
+			// format date x-axis
 			minimum: startDate,
 			maximum: endDate,
 			labelFormatter: function (e) {
@@ -39,10 +46,12 @@ const LineGraph = ({ startDate, endDate, weight, graphData }) => {
 			markerColor: "#e1bcba",
 			lineColor: "#e1bcba",
 			lineThickness: 3,
+			// graph defined weight data
 			dataPoints: graphData[0]
 		}]
 	}
 
+	// options applied if weight is false (calorie graph)
 	const calorieOptions = {
 		toolTip: {
 			enabled: true,
@@ -53,6 +62,7 @@ const LineGraph = ({ startDate, endDate, weight, graphData }) => {
 		backgroundColor: "#ffffff00",
 		height: 250,
 		axisY: {
+			// calorie title and units
 			title: "Calorie",
 			suffix: "C",
 			gridThickness: 0,
@@ -64,6 +74,7 @@ const LineGraph = ({ startDate, endDate, weight, graphData }) => {
 			title: "Date",
 			labelFontWeight: "bold",
 			lineThickness: 3,
+			// format date x-axis
 			minimum: startDate,
 			maximum: endDate,
 			labelFormatter: function (e) {
@@ -78,10 +89,12 @@ const LineGraph = ({ startDate, endDate, weight, graphData }) => {
 			markerColor: "#32496c",
 			lineColor: "#32496c",
 			lineThickness: 3,
+			// graph defined calorie data
 			dataPoints: graphData[0]
 		}]
 	}
 
+	// if no data was passed
 	if (!graphData) {
 		return (
 			<div>
@@ -92,8 +105,10 @@ const LineGraph = ({ startDate, endDate, weight, graphData }) => {
 	return (
 		<div>
 			{weight ? (
+				// if weight is true, return graph with weight options
 				<CanvasJSChart options={weightOptions} />
 			) : (
+				// if weight is false, return graph with calorie options
 				<CanvasJSChart options={calorieOptions} />
 			)}
 		</div>

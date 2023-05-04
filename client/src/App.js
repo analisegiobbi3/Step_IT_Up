@@ -1,15 +1,10 @@
-// import package and local component
+// import packages
 import React from "react";
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  createHttpLink,
-} from "@apollo/client";
-
-import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink, } from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
 
+// import local components
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import Blog from "./pages/Blog";
@@ -23,9 +18,10 @@ import Profile from "./pages/Profile";
 import LoginSignup from "./pages/LoginSignup";
 import Playlists from "./pages/Playlists"
 
+// import local global style sheet
 import './styles/Global.css';
 
-
+// define http request link
 const httpLink = createHttpLink({
   uri: "/graphql",
 });

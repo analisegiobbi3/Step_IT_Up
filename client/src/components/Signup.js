@@ -1,12 +1,13 @@
-// import package and local style sheet
+// import package and local auth
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'
+import Auth from '../utils/auth';
 
+// import mutation
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../utils/mutations';
 
-import Auth from '../utils/auth';
-
+// import package component and icon
 import {
   Box, Button, FormControl, Spinner,
   InputGroup, InputLeftAddon, InputRightElement,
@@ -15,27 +16,29 @@ import {
 
 import { FiUser, FiMail, FiEyeOff, FiEye } from 'react-icons/fi';
 
+// import local style sheet
 import '../styles/LoginSignup.css';
 
+// functional component for the signup tab
 const Signup = () => {
 
-  const [formState, setFormState] = useState({
-    username: '',
-    email: '',
-    password: '',
-  });
-
+  // define the form state, default empty
+  const [formState, setFormState] = useState({ username: '', email: '', password: '', });
+  // define mutation
   const [addUser, { error, data }] = useMutation(ADD_USER);
 
+  // on username/email/password change
   const handleChange = (event) => {
     const { name, value } = event.target;
 
+    // set the form state to the new values
     setFormState({
       ...formState,
       [name]: value,
     });
   };
 
+  // on submitting the form (click submit)
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
@@ -44,14 +47,17 @@ const Signup = () => {
         variables: { ...formState },
       });
 
+      // authenticate user signup, set to redirect to home page
       Auth.login(data.addUser.token);
     } catch (e) {
       console.error(e);
     }
   };
 
+  // navigate to home on page close
   const navigate = useNavigate();
   const returnToHome = () => navigate('/');
+  // set state of show password as text
   const [show, setShow] = React.useState(false)
 
   return (

@@ -1,9 +1,11 @@
+/* styling for the playlist page */
 .playlists-page {
     min-height: 100vh;
     height: fit-content;
     padding: 3vw;
 }
 
+/* page title */
 .playlists-page h1 {
     text-align: center;
     font-family: var(--font);
@@ -14,21 +16,25 @@
     border-bottom: 1vh solid var(--shade1);
 } 
 
+/* playlist cards */
 .playlist-card {
     margin-left: 5px;
     margin-right: 5px;
     outline: solid var(--shade6);
 }
 
+/* icon button with link */
 .spotify-button {
     color: var(--shade1);
     margin: 1vw;
 }
 
+/* button on hover */
 .spotify-button:hover {
     color: #1DB954;
 }
 
+/* card titles */
 .playlist-name {
     color: var(--shade6);
     text-align: center;
