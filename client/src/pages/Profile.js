@@ -1,21 +1,21 @@
 // import packages and local auth
-import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import Auth from "../utils/auth";
+import React, { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import Auth from '../utils/auth';
 
 // import queries and mutations
-import { useQuery, useMutation } from "@apollo/client";
-import { QUERY_ME } from "../utils/queries";
-import { UPDATE_PROFILE } from "../utils/mutations";
+import { useQuery, useMutation } from '@apollo/client';
+import { QUERY_ME } from '../utils/queries';
+import { UPDATE_PROFILE } from '../utils/mutations';
 
 // import local components
-import AddProfile from "../components/AddProfile";
+import AddProfile from '../components/AddProfile';
 
 // import package components
 import {
   Box, Input, Button, Select, SimpleGrid,
   FormControl, FormLabel, FormHelperText,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 
 // import local style sheet
 import '../styles/Profile.css';
@@ -28,14 +28,14 @@ const Profile = () => {
   // extract the profile data 
   const me = data?.me.profile;
 
-  // set state of profile fields
-  const [age, setAge] = useState("");
-  const [sex, setSex] = useState("");
-  const [weight, setWeight] = useState("");
-  const [height, setHeight] = useState("");
-  const [goalWeight, setGoalWeight] = useState("");
-  const [activityLevel, setActivityLevel] = useState("");
-  const [calories, setCalories] = useState("");
+  // set state of profile fields, default blank
+  const [age, setAge] = useState('');
+  const [sex, setSex] = useState('');
+  const [weight, setWeight] = useState('');
+  const [height, setHeight] = useState('');
+  const [goalWeight, setGoalWeight] = useState('');
+  const [activityLevel, setActivityLevel] = useState('');
+  const [calories, setCalories] = useState('');
   // set state of calorie intake display, default to false
   const [showCalories, setShowCalories] = useState(false);
 
@@ -77,7 +77,7 @@ const Profile = () => {
   // 
   const calculateCalories = (e) => {
     setShowCalories(true);
-    if (sex === "Male") {
+    if (sex === 'Male') {
       const bmr =
         88.362 + (13.397 * (goalWeight / 2.2) + (4.799 * height) - (5.677 * age));
       setCalories(Math.round(bmr * activityLevel));
@@ -92,7 +92,7 @@ const Profile = () => {
   if (me) {
     // display the profile page
     return (
-      <Box className="profile">
+      <Box className='profile'>
         {/* check that the user is logged in */}
         {Auth.loggedIn() ? (
           <>
@@ -102,33 +102,33 @@ const Profile = () => {
             ) : (
               // profile form, to be populated with query information
               <form onSubmit={handleFormSubmit}>
-                <SimpleGrid columns={2} spacing={5} className="profile-page">
+                <SimpleGrid columns={2} spacing={5} className='profile-page'>
                   <Box>
-                    <FormControl isRequired mb="20px">
+                    <FormControl isRequired mb='20px'>
                       <FormLabel>Age </FormLabel>
                       <Input
-                        type="number"
+                        type='number'
                         value={age}
-                        className="form-input"
+                        className='form-input'
                         onChange={(e) => setAge(parseInt(e.target.value))}
                       />
                     </FormControl>
                   </Box>
                   <Box>
-                    <FormControl isRequired mb="20px">
+                    <FormControl isRequired mb='20px'>
                       <FormLabel>Birth Sex </FormLabel>
                       <Select
                         placeholder='Select Option'
                         value={sex}
                         onChange={(e) => setSex(e.target.value)}
                       >
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
+                        <option value='Male'>Male</option>
+                        <option value='Female'>Female</option>
                       </Select>
                     </FormControl>
                   </Box>
                   <Box>
-                    <FormControl isRequired mb="20px">
+                    <FormControl isRequired mb='20px'>
                       <FormLabel>Height
                         <span style={{ color: 'var(--shade3)', marginLeft: '0.5rem', marginRight: '0.5rem' }}>
                           (cm)
@@ -136,7 +136,7 @@ const Profile = () => {
                       </FormLabel>
                       <Input
                         defaultValue={height}
-                        className="form-input"
+                        className='form-input'
                         onChange={(e) =>
                           setHeight(parseInt(e.target.value))
                         }
@@ -144,7 +144,7 @@ const Profile = () => {
                     </FormControl>
                   </Box>
                   <Box>
-                    <FormControl isRequired mb="20px">
+                    <FormControl isRequired mb='20px'>
                       <FormLabel>Weight
                         <span style={{ color: 'var(--shade3)', marginLeft: '0.5rem', marginRight: '0.5rem' }}>
                           (lbs)
@@ -152,7 +152,7 @@ const Profile = () => {
                       </FormLabel>
                       <Input
                         value={weight}
-                        className="form-input"
+                        className='form-input'
                         onChange={(e) =>
                           setWeight(parseInt(e.target.value))
                         }
@@ -160,7 +160,7 @@ const Profile = () => {
                     </FormControl>
                   </Box>
                   <Box>
-                    <FormControl isRequired mb="20px">
+                    <FormControl isRequired mb='20px'>
                       <FormLabel>Goal Weight
                         <span style={{ color: 'var(--shade3)', marginLeft: '0.5rem', marginRight: '0.5rem' }}>
                           (lbs)
@@ -168,7 +168,7 @@ const Profile = () => {
                       </FormLabel>
                       <Input
                         value={goalWeight}
-                        className="form-input"
+                        className='form-input'
                         onChange={(e) =>
                           setGoalWeight(parseInt(e.target.value))
                         }
@@ -176,7 +176,7 @@ const Profile = () => {
                     </FormControl>
                   </Box>
                   <Box>
-                    <FormControl isRequired mb="20px">
+                    <FormControl isRequired mb='20px'>
                       <FormLabel>Activity Level</FormLabel>
                       <Select
                         placeholder='Select Option'
@@ -185,15 +185,15 @@ const Profile = () => {
                           setActivityLevel(parseFloat(e.target.value))
                         }
                       >
-                        <option value="1.2">Sedentary</option>
-                        <option value="1.375">Moderate</option>
-                        <option value="1.55">High</option>
+                        <option value='1.2'>Sedentary</option>
+                        <option value='1.375'>Moderate</option>
+                        <option value='1.55'>High</option>
                       </Select>
                     </FormControl>
                   </Box>
                 </SimpleGrid>
                 <FormControl>
-                  <FormHelperText mb="20px" fontSize='2vw' color='var(--shade6)'>
+                  <FormHelperText mb='20px' fontSize='2vw' color='var(--shade6)'>
                     If you are working on maintenance, you can enter your
                     current weight to help us personalize your experience
                     on this app.
@@ -201,25 +201,25 @@ const Profile = () => {
                 </FormControl>
                 <SimpleGrid columns={4} spacing={5}>
                   <Box>
-                    <FormControl mb="20px">
+                    <FormControl mb='20px'>
                       <Button
-                        type="button"
-                        colorScheme="facebook"
+                        type='button'
+                        colorScheme='facebook'
                         onClick={calculateCalories}
-                        mb="20px"
+                        mb='20px'
                         width='100%'
                         fontSize='2vw'
                         height='5vw'
                         _hover={{
-                          bg: "var(--shade2)",
-                          color: "var(--shade6)",
+                          bg: 'var(--shade2)',
+                          color: 'var(--shade6)',
                         }}
                       >
                         Calculate Your Calorie Intake
                       </Button>
                     </FormControl>
                   </Box>
-                  <Box className="calories">
+                  <Box className='calories'>
                     {calories ?
                       <Input
                         disabled={true}
@@ -232,28 +232,28 @@ const Profile = () => {
                         height='5vw'
                         bg='rgba(255, 255, 255, 0.75)'
                         value={`${calories}` + ' calories/day'}
-                      /> : ""}
+                      /> : ''}
                   </Box>
                   <Box></Box>
                   <Box textAlign='end'>
                     <Button
-                      bg="var(--shade1)"
-                      color="white"
+                      bg='var(--shade1)'
+                      color='white'
                       width='100%'
                       fontSize='2vw'
                       height='5vw'
                       _hover={{
-                        bg: "var(--shade2)",
-                        color: "var(--shade6)",
+                        bg: 'var(--shade2)',
+                        color: 'var(--shade6)',
                       }}
-                      type="submit"
+                      type='submit'
                     >
                       Update Profile
                     </Button>
                   </Box>
                 </SimpleGrid>
                 {error && (
-                  <div className="danger">Something went wrong..</div>
+                  <div className='danger'>Something went wrong..</div>
                 )}
 
               </form>
@@ -262,8 +262,8 @@ const Profile = () => {
         ) : (
           // message if user is not logged in
           <p>
-            You need to be logged in to view your profile. Please{" "}
-            <Link to="/loginSignup">Login/Signup</Link>
+            You need to be logged in to view your profile. Please{' '}
+            <Link to='/loginSignup'>Login/Signup</Link>
           </p>
         )}
       </Box>

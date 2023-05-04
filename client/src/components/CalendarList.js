@@ -1,10 +1,13 @@
+// import package
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom'
 
+// import query and mutations
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_ME } from '../utils/queries';
 import { UPDATE_TRACKER, ADD_SCHEDULED_ROUTINES, UPDATE_SCHEDULED_ROUTINES, REMOVE_SCHEDULED_ROUTINES } from '../utils/mutations';
 
+// import package components
 import {
   chakra, Stack, StackDivider, Flex, Box,
   Divider, Spacer, Tooltip, Heading, Text,
@@ -16,16 +19,21 @@ import {
   DrawerOverlay, DrawerContent, useDisclosure,
 } from '@chakra-ui/react'
 
-
+// import icons
 import { FiCheck, FiX, FiEdit, FiPlusSquare, FiMinusSquare, FiExternalLink, FiEye } from 'react-icons/fi';
 
+// import package and local style sheet
 import 'react-calendar/dist/Calendar.css';
 import '../styles/Calendar.css';
 
+// functional component of the calender list on the calendar page
+// only displayed if tracker exists for selected date, passes trackerIndex
 const CalendarList = ({ trackerIndex }) => {
 
+  // functions to control drawer (add and preview routines) display
   const { isOpen, onOpen, onClose } = useDisclosure()
 
+  // functions to show edit weight and calorie buttons on the list
   function EditableControls() {
     const { isEditing, getSubmitButtonProps, getCancelButtonProps, getEditButtonProps, } = useEditableControls()
 
@@ -40,30 +48,42 @@ const CalendarList = ({ trackerIndex }) => {
   }
 
   // emulates a fetch (useQuery expects a Promise)
+  // used to re-query data and re-render page on event listener/change
   const emulateFetch = _ => {
     return new Promise(resolve => {
       resolve([{ data: 'ok' }]);
     });
   };
 
+  // query all data associated with the signed in user
   const { loading, data, refetch } = useQuery(QUERY_ME, emulateFetch, {
     refetchOnWindowFocus: false,
+    // enabled set to true allows query to run on page initialization
     enabled: true
   });
 
+  // extract the tracker information with specific trackerIndex 
   const tracker = data?.me.tracker[trackerIndex] || [];
+  // extract the weight, calorie, and scheduled routines information from the tracker data
   const trackerWeight = data?.me.tracker[trackerIndex].weight || [];
   const trackerCalorie = data?.me.tracker[trackerIndex].calorie || [];
   const trackerScheduledRoutines = data?.me.tracker[trackerIndex].scheduledRoutines || [];
+
+  // extract the routines from the user data
   const routines = data?.me.routines || [];
 
+  // set the state of the weight and calorie, default query data
   const [weight, setWeight] = useState(trackerWeight);
   const [calorie, setCalorie] = useState(trackerCalorie);
+
+  // define update tracker mutation
   const [updateTracker, { updateTrackerData }] = useMutation(UPDATE_TRACKER);
 
+  // on click to update weight and calorie
   const handleUpdateTracker = async (event) => {
     event.preventDefault();
 
+    // based on if weight and/or calorie information are available, update one or both information on the tracker
     try {
       if (weight && calorie) {
         const { updateTrackerData } = await updateTracker({
@@ -79,6 +99,7 @@ const CalendarList = ({ trackerIndex }) => {
         });
       } else { return }
 
+      // re-render the page
       refetch();
     } catch (e) {
       console.error(e);
@@ -86,9 +107,11 @@ const CalendarList = ({ trackerIndex }) => {
 
   };
 
+  // set the routine title and text for the preview section on the drawer
   const [routineTitle, setRoutineTitle] = useState('Hover to preview');
   const [routineText, setRoutineText] = useState('');
 
+  // chakra function to det values of multiple checkbox group
   function CustomCheckbox(props) {
     const { state, getCheckboxProps, getInputProps, getLabelProps, htmlProps } = useCheckbox(props)
 
@@ -121,16 +144,21 @@ const CalendarList = ({ trackerIndex }) => {
     )
   }
 
+  // define array of multiple checkboxes that are checked in checkbox group
   const { value, getCheckboxProps } = useCheckboxGroup({})
 
+  // define add scheduled routines mutation
   const [addScheduledRoutines, { routineData }] = useMutation(ADD_SCHEDULED_ROUTINES);
 
+  // on click to add routine from the drawer
   const handleAddRoutines = async (event) => {
     event.preventDefault()
 
+    // loop through all the checked routines to add
     for (let i = 0; i < value.length; i++) {
       const routine = value[i];
 
+      // add each routine to the scheduled routine array in the tracker
       try {
         const { routineData } = await addScheduledRoutines({
           variables: { trackerId: tracker._id, routineName: routine },
@@ -141,21 +169,28 @@ const CalendarList = ({ trackerIndex }) => {
       }
     }
 
+    // close the drawer
     onClose()
   };
 
+  // define mutation to remove a scheduled routine
   const [removeScheduledRoutines, { removeScheduledRoutinesData }] = useMutation(REMOVE_SCHEDULED_ROUTINES);
 
+  // on click to remove routine from tracker (minus button)
   const handleRemoveScheduledRoutines = async (event) => {
     event.preventDefault();
+    // define the scheduled routineId from the event
     const { id } = event.target;
 
+    // if routineId is not blank
     if (id !== '') {
       try {
+        // remove the routine with trackerId and scheduledRoutineId
         const { removeScheduledRoutinesData } = await removeScheduledRoutines({
           variables: { trackerId: tracker._id, scheduledRoutinesId: id },
         });
 
+        // re-render the page
         refetch();
       } catch (e) {
         console.error(e);
@@ -163,16 +198,22 @@ const CalendarList = ({ trackerIndex }) => {
     }
   };
 
+  // set checked state of routines on the calendar routine list
   const [checkedItems, setCheckedItems] = useState([])
 
+  // define mutation to update scheduled routine
   const [updateScheduledRoutines, { updateScheduledRoutinesData }] = useMutation(UPDATE_SCHEDULED_ROUTINES);
 
+  // on click to update routine (check/uncheck checkbox for specific routine)
   const handleUpdateScheduledRoutines = async (event) => {
     event.preventDefault();
+    // define the routine id and checked state from the event
     const { id, checked } = event.target;
 
+    // if the id is not blank
     if (id !== '') {
       try {
+        // update the scheduled routine's complete status/boolean
         const { updateScheduledRoutineData } = await updateScheduledRoutines({
           variables: { scheduledRoutinesId: id, complete: checked },
         });
@@ -202,6 +243,7 @@ const CalendarList = ({ trackerIndex }) => {
                   <IconButton ml='3' size='md' icon={<FiPlusSquare />} onClick={onOpen} />
                 </Box>
               </Flex>
+              {/* map through the scheduled routines for the tracker date */}
               {trackerScheduledRoutines.map((routine, index) => (
                 <Box key={routine._id}>
                   <Text fontSize='sm' mb='2'>
@@ -217,6 +259,7 @@ const CalendarList = ({ trackerIndex }) => {
                     <Checkbox
                       size='lg'
                       colorScheme='blue'
+                      // default check to routine's completion status/boolean
                       defaultChecked={routine.complete}
                       isChecked={checkedItems[{ index }]}
                       id={routine._id}
@@ -254,6 +297,7 @@ const CalendarList = ({ trackerIndex }) => {
                       value={weight}
                       onChange={(e) => { setWeight(e.target.value) }}
                     />
+                    {/* controls/function to display if edit field is clicked */}
                     <EditableControls />
                   </Editable>
                 </Box>
@@ -282,12 +326,14 @@ const CalendarList = ({ trackerIndex }) => {
                       value={calorie}
                       onChange={(e) => { setCalorie(e.target.value) }}
                     />
+                    {/* controls/function to display if edit field is clicked */}
                     <EditableControls />
                   </Editable>
                 </Box>
               </Flex>
             </Box>
           </Stack>
+          {/* drawer to add routine, default hidden */}
           <Drawer placement='left' size='sm' onClose={onClose} isOpen={isOpen}>
             <DrawerOverlay />
             <DrawerContent>
@@ -300,6 +346,7 @@ const CalendarList = ({ trackerIndex }) => {
                         <Text as='b' my='2'>Routines:</Text>
                       </Box>
                       <Box>
+                        {/* link to redirect to routines page */}
                         <Link to='/routines' >
                           <Tooltip label='Add / Edit / View Routines'>
                             <IconButton aria-label='Routine' bg='var(--shade1)' color='white' _hover={{ bg: 'var(--shade5)' }} icon={<FiExternalLink />} />
@@ -308,34 +355,39 @@ const CalendarList = ({ trackerIndex }) => {
                       </Box>
                     </Flex>
                     <Box overflowY='auto' maxHeight='28vh'>
-                    {routines.map((routine, index) => (
-                      <Flex key={routine._id} 
-                      justifyContent='space-between' 
-                      alignItems='center'
-                      my='3'
-                      >
-                        <Box>
-                          <CustomCheckbox defaultChecked={false} {...getCheckboxProps({ value: `${routine.title}` })} />
-                        </Box>
-                        <Box>
-                          <IconButton aria-label={routine.title}
-                            name={routine.title}
-                            value={routine.text}
-                            bg='var(--shade2)' color='var(--shade6)'
-                            _hover={{ bg: 'var(--shade4)' }}
-                            icon={<FiEye />}
-                            onMouseEnter={(e) => { setRoutineTitle(e.target.name); setRoutineText(e.target.value) }} />
-                        </Box>
-                      </Flex>
-                    ))}
+                      {/* map through user routines to create a list */}
+                      {routines.map((routine, index) => (
+                        <Flex key={routine._id}
+                          justifyContent='space-between'
+                          alignItems='center'
+                          my='3'
+                        >
+                          <Box>
+                            <CustomCheckbox defaultChecked={false} {...getCheckboxProps({ value: `${routine.title}` })} />
+                          </Box>
+                          <Box>
+                            <IconButton aria-label={routine.title}
+                              name={routine.title}
+                              value={routine.text}
+                              bg='var(--shade2)' color='var(--shade6)'
+                              _hover={{ bg: 'var(--shade4)' }}
+                              icon={<FiEye />}
+                              // hover over icon to set routine preview fields
+                              onMouseEnter={(e) => { setRoutineTitle(e.target.name); setRoutineText(e.target.value) }} />
+                          </Box>
+                        </Flex>
+                      ))}
                     </Box>
                     <Divider borderWidth='3px' borderColor='var(--shade1)' />
+                    {/* section to preview routines on hover */}
                     <Text as='b'>Preview: </Text>
                     <Card borderWidth='3px' borderColor='var(--shade5)'>
                       <CardHeader>
+                        {/* preview routine title */}
                         <Heading size='md' defaultValue='No routine selected'>{routineTitle}</Heading>
                       </CardHeader>
                       <CardBody>
+                        {/* preview routine text */}
                         <Text>{routineText}</Text>
                       </CardBody>
                       <CardFooter></CardFooter>

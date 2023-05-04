@@ -47,19 +47,23 @@ const Login = () => {
         variables: { ...formState },
       });
 
+      // authenticate user login, set to redirect to home page
       Auth.login(data.login.token);
     } catch (e) {
       console.error(e);
     }
 
+    // clear the form
     setFormState({
       email: '',
       password: '',
     });
   };
 
+  // navigate to home page on close
   const navigate = useNavigate();
   const returnToHome = () => navigate('/');
+  // set state of show password as text
   const [show, setShow] = useState(false)
 
   return (

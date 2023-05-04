@@ -1,11 +1,13 @@
-// import package and local style sheet
+// import packages
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form';
 
+// import mutation
 import { useMutation } from '@apollo/client';
 import { ADD_ROUTINE } from '../utils/mutations';
 
+// import package components
 import {
   SimpleGrid, Stack, Box,Divider, Text, Button,
   Card, CardHeader, CardBody, CardFooter,
@@ -16,54 +18,77 @@ import {
   ModalFooter, ModalBody, ModalCloseButton, useDisclosure,
 } from '@chakra-ui/react'
 
+// import local style sheet
 import '../styles/Routine.css';
 
+
+// functional component to create routines modal
 const CreateRoutine = () => {
 
+  // function to define, set, and get form values
   const { register, setValue, getValues } = useForm();
+  // set modal to open on default
   const { isOpen } = useDisclosure({ defaultIsOpen: true })
+  // set state of workout, default empty
   const [workout, setWorkout] = useState('')
+  // set state of Repeat for Left/Right checkbox
   const [checkbox, setCheckbox] = useState(false);
+  // set state of combined routine text
   const [routine, setRoutine] = useState('')
+  // set state of routine name
   const [routineName, setRoutineName] = useState('');
 
+  // navigate back to routines on close
   const navigate = useNavigate();
   const redirectRoutines = () => navigate('/routines');
 
+  // function to define workout to add to routine
   const outlineRoutine = () => {
+    // get values from respective fields
     const count = getValues('count');
     const rep = getValues('rep');
     const time = getValues('time');
     const unit = getValues('unit');
 
+    // if Repeat for Left/Right is not checked
     if (!checkbox) {
+      // if workout is defined in counts and reps
       if (count !== '-') {
         let workoutDetail = workout + ': ' + rep + ' rep of ' + count
         addWorkout(workoutDetail)
       } else {
+        // workout is defined in time
         let workoutDetail = workout + ': ' + time + ' ' + unit
         addWorkout(workoutDetail)
       }
+      // Repeat for Left/Right is checked
     } else {
+      // if workout is defined in counts and reps
       if (count !== '-') {
         let workoutDetail = workout + ' (L): ' + rep + ' rep of ' + count + '\n' + workout + ' (R): ' + rep + ' rep of ' + count
         addWorkout(workoutDetail)
       } else {
+        // if workout is defined in time
         let workoutDetail = workout + ' (L): ' + time + ' ' + unit + '\n' + workout + ' (R): ' + time + ' ' + unit
         addWorkout(workoutDetail)
       }
     };
+    // clear fields
     resetDetails();
   };
 
+  // function to add workout to combined routine text
   const addWorkout = (workoutDetail) => {
+    // if no workout has been added yet
     if (!routine) {
       setRoutine(workoutDetail);
     } else {
+      // if workout already exists for routine, add newline before adding workout
       setRoutine(routine + '\n' + workoutDetail)
     }
   };
 
+  // clear the form for the next workout
   const resetDetails = () => {
     setWorkout('');
     setValue('count', '')
@@ -72,17 +97,20 @@ const CreateRoutine = () => {
     setCheckbox(false)
   };
 
+  // define add routine mutation
   const [addRoutine, { error, data }] = useMutation(ADD_ROUTINE);
 
+  // on click to add routine
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
     try {
-
+      // add routine with variables routineNanem and routine
       const { data } = await addRoutine({
         variables: { title: routineName, text: routine},
       });
 
+      // redirect back to the routines page
       window.location.assign('/routines');
     } catch (e) {
       console.error(e);
@@ -99,6 +127,7 @@ const CreateRoutine = () => {
           <ModalBody>
             <Box overflowY='auto' maxHeight='500px'>
               <Text as='b'>1. Select from a list of a popular workouts: </Text>
+              {/* tabs of popular routines */}
               <Tabs variant='enclosed-colored' mt='5'>
                 <TabList>
                   <Tab>Aerobic</Tab>
@@ -106,7 +135,7 @@ const CreateRoutine = () => {
                   <Tab>Stretch/Yoga</Tab>
                   <Tab>Balance</Tab>
                 </TabList>
-
+                {/* series of radiobuttons in each tab panel */}
                 <TabPanels>
                   <TabPanel>
                     <RadioGroup onChange={setWorkout} value={workout}>
@@ -264,17 +293,20 @@ const CreateRoutine = () => {
               </Tabs>
               <Text mb='5'>OR </Text>
               <Text as='b'>Create your own: </Text>
+              {/* input for workout name */}
               <InputGroup my='3'>
                 <InputLeftAddon as='b' bg='var(--shade4)' color='white'>Workout</InputLeftAddon>
                 <Input width='50%' placeholder='i.e. Breathe'
                   value={workout}
                   onChange={(e) => { setWorkout(e.target.value) }}
                 />
+                {/* checkbox for Repeat for Left/Right */}
                 <Checkbox ml='5' isChecked={checkbox} onChange={(e) => setCheckbox(e.target.checked)}>Repeat for Left and Right</Checkbox>
               </InputGroup>
 
               <Divider borderWidth='3px' borderColor='black' my='5' />
 
+              {/* field to enter workout details */}
               <Text as='b'>2. Enter the workout details: </Text>
               <InputGroup mt='3' onSubmit={() => { setValue('count', ''); setValue('rep', ''); setValue('time', '') }}>
                 <InputLeftAddon as='b' bg='var(--shade4)' color='white'>Count</InputLeftAddon>
@@ -304,6 +336,7 @@ const CreateRoutine = () => {
               <Text as='b'>3. Preview Routine: </Text>
               <Card borderWidth='1px' width='fit-content' m='5'>
                 <CardHeader pb='0'>
+                  {/* input to enter routine name */}
                   <input
                   type='text'
                   name='routineName'
